@@ -1,6 +1,6 @@
 id: lv
 version: trial
-name: "Klonoa 2: Lunatea's Veil (Demo Disc 2.3 Trial)"
+name: 'Klonoa 2: Lunatea''s Veil (Demo Disc 2.3 Trial)'
 platform: ps2
 repository: https://github.com/entriphy/kl2_lv_decomp
 src: src
@@ -38,6 +38,7 @@ sections:
           - [0x002E3098, MenuCont.0, data, 0x0040]
           - [0x002E30D8, abMenuFuncTbl, data, 0x0000]
           - [0x00375BE0, MenuGbl.0, bss, 0x0010]
+          - [0x00373B08, null, sdata, 0x0000]
       - name: ab_objtest.c
         functions:
           - [0x00100960, DrawObjTest.0]
@@ -53,6 +54,7 @@ sections:
           - [0x001011C0, FiretestMain]
         data:
           - [0x002E30E8, abFiretestFuncTbl, data, 0x0000]
+          - [0x00373B40, null, sdata, 0x0000]
       - name: sample.c
         functions:
           - [0x00101488, SampleInit.0]
@@ -168,6 +170,7 @@ sections:
           - [0x00373C80, hr_obcdata, sdata, 0x0004]
           - [0x00373C84, hr_obcvpf, sdata, 0x0004]
           - [0x00373C88, hr_obcvpo, sdata, 0x0004]
+          - [0x00373B60, null, sdata, 0x0000]
       - name: hr_mapdr.c
         functions:
           - [0x00104AB8, DecodeVpm]
@@ -304,6 +307,7 @@ sections:
           - [0x00375D30, ptmp_mir, bss, 0x0050]
           - [0x00375D80, ptmp_len, bss, 0x0020]
           - [0x00375DA0, MapName.0, bss, 0x0100]
+          - [0x00373C90, null, sdata, 0x0000]
       - name: hr_mirr.c
         functions:
           - [0x0010CDE0, hr_mir_setf]

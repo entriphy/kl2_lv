@@ -9,3 +9,6 @@ stdump.json
 MAIN.ELF*
 .ninja_log
 permuter_settings.toml
+.cache
+.clangd
+compile_commands.json

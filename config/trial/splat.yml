@@ -1,4 +1,4 @@
-name: "Klonoa 2: Lunatea's Veil (Demo Disc 2.3 Trial)"
+name: 'Klonoa 2: Lunatea''s Veil (Demo Disc 2.3 Trial)'
 sha1: a3bb363a7b97f4f0bb4059b0d55dd38ca2a27082
 options:
   basename: MAIN.ELF
@@ -10,25 +10,33 @@ options:
   compiler: EEGCC
   platform: ps2
   use_gp_rel_macro_nonmatching: false
-  ld_bss_contains_common: true
   string_encoding: EUC-JP
+  rodata_string_guesser_level: 2
+  data_string_guesser_level: 2
   disasm_unknown: true
   named_regs_for_c_funcs: false
-  gp_value: 0x3784F0
+  gp_value: 0x003784F0
   subalign: null
   find_file_boundaries: true
-  section_order: [".text", ".data", ".rodata", ".lit4", ".sdata", ".sbss", ".bss"]
+  section_order:
+    - .text
+    - .data
+    - .rodata
+    - .lit4
+    - .sdata
+    - .sbss
+    - .bss
 segments:
-  - [0, databin, elf_header]
+  - [0x000000, databin, elf_header]
   - name: main
     type: code
-    start: 0x1000
-    vram: 0x100000
-    bss_size: 0x3622F4
+    start: 0x00001000
+    vram: 0x00100000
+    bss_size: 0x003622F4
     subsegments:
       - [0x001000, asm, lib/crt0]
       - [0x0010C8, asm, lib/tmp]
-      - [0x001130, c, abe/ab_access]
+      - [0x001130, asm, abe/ab_access]
       - [0x001158, asm, abe/ab_dummy]
       - [0x0012A0, asm, abe/ab_func]
       - [0x001330, asm, abe/ab_menu]
@@ -396,9 +404,8 @@ segments:
       - [0x1B9440, asm, lib/sce]
       - [0x1BFB70, asm, lib/gcc]
       - [0x1E1900, data, vutext]
-      # - [0x1E4000, data, lib/tmp]
-      # - [0x1E4018, data, lib/gcc]
-      - [0x1E4000, data]
+      - [0x1E4000, data, lib/tmp]
+      - [0x1E4018, data, lib/gcc]
       - [0x1E4058, data, abe/ab_dummy]
       - [0x1E4068, data, abe/ab_func]
       - [0x1E4098, data, abe/ab_menu]
@@ -576,10 +583,14 @@ segments:
       - [0x260F00, rodata, rodata]
       - [0x271400, rodatabin, gcc_except_table]
       - [0x271500, lit4, lit4]
+      - [0x274B00, sdata, lib/gcc]
+      - [0x274B08, sdata, abe/ab_menu]
+      - [0x274B40, sdata, abe/firetest]
       - [0x274B48, sdata, harada/hr_anmvp]
       - [0x274B50, sdata, harada/hr_bgwk]
-      - [0x274C60, sdata, harada/hr_main]
+      - [0x274B60, sdata, harada/hr_main]
       - [0x274C8C, sdata, harada/hr_mapdr]
+      - [0x274C90, sdata, harada/hr_mapv]
       - [0x274E18, sdata, harada/hr_mirr]
       - [0x274E70, sdata, harada/hr_obcon2]
       - [0x274EA0, sdata, harada/hr_obcon4]
@@ -776,7 +787,7 @@ segments:
       - {start: 0x276864, type: bss, vram: 0x6D25C0, name: nakano/cpad}
       - {start: 0x276864, type: bss, vram: 0x6D27C0, name: lib/sce}
       - {start: 0x276864, type: bss, vram: 0x6D7CA8, name: lib/gcc}
-  - [0x276800, databin] # .sbss/.bss
-  - [0x276864, databin] # .reginfo
-  - [0x27687C, databin] # .mdebug
-  - [0x10B5CE6] # end
+  - [0x276800, databin]
+  - [0x276864, databin]
+  - [0x27687C, databin]
+  - [0x10B5CE6]

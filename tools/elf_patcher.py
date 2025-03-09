@@ -18,9 +18,9 @@ SECTIONS_TO_REALIGN_PER_TOOL: dict[str, dict[str, int]] = {
         ".text": 0x8,
         ".data": 0x8,
         ".rodata": 0x8,
-        ".sdata": 0x8,
+        ".sdata": 0x4,
         ".sbss": 0x4,
-        ".bss": 16,
+        ".bss": 0x8,
     },
 }
 
