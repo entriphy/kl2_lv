@@ -5,7 +5,7 @@ build/
 config/*/undefined_funcs_auto.txt
 config/*/undefined_syms_auto.txt
 build.ninja
-stdump.json
+stdump*
 MAIN.ELF*
 .ninja_log
 permuter_settings.toml

@@ -117,6 +117,13 @@ typedef volatile s128 vs128 __attribute__((mode(TI)));
 #define pPAD_LVL_START(kpd) (kpd->lvl & 0x800)
 #define pPAD_LVL_SELECT(kpd) (kpd->lvl & 0x100)
 
+#define SETVEC(vec, x, y, z, w) (vec[0] = x, vec[1] = y, vec[2] = z, vec[3] = w)
+#define SPR_MEM ((void *)0x70000000)
+#define SPR_MEM_IDX(i) ((void *)(0x70000000 + (i) * 0x10))
+#define SPR_SRC(x) ((void *)((u32)x | 0x80000000))
+#define SPR_SEND SPR_SRC(SPR_MEM)
+#define UNCACHED(p) ((void *)((u32)p | 0x20000000))
+
 typedef struct {
     f32 x;
     f32 y;
