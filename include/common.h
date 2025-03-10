@@ -1,8 +1,12 @@
 #ifndef __KL2_COMMON_H
 #define __KL2_COMMON_H
 
+#include <math.h>
+#include <stdio.h>
+#include <libdma.h>
 #include <libvu0.h>
 #include <libgraph.h>
+#include "include_asm.h"
 
 #ifndef __KL2_TYPES
 #define __KL2_TYPES
@@ -42,6 +46,76 @@ typedef volatile u128 vu128 __attribute__((mode(TI)));
 typedef signed int s128 __attribute__((mode(TI)));
 typedef volatile s128 vs128 __attribute__((mode(TI)));
 #endif
+
+#define PAD_TRG_UP(kpd) (kpd.trg & 0x1000)
+#define PAD_TRG_DOWN(kpd) (kpd.trg & 0x4000)
+#define PAD_TRG_LEFT(kpd) (kpd.trg & 0x8000)
+#define PAD_TRG_RIGHT(kpd) (kpd.trg & 0x2000)
+#define PAD_TRG_TRIANG(kpd) (kpd.trg & 0x10)
+#define PAD_TRG_CROSS(kpd) (kpd.trg & 0x40)
+#define PAD_TRG_SQUARE(kpd) (kpd.trg & 0x80)
+#define PAD_TRG_CIRCLE(kpd) (kpd.trg & 0x20)
+#define PAD_TRG_L1(kpd) (kpd.trg & 0x4)
+#define PAD_TRG_L2(kpd) (kpd.trg & 0x1)
+#define PAD_TRG_R1(kpd) (kpd.trg & 0x8)
+#define PAD_TRG_R2(kpd) (kpd.trg & 0x2)
+#define PAD_TRG_START(kpd) (kpd.trg & 0x800)
+#define PAD_TRG_SELECT(kpd) (kpd.trg & 0x100)
+
+#define PAD_REP_UP(kpd) (kpd.rep & 0x1000)
+#define PAD_REP_DOWN(kpd) (kpd.rep & 0x4000)
+#define PAD_REP_LEFT(kpd) (kpd.rep & 0x8000)
+#define PAD_REP_RIGHT(kpd) (kpd.rep & 0x2000)
+
+#define PAD_LVL_UP(kpd) (kpd.lvl & 0x1000)
+#define PAD_LVL_DOWN(kpd) (kpd.lvl & 0x4000)
+#define PAD_LVL_LEFT(kpd) (kpd.lvl & 0x8000)
+#define PAD_LVL_RIGHT(kpd) (kpd.lvl & 0x2000)
+#define PAD_LVL_TRIANG(kpd) (kpd.lvl & 0x10)
+#define PAD_LVL_CROSS(kpd) (kpd.lvl & 0x40)
+#define PAD_LVL_SQUARE(kpd) (kpd.lvl & 0x80)
+#define PAD_LVL_CIRCLE(kpd) (kpd.lvl & 0x20)
+#define PAD_LVL_L1(kpd) (kpd.lvl & 0x4)
+#define PAD_LVL_L2(kpd) (kpd.lvl & 0x1)
+#define PAD_LVL_R1(kpd) (kpd.lvl & 0x8)
+#define PAD_LVL_R2(kpd) (kpd.lvl & 0x2)
+#define PAD_LVL_START(kpd) (kpd.lvl & 0x800)
+#define PAD_LVL_SELECT(kpd) (kpd.lvl & 0x100)
+
+#define pPAD_TRG_UP(kpd) (kpd->trg & 0x1000)
+#define pPAD_TRG_DOWN(kpd) (kpd->trg & 0x4000)
+#define pPAD_TRG_LEFT(kpd) (kpd->trg & 0x8000)
+#define pPAD_TRG_RIGHT(kpd) (kpd->trg & 0x2000)
+#define pPAD_TRG_TRIANG(kpd) (kpd->trg & 0x10)
+#define pPAD_TRG_CROSS(kpd) (kpd->trg & 0x40)
+#define pPAD_TRG_SQUARE(kpd) (kpd->trg & 0x80)
+#define pPAD_TRG_CIRCLE(kpd) (kpd->trg & 0x20)
+#define pPAD_TRG_L1(kpd) (kpd->trg & 0x4)
+#define pPAD_TRG_L2(kpd) (kpd->trg & 0x1)
+#define pPAD_TRG_R1(kpd) (kpd->trg & 0x8)
+#define pPAD_TRG_R2(kpd) (kpd->trg & 0x2)
+#define pPAD_TRG_START(kpd) (kpd->trg & 0x800)
+#define pPAD_TRG_SELECT(kpd) (kpd->trg & 0x100)
+
+#define pPAD_REP_UP(kpd) (kpd->rep & 0x1000)
+#define pPAD_REP_DOWN(kpd) (kpd->rep & 0x4000)
+#define pPAD_REP_LEFT(kpd) (kpd->rep & 0x8000)
+#define pPAD_REP_RIGHT(kpd) (kpd->rep & 0x2000)
+
+#define pPAD_LVL_UP(kpd) (kpd->lvl & 0x1000)
+#define pPAD_LVL_DOWN(kpd) (kpd->lvl & 0x4000)
+#define pPAD_LVL_LEFT(kpd) (kpd->lvl & 0x8000)
+#define pPAD_LVL_RIGHT(kpd) (kpd->lvl & 0x2000)
+#define pPAD_LVL_TRIANG(kpd) (kpd->lvl & 0x10)
+#define pPAD_LVL_CROSS(kpd) (kpd->lvl & 0x40)
+#define pPAD_LVL_SQUARE(kpd) (kpd->lvl & 0x80)
+#define pPAD_LVL_CIRCLE(kpd) (kpd->lvl & 0x20)
+#define pPAD_LVL_L1(kpd) (kpd->lvl & 0x4)
+#define pPAD_LVL_L2(kpd) (kpd->lvl & 0x1)
+#define pPAD_LVL_R1(kpd) (kpd->lvl & 0x8)
+#define pPAD_LVL_R2(kpd) (kpd->lvl & 0x2)
+#define pPAD_LVL_START(kpd) (kpd->lvl & 0x800)
+#define pPAD_LVL_SELECT(kpd) (kpd->lvl & 0x100)
 
 typedef struct {
     f32 x;
@@ -145,7 +219,9 @@ typedef struct OBJWORK {
     void (*pers)(struct OBJWORK *); // 0x00
     void (*draw)(struct OBJWORK *); // 0x04
     void (*drmir)(struct OBJWORK *); // 0x08
+#ifndef KL2_VER_TRIAL
     void (*drmiref)(struct OBJWORK *); // 0x0C
+#endif
     void (*dreff)(struct OBJWORK *); // 0x10
     void *prim; // 0x14
     void *work; // 0x18
@@ -344,6 +420,109 @@ typedef struct {
     /* 0x5f0 */ CAM_WORK cam;
     /* 0x620 */ CAM_WORK d_cam;
 } GAME_WORK;
+
+typedef struct { // 0x50
+    /* 0x00 */ u32 irqc;
+    /* 0x04 */ u32 drawhc;
+    /* 0x08 */ u32 proc_hcnt;
+    /* 0x0c */ s32 cp;
+    /* 0x10 */ u32 *cotf;
+    /* 0x14 */ u32 *cot;
+    /* 0x18 */ u32 *cotb;
+    /* 0x1c */ u32 *cpkt;
+    /* 0x20 */ u32 *sysbuf;
+    /* 0x24 */ u32 *sysbufbase;
+    /* 0x28 */ s32 nmode;
+    /* 0x2c */ s32 nsmode;
+    /* 0x30 */ s32 fmode;
+    /* 0x34 */ s32 smode;
+    /* 0x38 */ u32 modorg;
+    /* 0x3c */ u32 modorgend;
+    /* 0x40 */ OBJWORK *objwork;
+    /* 0x44 */ s32 n_objw;
+    /* 0x48 */ s32 Language;
+    /* 0x4C */ s32 TVSystem;
+} SYSGBL;
+
+typedef struct { // 0x2050
+    /* 0x0000 */ u32 block_list[2049];
+    /* 0x2004 */ qword *block_head_ptr;
+    /* 0x2008 */ u32 *clip_head_ptr;
+    /* 0x200c */ u32 *vpm_data_top;
+    /* 0x2010 */ u32 vpm_zone_num;
+    /* 0x2014 */ u32 vpm_block_num;
+    /* 0x2018 */ s32 course_level;
+    /* 0x201c */ s32 fog_near;
+    /* 0x2020 */ s32 fog_far;
+    /* 0x2030 */ qword fog_col;
+    /* 0x2040 */ s32 pixel_intpl;
+    /* 0x2044 */ u8 *data_buff;
+    /* 0x2048 */ u8 *hm_buff;
+} vpmINFO;
+
+typedef struct { // 0x240
+	/* 0x000 */ u32 block_list[128];
+	/* 0x200 */ u32 drawb_num;
+	/* 0x204 */ qword *block_head_ptr;
+	/* 0x208 */ u32 *clip_head_ptr;
+	/* 0x20c */ u32 *vpm_data_top;
+	/* 0x210 */ u32 vpm_zone_num;
+	/* 0x214 */ u32 vpm_block_num;
+	/* 0x218 */ s32 fog_near;
+	/* 0x21c */ s32 fog_far;
+	/* 0x220 */ qword fog_col;
+	/* 0x230 */ s32 pixel_intpl;
+	/* 0x234 */ u8 *data_buff;
+} mINFO;
+
+typedef struct HRANMV { // 0x40
+    /* 0x00 */ sceVu0FVECTOR pos;
+    /* 0x10 */ vpmINFO *info;
+    /* 0x14 */ void (*prog)(struct HRANMV *);
+    /* 0x18 */ u32 flag;
+    /* 0x1c */ s32 drawno;
+    /* 0x20 */ s32 work0;
+    /* 0x24 */ s32 work1;
+    /* 0x28 */ s32 work2;
+    /* 0x2c */ s32 work3;
+    /* 0x30 */ f32 fwk0;
+    /* 0x34 */ f32 fwk1;
+    /* 0x38 */ f32 fwk2;
+    /* 0x3c */ f32 fwk3;
+} HRANMV;
+
+typedef struct { // 0x10
+    /* 0x0 */ void (*prog)(HRANMV *);
+    /* 0x4 */ void (*init)(HRANMV *);
+    /* 0x8 */ s32 drawno;
+    /* 0xc */ vpmINFO *info;
+} HRANMVS;
+
+typedef struct { // 0x30
+    /* 0x00 */ f32 x;
+    /* 0x04 */ f32 y;
+    /* 0x08 */ f32 z;
+    /* 0x0c */ f32 r;
+    /* 0x10 */ f32 g;
+    /* 0x14 */ f32 b;
+    /* 0x18 */ f32 n;
+    /* 0x1c */ f32 f;
+    /* 0x20 */ f32 ri;
+    /* 0x24 */ f32 gi;
+    /* 0x28 */ f32 bi;
+    /* 0x2c */ f32 pad0;
+} HRAVL;
+
+typedef enum {
+    HRAV_WAVE,
+    HRAV_SINT,
+    HRAV_SINT2,
+    HRAV_SINTD,
+    HRAV_SINT2D,
+} HRAV;
+
+extern GAME_WORK GameGbl;
+extern SYSGBL SysGbl;
 
 #endif // __KL2_TYPES
 

@@ -12,3 +12,4 @@ permuter_settings.toml
 .cache
 .clangd
 compile_commands.json
+objdiff.json
