@@ -484,6 +484,7 @@ def write_ninja_config(version: str, linker_entries: list[LinkerEntry], objdiff_
         src_paths: list[Path],
         task: str,
         variables: dict[str, str] = {},
+        implicit: list[str] = [],
         implicit_outputs: list[str] = [],
         asm_only: bool = False
     ):
@@ -499,6 +500,7 @@ def write_ninja_config(version: str, linker_entries: list[LinkerEntry], objdiff_
                 outputs=object_strs,
                 rule=task,
                 inputs=[str(s) for s in src_paths],
+                implicit=implicit,
                 variables=variables,
                 implicit_outputs=implicit_outputs,
             )
@@ -508,7 +510,7 @@ def write_ninja_config(version: str, linker_entries: list[LinkerEntry], objdiff_
     ninja.rule(
         "as",
         description="as $in",
-        command=f"cpp {COMMON_INCLUDES} $in -o  - | iconv -f=UTF-8 -t=EUC-JP $in | {CROSS}-as -no-pad-sections -EL -march=5900 -mabi=eabi -Iinclude -o $out && python3 tools/elf_patcher.py $out gas",
+        command=f"cpp {COMMON_INCLUDES} $in -o  - | iconv -f=UTF-8 -t=EUC-JP $in | {CROSS}-as -no-pad-sections -EL -march=5900 -mabi=eabi -Iinclude -o $out && build/tools/elf_patcher $out",
     )
 
     defines = [f"-DKL2_VER_{version.upper()}"]
@@ -546,6 +548,18 @@ def write_ninja_config(version: str, linker_entries: list[LinkerEntry], objdiff_
         command=f"{CROSS}-objcopy $in $out -O binary",
     )
 
+    ninja.rule(
+        "tool",
+        description="tool $in",
+        command="gcc -O2 $in -o $out && chmod +x $out"
+    )
+
+    ninja.build(
+        "build/tools/elf_patcher",
+        "tool",
+        "tools/elf_patcher.c"
+    )
+
     for entry in linker_entries:
         seg = entry.segment
 
@@ -556,17 +570,17 @@ def write_ninja_config(version: str, linker_entries: list[LinkerEntry], objdiff_
             continue
 
         if isinstance(seg, splat.segtypes.common.asm.CommonSegAsm):
-            build(entry.object_path, entry.src_paths, "as")
+            build(entry.object_path, entry.src_paths, "as", implicit=["build/tools/elf_patcher"])
         elif isinstance(seg, splat.segtypes.common.cpp.CommonSegCpp):
             build(entry.object_path, entry.src_paths, "cpp")
         elif isinstance(seg, splat.segtypes.common.c.CommonSegC):
             build(entry.object_path, entry.src_paths, "c")
         elif isinstance(seg, splat.segtypes.common.data.CommonSegData):
-            build(entry.object_path, entry.src_paths, "as")
+            build(entry.object_path, entry.src_paths, "as", implicit=["build/tools/elf_patcher"])
         elif isinstance(seg, splat.segtypes.common.databin.CommonSegDatabin):
-            build(entry.object_path, entry.src_paths, "as")
+            build(entry.object_path, entry.src_paths, "as", implicit=["build/tools/elf_patcher"])
         elif isinstance(seg, splat.segtypes.common.rodatabin.CommonSegRodatabin):
-            build(entry.object_path, entry.src_paths, "as")
+            build(entry.object_path, entry.src_paths, "as", implicit=["build/tools/elf_patcher"])
         else:
             print(f"WARN: Unsupported build segment type {seg.type}")
 
