@@ -118,13 +118,20 @@ typedef volatile s128 vs128 __attribute__((mode(TI)));
 #define pPAD_LVL_SELECT(kpd) (kpd->lvl & 0x100)
 
 #define SETVEC(vec, x, y, z, w) (vec[0] = x, vec[1] = y, vec[2] = z, vec[3] = w)
+#define SETVEC_XYZ(vec, x, y, z) (vec[0] = x, vec[1] = y, vec[2] = z)
+#define SETVEC_XY(vec, x, y) (vec[0] = x, vec[1] = y)
 #define SPR_MEM ((void *)0x70000000)
 #define SPR_MEM_IDX(i) ((void *)(0x70000000 + (i) * 0x10))
 #define SPR_SRC(x) ((void *)((u32)x | 0x80000000))
 #define SPR_SEND SPR_SRC(SPR_MEM)
 #define UNCACHED(p) ((void *)((u32)p | 0x20000000))
 
-#define KL2_PI 3.141592f
+#define KL2_PI  (3.141592f)
+#define KL2_2PI (2.0f * KL2_PI)
+#define KL2_3PI (3.0f * KL2_PI)
+#define KL2_PI3 (KL2_PI / 3.0f)
+
+#define KL2_PI_CLAMP(f) ({if (f < -KL2_PI) { f += KL2_2PI; } else if (f > KL2_PI) { f -= KL2_2PI; }})
 
 typedef struct {
     f32 x;
@@ -544,8 +551,16 @@ typedef enum {
     HRAV_SINT2D,
 } HRAV;
 
+// From nakano/main.h
 extern GAME_WORK GameGbl;
 extern SYSGBL SysGbl;
+extern sceDmaChan *DmaChVIF0;
+extern sceDmaChan *DmaChVIF1;
+extern sceDmaChan *DmaChGIF;
+extern sceDmaChan *DmaChfromIPU;
+extern sceDmaChan *DmaChtoIPU;
+extern sceDmaChan *DmaChfromSPR;
+extern sceDmaChan *DmaChtoSPR;
 
 #endif // __KL2_TYPES
 

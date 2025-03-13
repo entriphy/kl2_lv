@@ -40,10 +40,10 @@ segments:
       - [0x001000, asm, lib/crt0]
       - [0x0010C8, asm, lib/tmp]
       - [0x001130, c, abe/ab_access]
-      - [0x001158, asm, abe/ab_dummy]
+      - [0x001158, c, abe/ab_dummy]
       - [0x0012A0, asm, abe/ab_func]
       - [0x001330, asm, abe/ab_menu]
-      - [0x001960, asm, abe/ab_objtest]
+      - [0x001960, c, abe/ab_objtest]
       - [0x001FC8, asm, abe/firetest]
       - [0x002488, asm, abe/sample]
       - [0x0028F8, c, harada/h_vpm2]
@@ -167,7 +167,7 @@ segments:
       - [0x0859E0, asm, nakano/klohit2]
       - [0x085CD0, asm, nakano/klopipe]
       - [0x086ED8, asm, nakano/light]
-      - [0x088C58, c, nakano/main]
+      - [0x088C58, asm, nakano/main]
       - [0x088DD0, asm, nakano/map00]
       - [0x089490, asm, nakano/map01]
       - [0x089C60, asm, nakano/mapview]
@@ -409,10 +409,10 @@ segments:
       - [0x1E1900, data, vutext]
       - [0x1E4000, data, lib/tmp]
       - [0x1E4018, data, lib/gcc]
-      - [0x1E4058, data, abe/ab_dummy]
+      - [0x1E4058, .data, abe/ab_dummy]
       - [0x1E4068, data, abe/ab_func]
       - [0x1E4098, data, abe/ab_menu]
-      - [0x1E40E0, data, abe/ab_objtest]
+      - [0x1E40E0, .data, abe/ab_objtest]
       - [0x1E40E8, data, abe/firetest]
       - [0x1E40F0, data, abe/sample]
       - [0x1E4100, .data, harada/h_vpm2]
@@ -487,7 +487,7 @@ segments:
       - [0x1FCD90, data, nakano/game]
       - [0x204C90, data, nakano/gssub]
       - [0x205080, data, nakano/light]
-      - [0x2051C0, .data, nakano/main]
+      - [0x2051C0, data, nakano/main]
       - [0x20C2C0, data, nakano/mapview]
       - [0x20C2C8, data, nakano/menu]
       - [0x20C390, data, nakano/mfunc]
@@ -608,7 +608,7 @@ segments:
       - [0x2623B0, rodata, harada/hrmenu]
       - [0x262410, rodata, rodata]
       - [0x271400, rodatabin, gcc_except_table]
-      - [0x271500, lit4, abe/ab_objtest]
+      - [0x271500, .lit4, abe/ab_objtest]
       - [0x27153C, .lit4, harada/hr_anmdt]
       - [0x271544, lit4, harada/hr_anmvp]
       - [0x27154C, lit4, harada/hr_bgwk]
@@ -834,7 +834,7 @@ segments:
       - [0x275AC8, sdata, kazuya/wm_job]
       - [0x275AE8, sdata, nakano/dma]
       - [0x275B38, sdata, nakano/game]
-      - [0x275B74, .sdata, nakano/main]
+      - [0x275B74, sdata, nakano/main]
       - [0x275BB8, sdata, nakano/map01]
       - [0x275DC8, sdata, okanoyo/init]
       - [0x275E30, sdata, okanoyo/okggum00]
@@ -969,7 +969,7 @@ segments:
       - {start: 0x276864, type: bss, vram: 0x491290, name: nakano/gscreen}
       - {start: 0x276864, type: bss, vram: 0x491440, name: nakano/klopipe}
       - {start: 0x276864, type: bss, vram: 0x491450, name: nakano/light}
-      - {start: 0x276864, type: .bss, vram: 0x491680, name: nakano/main}
+      - {start: 0x276864, type: bss, vram: 0x491680, name: nakano/main}
       - {start: 0x276864, type: bss, vram: 0x6B1720, name: nakano/mapview}
       - {start: 0x276864, type: bss, vram: 0x6B18F0, name: nakano/menu}
       - {start: 0x276864, type: bss, vram: 0x6B1980, name: nakano/nkmirr}
