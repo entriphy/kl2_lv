@@ -3,6 +3,12 @@
 
 #include "common.h"
 
+#ifndef KL2_VER_TRIAL
+#define __WORK_PATH_SZ 16
+#else
+#define __WORK_PATH_SZ 8
+#endif
+
 typedef struct {
     s32 map_draw_flag;
     s32 cam_debug_mode;
@@ -12,7 +18,7 @@ typedef struct {
     s32 flag;
     s32 opflag;
     s32 capture_num;
-    s32 work_path[16];
+    s32 work_path[__WORK_PATH_SZ];
 } NKDEBGBL;
 
 extern NKDEBGBL nkDG;

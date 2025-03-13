@@ -13,3 +13,5 @@ permuter_settings.toml
 .clangd
 compile_commands.json
 objdiff.json
+.vscode/
+__pycache__/

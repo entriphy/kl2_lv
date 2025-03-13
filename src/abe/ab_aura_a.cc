@@ -1,9 +1,5 @@
 #include "abe/ab_aura_a.h"
 
-int main() {
-    
-}
-
 // INCLUDE_ASM("abe/ab_aura_a", abSetAuraA);
 
 // INCLUDE_ASM("abe/ab_aura_a", abSetAuraB);

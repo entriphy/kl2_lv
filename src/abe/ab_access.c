@@ -1,7 +1,5 @@
 #include "abe/ab_access.h"
 
-extern GAME_WORK GameGbl;
-
 OBJWORK* abGetKlonoa(s32 player) {
     return GameGbl.klonoa;
 }

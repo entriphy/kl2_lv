@@ -19,7 +19,7 @@ from splat.segtypes.linker_entry import LinkerEntry
 
 ROOT        = Path(__file__).parent.resolve()
 TOOLS_DIR   = ROOT / "tools"
-CLEAN_FILES = [".splache", ".ninja_log", "build.ninja", "MAIN.ELF.ld", "permuter_settings.toml", "compile_commands.json"]
+CLEAN_FILES = [".splache", ".ninja_log", "build.ninja", "MAIN.ELF.ld", "permuter_settings.toml", "compile_commands.json", "objdiff.json"]
 CLEAN_DIRS  = ["asm", "assets", "build"]
 
 CROSS              = "mips-linux-gnu"
@@ -389,9 +389,9 @@ def write_splat_config(version: str, sections: list[Section], asm_only: bool = F
         if "lib" in section.id:
             continue
         for unit in section.units:
-            matching = os.path.exists(f"src/{section.path}/{unit.name}")
+            matching = os.path.exists(f"src/{section.path}/{unit.name}") and not unit.name.endswith(".cc")
             if len(unit.functions) > 0:
-                subsegments.append(SplatSegment(unit.functions[0].address - 0x100000 + 0x1000, ("c" if unit.name.endswith(".c") else "cpp") if matching and not asm_only else "asm", f"{section.path}/{unit.name.split(".")[0]}"))
+                subsegments.append(SplatSegment(unit.functions[0].address - 0x100000 + 0x1000, unit.name.split(".")[1] if matching and not asm_only else "asm", f"{section.path}/{unit.name.split(".")[0]}"))
             for elf_section in ["data", "sdata", "sbss", "bss", "rodata", "lit4"]:
                 data = unit.get_section_start(elf_section)
                 if data is not None:
@@ -412,13 +412,14 @@ def write_splat_config(version: str, sections: list[Section], asm_only: bool = F
             "basename": "MAIN.ELF",
             "target_path": "MAIN.ELF",
             "base_path": "../..",
+            "extensions_path": "tools/splat_ext",
             "symbol_addrs_path": f"config/{version}/symbol_addrs.txt",
             "undefined_funcs_auto_path": f"config/{version}/undefined_funcs_auto.txt",
             "undefined_syms_auto_path": f"config/{version}/undefined_syms_auto.txt",
             "compiler": "EEGCC",
             "platform": "ps2",
             "use_gp_rel_macro_nonmatching": False,
-            "string_encoding": "EUC-JP",
+            "string_encoding": "SHIFT-JIS",
             "rodata_string_guesser_level": 2,
             "data_string_guesser_level": 2,
             "disasm_unknown": True,
@@ -510,7 +511,7 @@ def write_ninja_config(version: str, linker_entries: list[LinkerEntry], objdiff_
     ninja.rule(
         "as",
         description="as $in",
-        command=f"cpp {COMMON_INCLUDES} $in -o  - | iconv -f=UTF-8 -t=EUC-JP $in | {CROSS}-as -no-pad-sections -EL -march=5900 -mabi=eabi -Iinclude -o $out && build/tools/elf_patcher $out",
+        command=f"cpp {COMMON_INCLUDES} $in -o  - | iconv -f=UTF-8 -t=SHIFT-JIS $in | {CROSS}-as -no-pad-sections -EL -march=5900 -mabi=eabi -Iinclude -o $out && build/tools/elf_patcher $out",
     )
 
     defines = [f"-DKL2_VER_{version.upper()}"]
@@ -626,7 +627,7 @@ def write_ninja_config(version: str, linker_entries: list[LinkerEntry], objdiff_
         for unit, entries in objdiff_ld.items():
             inputs = []
             for entry in entries:
-                build(entry.object_path, entry.src_paths, "as", asm_only=True)
+                build(entry.object_path, entry.src_paths, "as", asm_only=True, implicit=["build/tools/elf_patcher"])
                 inputs.append(str(entry.object_path))
             ninja.build(
                 f"build/objdiff/{unit}.o",
@@ -732,6 +733,6 @@ if __name__ == "__main__":
             splat_stuff(args.version)
             objdiff_entries = []
         
-        write_ninja_config(args.version, split.linker_writer.entries, [entry.entry for entry in objdiff_entries])
+        write_ninja_config(args.version, split.linker_writer.entries, [entry.entry for entry in objdiff_entries], debug=True)
         with open("compile_commands.json", "wb") as f:
             subprocess.run(["ninja", "-t", "compdb"], stdout=f)

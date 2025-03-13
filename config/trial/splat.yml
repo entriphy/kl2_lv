@@ -4,13 +4,14 @@ options:
   basename: MAIN.ELF
   target_path: MAIN.ELF
   base_path: ../..
+  extensions_path: tools/splat_ext
   symbol_addrs_path: config/trial/symbol_addrs.txt
   undefined_funcs_auto_path: config/trial/undefined_funcs_auto.txt
   undefined_syms_auto_path: config/trial/undefined_syms_auto.txt
   compiler: EEGCC
   platform: ps2
   use_gp_rel_macro_nonmatching: false
-  string_encoding: EUC-JP
+  string_encoding: SHIFT-JIS
   rodata_string_guesser_level: 2
   data_string_guesser_level: 2
   disasm_unknown: true
@@ -39,7 +40,7 @@ segments:
       - [0x001000, asm, lib/crt0]
       - [0x0010C8, asm, lib/tmp]
       - [0x001130, c, abe/ab_access]
-      - [0x001158, c, abe/ab_dummy]
+      - [0x001158, asm, abe/ab_dummy]
       - [0x0012A0, asm, abe/ab_func]
       - [0x001330, asm, abe/ab_menu]
       - [0x001960, asm, abe/ab_objtest]
@@ -48,8 +49,8 @@ segments:
       - [0x0028F8, c, harada/h_vpm2]
       - [0x002BC0, asm, harada/hr_abe]
       - [0x002BE0, c, harada/hr_anmdt]
-      - [0x002D90, c, harada/hr_anmvp]
-      - [0x003750, c, harada/hr_bgwk]
+      - [0x002D90, asm, harada/hr_anmvp]
+      - [0x003750, asm, harada/hr_bgwk]
       - [0x003AD8, asm, harada/hr_main]
       - [0x005AB8, asm, harada/hr_mapdr]
       - [0x0081E0, asm, harada/hr_mapv]
@@ -329,7 +330,7 @@ segments:
       - [0x0F2CF8, asm, vtusr/kit/kitwavevuprog]
       - [0x0F5E10, asm, vtusr/taro/taro_movie]
       - [0x0F8830, asm, vtusr/taro/taromoviemain]
-      - [0x0F8B88, cpp, abe/ab_aura_a]
+      - [0x0F8B88, asm, abe/ab_aura_a]
       - [0x0FBAC0, asm, abe/ab_bosshit_a]
       - [0x0FD690, asm, abe/ab_bubble_a]
       - [0x0FF8A8, asm, abe/ab_buppy_b]
@@ -408,7 +409,7 @@ segments:
       - [0x1E1900, data, vutext]
       - [0x1E4000, data, lib/tmp]
       - [0x1E4018, data, lib/gcc]
-      - [0x1E4058, .data, abe/ab_dummy]
+      - [0x1E4058, data, abe/ab_dummy]
       - [0x1E4068, data, abe/ab_func]
       - [0x1E4098, data, abe/ab_menu]
       - [0x1E40E0, data, abe/ab_objtest]
@@ -416,8 +417,8 @@ segments:
       - [0x1E40F0, data, abe/sample]
       - [0x1E4100, .data, harada/h_vpm2]
       - [0x1E4310, .data, harada/hr_anmdt]
-      - [0x1E4320, .data, harada/hr_anmvp]
-      - [0x1E43E0, .data, harada/hr_bgwk]
+      - [0x1E4320, data, harada/hr_anmvp]
+      - [0x1E43E0, data, harada/hr_bgwk]
       - [0x1E5180, data, harada/hr_main]
       - [0x1E7210, data, harada/hr_mapv]
       - [0x1E7280, data, harada/hr_mirr]
@@ -585,7 +586,7 @@ segments:
       - [0x260F00, rodata, abe/ab_menu]
       - [0x260F30, rodata, abe/firetest]
       - [0x260F40, rodata, abe/sample]
-      - [0x260FA0, .rodata, harada/hr_bgwk]
+      - [0x260FA0, rodata, harada/hr_bgwk]
       - [0x260FC8, rodata, harada/hr_main]
       - [0x2613C0, rodata, harada/hr_mapdr]
       - [0x2613F0, rodata, harada/hr_mapv]
@@ -609,8 +610,8 @@ segments:
       - [0x271400, rodatabin, gcc_except_table]
       - [0x271500, lit4, abe/ab_objtest]
       - [0x27153C, .lit4, harada/hr_anmdt]
-      - [0x271544, .lit4, harada/hr_anmvp]
-      - [0x27154C, .lit4, harada/hr_bgwk]
+      - [0x271544, lit4, harada/hr_anmvp]
+      - [0x27154C, lit4, harada/hr_bgwk]
       - [0x271554, lit4, harada/hr_mapdr]
       - [0x271564, lit4, harada/hr_mapv]
       - [0x2715A4, lit4, harada/hr_mirr]
@@ -749,7 +750,7 @@ segments:
       - [0x273F90, lit4, vtusr/ao/aoVU1pkt]
       - [0x273FF4, lit4, vtusr/kit/kitfiremain]
       - [0x27407C, lit4, vtusr/kit/kitwavevuprog]
-      - [0x2740AC, .lit4, abe/ab_aura_a]
+      - [0x2740AC, lit4, abe/ab_aura_a]
       - [0x2740B4, lit4, abe/ab_bosshit_a]
       - [0x2740BC, lit4, abe/ab_bubble_a]
       - [0x2740C0, lit4, abe/ab_core_a]
@@ -802,8 +803,8 @@ segments:
       - [0x274B00, sdata, lib/gcc]
       - [0x274B08, sdata, abe/ab_menu]
       - [0x274B40, sdata, abe/firetest]
-      - [0x274B48, .sdata, harada/hr_anmvp]
-      - [0x274B50, .sdata, harada/hr_bgwk]
+      - [0x274B48, sdata, harada/hr_anmvp]
+      - [0x274B50, sdata, harada/hr_bgwk]
       - [0x274B60, sdata, harada/hr_main]
       - [0x274C8C, sdata, harada/hr_mapdr]
       - [0x274C90, sdata, harada/hr_mapv]
@@ -851,7 +852,7 @@ segments:
       - [0x2763B0, sdata, vtusr/ao/aoVU1pkt]
       - [0x2763D0, sdata, vtusr/kit/kitfiremain]
       - [0x2763E8, sdata, vtusr/taro/taro_movie]
-      - [0x276410, .sdata, abe/ab_aura_a]
+      - [0x276410, sdata, abe/ab_aura_a]
       - [0x276418, sdata, abe/ab_bosshit_a]
       - [0x276420, sdata, abe/ab_bubble_a]
       - [0x276428, sdata, abe/ab_buppy_b]

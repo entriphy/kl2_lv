@@ -33,7 +33,7 @@ u32 *vtMovieAdr[8] = {};
 extern u16 hrpt_deb;
 
 s32 main(s32 argc, char *argv[]) {
-    #ifdef KL2_VER_TRIAL
+#ifdef KL2_VER_TRIAL
     u16 language;
     u16 aspect;
     u16 playmode;
@@ -43,10 +43,10 @@ s32 main(s32 argc, char *argv[]) {
     u16 masterVolumeScale;
     u16 directorySectorNum;
 
-    sceDemoStart(argc, argv,&language,&aspect,&playmode,&to_inactive,&to_total,&mediaType, &masterVolumeScale, &directorySectorNum);
+    sceDemoStart(argc, argv, &language, &aspect, &playmode, &to_inactive, &to_total, &mediaType, &masterVolumeScale, &directorySectorNum);
     printf("l %d a %d pm %d toa %d tot %d\n", language, aspect, playmode, to_inactive, to_total);
-    printf("MEDIA TYpE %d\n", mediaType);
-    #endif
+    printf("MEDIA TYpE %d\n", mediaType); // why is the p lowercase
+#endif
 
     memorySysFormat();
     hInitBoot();
@@ -68,17 +68,17 @@ s32 main(s32 argc, char *argv[]) {
         MainFunc();
         SysGbl.irqc++;
     }
-    #ifndef KL2_VER_TRIAL
+#ifndef KL2_VER_TRIAL
     while (1);
-    #else
+#else
     while (hPre2Check());
-    #endif
+#endif
 
-    #ifdef KL2_VER_TRIAL
+#ifdef KL2_VER_TRIAL
     sceSifExitCmd();
     sceDemoEnd(5);
     printf("finish!\n");
-    #endif
+#endif
 
     return 0;
 }

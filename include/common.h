@@ -124,6 +124,8 @@ typedef volatile s128 vs128 __attribute__((mode(TI)));
 #define SPR_SEND SPR_SRC(SPR_MEM)
 #define UNCACHED(p) ((void *)((u32)p | 0x20000000))
 
+#define KL2_PI 3.141592f
+
 typedef struct {
     f32 x;
     f32 y;
@@ -386,7 +388,11 @@ typedef struct {
     /* 0x37c */ s32 Re_st_klomode;
     /* 0x380 */ s32 Re_st_muki;
     /* 0x384 */ f32 Re_st_height;
+#ifndef KL2_VER_TRIAL
     /* 0x388 */ s32 Re_st_zanki_count;
+#else
+                u128 *print_buf;
+#endif
     /* 0x38c */ OBJWORK *klonoa;
     /* 0x390 */ OBJWORK *kazd;
     /* 0x394 */ s32 *dataBuff;
@@ -397,11 +403,16 @@ typedef struct {
     /* 0x400 */ s32 kloLife[2];
     /* 0x408 */ s32 kloZanki[2];
     /* 0x410 */ f32 reverse_cnt;
+#ifndef KL2_VER_TRIAL
     /* 0x414 */ s32 stage_flag;
+#else
+                s32 us_trial_timer;
+#endif
     /* 0x418 */ s32 filter_type;
     /* 0x41c */ f32 filter_cnt;
     /* 0x420 */ s32 filter_prty;
     /* 0x424 */ s32 area_max;
+#ifndef KL2_VER_TRIAL
     /* 0x428 */ f32 gus_timer;
     /* 0x42c */ f32 gus_cnt;
     /* 0x430 */ s32 popuka_flag;
@@ -418,6 +429,7 @@ typedef struct {
     /* 0x45c */ s32 retry_bun1;
     /* 0x460 */ s32 retry_muki;
     /* 0x464 */ s32 tokurom_cnt;
+#endif
     /* 0x470 */ sceVu0FMATRIX wsm;
     /* 0x4b0 */ sceVu0FMATRIX wvm;
     /* 0x4f0 */ sceVu0FMATRIX vsm;
@@ -425,7 +437,9 @@ typedef struct {
     /* 0x570 */ sceVu0FMATRIX d_wvm;
     /* 0x5b0 */ sceVu0FMATRIX d_vsm;
     /* 0x5f0 */ CAM_WORK cam;
+#ifndef KL2_VER_TRIAL
     /* 0x620 */ CAM_WORK d_cam;
+#endif
 } GAME_WORK;
 
 typedef struct { // 0x50
@@ -447,8 +461,10 @@ typedef struct { // 0x50
     /* 0x3c */ u32 modorgend;
     /* 0x40 */ OBJWORK *objwork;
     /* 0x44 */ s32 n_objw;
+#ifndef KL2_VER_TRIAL
     /* 0x48 */ s32 Language;
     /* 0x4C */ s32 TVSystem;
+#endif
 } SYSGBL;
 
 typedef struct { // 0x2050

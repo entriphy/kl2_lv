@@ -1,0 +1,3 @@
+PsfxWorkBuff = 0x491680;
+p1_packet_buff = 0x691680;
+p1_ot_buff = 0x6b1680;

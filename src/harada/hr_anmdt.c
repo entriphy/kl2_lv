@@ -5,7 +5,7 @@
 static void hr_anm_v0100i(HRANMV *av);
 static void hr_anm_v0100w(HRANMV *av);
 
-static HRANMVS hr_v_avt_tbl[1] = { {hr_anm_v0100i, hr_anm_v0100w, 3, &VpmInfo} };
+static HRANMVS hr_v_avt_tbl[1] = { {hr_anm_v0100w, hr_anm_v0100i, 2, &VpmInfo} };
 
 static void hr_anm_v0100i(HRANMV *av) {
     OBJWORK *obj;

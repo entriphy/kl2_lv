@@ -5,16 +5,16 @@
 
 struct AlignmentEntry {
     const char *name;
-    int alignment;
+    Elf32_Word alignment;
 };
 
 struct AlignmentEntry alignment_entries[] = {
-    { ".text", 0x8 },
-    { ".data", 0x8 },
+    { ".text",   0x8 },
+    { ".data",   0x8 },
     { ".rodata", 0x8 },
-    { ".sdata", 0x4 },
-    { ".sbss", 0x4 },
-    { ".bss", 0x8 }
+    { ".sdata",  0x4 },
+    { ".sbss",   0x4 },
+    { ".bss",    0x8 }
 };
 
 int main(int argc, const char *argv[]) {

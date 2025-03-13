@@ -25,9 +25,13 @@ void hr_bginit() {
 
     hrbgbuff = (BGWK *)getBuff(1, sizeof(BGWK) * 6, "hrbgbuff", &i);
     if ((s32)hrbgbuff == -1) {
-        #ifdef KL2_VER_TRIAL
-        printf("☆☆☆☆BG cansel\n");
+        #ifdef KL2_DEBUG
+        // NOTE: The string below is in Shift JIS encoding!
+        // The string is "☆☆☆☆BG cansel\n"
+        // Do NOT save this file as Shift JIS or splat will fail to read this file.
+        printf("��������BG cansel\n");
         #endif
+        
         hrcntbg = 0;
     } else {
         for (i = 0, bg = hrbgbuff, info = hrbgi; i < hrcntbg; i++, bg++, info++) {
@@ -52,19 +56,9 @@ static f32 get_bg_rot(s32 rot) {
     if (rot == 0) {
         return 0.0f;
     } else if (rot <= 0x8000) {
-        return (f32)rot * (f32)M_PI * (1.0f / 32768.0f);
+        return (f32)rot * KL2_PI * (1.0f / 32768.0f);
     } else {
-        return (f32)(rot - 0x10000) * (f32)M_PI * (1.0f / 32768.0f);
-    }
-}
-
-void hr_bg_workclip() {
-    hrcntdrawbg = 0;
-    if (hrcntbg != 0) {
-        if (GameGbl.pause_flag == 0) {
-            hr_anmVPA_workBG();
-        }
-        hr_bg_workclipM();
+        return (f32)(rot - 0x10000) * KL2_PI * (1.0f / 32768.0f);
     }
 }
 
@@ -110,5 +104,15 @@ static void hr_bg_workclipM() {
                 *list++ = j;
             }
         }
+    }
+}
+
+void hr_bg_workclip() {
+    hrcntdrawbg = 0;
+    if (hrcntbg != 0) {
+        if (GameGbl.pause_flag == 0) {
+            hr_anmVPA_workBG();
+        }
+        hr_bg_workclipM();
     }
 }
