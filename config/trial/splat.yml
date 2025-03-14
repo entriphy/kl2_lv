@@ -144,7 +144,7 @@ segments:
       - [0x071108, asm, kazuya/td_sys]
       - [0x0742D8, asm, kazuya/wm_job]
       - [0x074C18, asm, kazuya/wm_main]
-      - [0x075360, asm, nakano/calc3d]
+      - [0x075360, c, nakano/calc3d]
       - [0x0753F0, asm, nakano/camera]
       - [0x0784C0, asm, nakano/capture]
       - [0x0787A0, asm, nakano/dma]

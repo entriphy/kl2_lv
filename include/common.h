@@ -3,10 +3,14 @@
 
 #include <math.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "include_asm.h"
+
 #include <libdma.h>
 #include <libvu0.h>
 #include <libgraph.h>
-#include "include_asm.h"
+#include <sifdev.h>
 
 #ifndef __KL2_TYPES
 #define __KL2_TYPES
@@ -116,6 +120,13 @@ typedef volatile s128 vs128 __attribute__((mode(TI)));
 #define pPAD_LVL_R2(kpd) (kpd->lvl & 0x2)
 #define pPAD_LVL_START(kpd) (kpd->lvl & 0x800)
 #define pPAD_LVL_SELECT(kpd) (kpd->lvl & 0x100)
+
+#define SCR_WIDTH       640
+#define SCR_HEIGHT      224 // Field scan
+#define SCR_HEIGHT_PROG 240 // Progressive scan
+
+#define GS_X_COORD(x) ((2048 - (SCR_WIDTH  / 2) + x) << 4)
+#define GS_Y_COORD(y) ((2048 - (SCR_HEIGHT / 2) + y) << 4)
 
 #define SETVEC(vec, x, y, z, w) (vec[0] = x, vec[1] = y, vec[2] = z, vec[3] = w)
 #define SETVEC_XYZ(vec, x, y, z) (vec[0] = x, vec[1] = y, vec[2] = z)
