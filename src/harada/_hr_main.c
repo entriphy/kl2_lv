@@ -179,15 +179,10 @@ void hrStageDataLoad(s32 fg) {
         hrd_pack = (u32 *)-1;
     }
     if ((s32)hrd_pack == -1) {
-#ifdef KL2_DEBUG
-        printf("No hrData !!!!\n");
-#endif
+        KL2_DEBUG_PRINT(("No hrData !!!!\n"));
         return;
     }
-
-#ifdef KL2_DEBUG
-    printf("hrData %x %d ==== Read\n", hrd_pack, *hrd_pack);
-#endif
+    KL2_DEBUG_PRINT(("hrData %x %d ==== Read\n", hrd_pack, *hrd_pack));
 
     num = *hrd_pack;
     if (num > HR_PACK_MAX) {
@@ -227,14 +222,10 @@ void hrStageDataLoad(s32 fg) {
         case 1:
             hrd_pack = GetFHMAddress(hrd_pack, 0);
             hrStageDecode();
-#ifdef KL2_DEBUG
-            printf("hrData %x %x ==== OK\n", (u32)hrd_pack, (u32)hrg_pack);
-#endif
+            KL2_DEBUG_PRINT(("hrData %x %x ==== OK\n", (u32)hrd_pack, (u32)hrg_pack));
             break;
         default:
-#ifdef KL2_DEBUG
-            printf("hrData %s Error !!!!!!!\n",Name);
-#endif
+            KL2_DEBUG_PRINT(("hrData %s Error !!!!!!!\n", Name));
             hrd_pack = (u32 *)-1;
             break;
     }

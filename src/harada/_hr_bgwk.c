@@ -25,13 +25,10 @@ void hr_bginit() {
 
     hrbgbuff = (BGWK *)getBuff(1, sizeof(BGWK) * 6, "hrbgbuff", &i);
     if ((s32)hrbgbuff == -1) {
-        #ifdef KL2_DEBUG
         // NOTE: The string below is in Shift JIS encoding!
         // The string is "☆☆☆☆BG cansel\n"
         // Do NOT save this file as Shift JIS or splat will fail to read this file.
-        printf("��������BG cansel\n");
-        #endif
-        
+        KL2_DEBUG_PRINT(("��������BG cansel\n"));
         hrcntbg = 0;
     } else {
         for (i = 0, bg = hrbgbuff, info = hrbgi; i < hrcntbg; i++, bg++, info++) {

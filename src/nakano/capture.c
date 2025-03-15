@@ -17,18 +17,14 @@ void WriteVram(s32 x, s32 y, s32 x_s, s32 y_s, char *tfn) {
 
     d_ctrl = *D_CTRL;
     *D_CTRL = d_ctrl & 0x70F;
-#ifdef KL2_DEBUG
-    printf("capturing...\n");
-#endif
+    KL2_DEBUG_PRINT(("capturing...\n"));
     strcat(fn, tfn);
     buff0 = (u128 *)malloc(x_s * (y_s << 2));
     buff1 = (u128 *)malloc(x_s * (y_s << 2));
     buff_dst = (u128 *)malloc(x_s * (y_s << 2) * 2);
 
     if (buff0 == NULL || buff1 == NULL) {
-#ifdef KL2_DEBUG
-        printf("nakano > capture malloc miss!!\n");
-#endif
+        KL2_DEBUG_PRINT(("nakano > capture malloc miss!!\n"));
         return;
     }
 
@@ -46,9 +42,7 @@ void WriteVram(s32 x, s32 y, s32 x_s, s32 y_s, char *tfn) {
 
     Fp = sceOpen(fn, SCE_WRONLY | SCE_CREAT | SCE_TRUNC);
     if (Fp < 0) {
-#ifdef KL2_DEBUG
-        printf("nakano > capture file make miss!!\n");
-#endif
+        KL2_DEBUG_PRINT(("nakano > capture file make miss!!\n"));
         return;
     }
 
@@ -80,9 +74,7 @@ void WriteVram(s32 x, s32 y, s32 x_s, s32 y_s, char *tfn) {
     free(buff1);
     free(buff_dst);
     sceClose(Fp);
-#ifdef KL2_DEBUG
-    printf("> Write \"%s\" file.\n", tfn);
-#endif
+    KL2_DEBUG_PRINT(("> Write \"%s\" file.\n", tfn));
     *D1_CHCR |= 0x40; // TTE = 1
     *D_CTRL = d_ctrl;
 }
