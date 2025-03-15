@@ -30,7 +30,7 @@ u32 *vtWaveAdr = NULL;
 u32 *vtSprayAdr = NULL;
 u32 *vtMovieAdr[8] = {};
 
-extern u16 hrpt_deb;
+extern u16 hrpt_deb; // TODO: remove
 
 s32 main(s32 argc, char *argv[]) {
 #ifdef KL2_VER_TRIAL

@@ -144,6 +144,12 @@ typedef volatile s128 vs128 __attribute__((mode(TI)));
 
 #define KL2_PI_CLAMP(f) ({if (f < -KL2_PI) { f += KL2_2PI; } else if (f > KL2_PI) { f -= KL2_2PI; }})
 
+#ifdef KL2_DEBUG
+#define KL2_DEBUG_PRINT(args) printf args
+#else
+#define KL2_DEBUG_PRINT(args) ((void *)0)
+#endif
+
 typedef struct {
     f32 x;
     f32 y;

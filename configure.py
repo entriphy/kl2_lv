@@ -37,7 +37,7 @@ SECTION_ADDRS = {
     "vutext": 0x1E1900,
     "vudata": 0x253000,
     # "rodata": 0x260F00,
-    "rodata": 0x361410 - 0x100000 + 0x1000,
+    "rodata": 0x364E30 - 0x100000 + 0x1000,
     "gcc_except_table": 0x271400,
     # "lit4": 0x271500,
     "sbss": 0x276800,
@@ -288,6 +288,12 @@ def create_paruu_config(elf: ELFFile, stdump_json: str) -> list[Section]:
             "hr_main.c": 0x373B60,
             "hr_mapv.c": 0x373C90
         },
+        "hoshino:c": {
+            "h_util.c": 0x3743A8,
+        },
+        "kazuya:c": {
+            "bios.c": 0x3743D8
+        },
         "nakano:c": {
             "map01.c": 0x374BB8
         }
@@ -320,6 +326,62 @@ def create_paruu_config(elf: ELFFile, stdump_json: str) -> list[Section]:
             "hr_vpa.c": 0x3612A0,
             "hr_vpov.c": 0x3612E0,
             "hrmenu.c": 0x3613B0
+        },
+        "hato:c": {
+            "ht_b01deb.c": 0x361410,
+            "ht_b02deb.c": 0x3618E0,
+            "ht_b03deb.c": 0x361C30,
+            "ht_b04deb.c": 0x361F70,
+            "ht_b06deb.c": 0x362310,
+            "ht_b07deb.c": 0x362D20,
+            "ht_b08deb.c": 0x362FF0,
+            "ht_bcommon.c": 0x363110,
+            "ht_bdraw.c": 0x3631F0,
+            "ht_boss01.c": 0x3632B0,
+            "ht_boss06.c": 0x363348,
+            "ht_boss07.c": 0x3633E8,
+            "ht_gbl.c": 0x3635A8,
+            "ht_gimm.c": 0x3635F0,
+            "ht_menu.c": 0x363638,
+            "ht_meta.c": 0x363650,
+            "ht_tat.c": 0x363790,
+            "ht_tat2.c": 0x3637B0,
+            "ht_zako.c": 0x363890
+        },
+        "hoshino:c": {
+            "h_cdvd.c": 0x3638E0,
+            "h_event.c": 0x3639C0,
+            "h_file.c": 0x363A48,
+            "h_game.c": 0x363A70,
+            "h_gamesnd.c": 0x363D18,
+            "h_init.c": 0x363E58,
+            "h_menu.c": 0x364028,
+            "h_rpc.c": 0x364048,
+            "h_sound.c": 0x364060,
+            "h_str.c": 0x364180,
+            "h_test.c": 0x364210,
+            "h_test_se.c": 0x364508,
+            "h_util.c": 0x364608
+        },
+        "kazuya:c": {
+            "bios.c": 0x364660,
+            "menu.c": 0x364760,
+            "obj_klo.c": 0x364780,
+            "obj_std.c": 0x003647C8,
+            "sample.c": 0x3647E8,
+            "td_fljob.c": 0x364890,
+            "td_job.c": 0x364920,
+            "td_mhjob.c": 0x364970,
+            "td_nejob.c": 0x364988,
+            "td_sys.c": 0x3649A0,
+            "wm_job.c": 0x3649C0,
+            "wm_main.c": 0x364AF0
+        },
+        "nakano:c": {
+            "camera.c": 0x364B80,
+            "capture.c": 0x364D68,
+            "dma.c": 0x364DE0,
+
         }
     }
 
@@ -389,7 +451,7 @@ def write_splat_config(version: str, sections: list[Section], asm_only: bool = F
         if "lib" in section.id:
             continue
         for unit in section.units:
-            matching = os.path.exists(f"src/{section.path}/{unit.name}") and not unit.name.endswith(".cc")
+            matching = os.path.exists(f"src/{section.path}/{unit.name}")
             if len(unit.functions) > 0:
                 subsegments.append(SplatSegment(unit.functions[0].address - 0x100000 + 0x1000, unit.name.split(".")[1] if matching and not asm_only else "asm", f"{section.path}/{unit.name.split(".")[0]}"))
             for elf_section in ["data", "sdata", "sbss", "bss", "rodata", "lit4"]:

@@ -18,26 +18,26 @@ void h_vp_init(VPCLIP *vpc, f32 proj, f32 near, f32 far, f32 hamix, f32 hamiy, f
         hamix = hamiy = hamiz = sqrtf(hamix * hamix + hamiy * hamiy + hamiz * hamiz);
         
         if (proj < 320.0f) {
-            #ifndef KL2_VER_TRIAL
+#ifndef KL2_VER_TRIAL
             hamix += ((320.0f - proj) * hamix) / proj + 724.0f;
             if (proj < 240.0f) {
                 hamiy += ((240.0f - proj) * hamiy) / proj + 724.0f;
             }
-            #else
+#else
             hamix += ((320.0f - proj) * hamix) / proj;
             if (proj < 240.0f) {
                 hamiy += ((240.0f - proj) * hamiy) / proj;
             }
-            #endif
+#endif
         }
 
-        #ifndef KL2_VER_TRIAL
+#ifndef KL2_VER_TRIAL
         if (GameGbl.vision == 0x1101) {
             hamix *= 2;
             hamiy *= 2;
             hamiz *= 1.5f;
         }
-        #endif
+#endif
     }
 
     vpc->hmax[0] = hamix;
