@@ -52,20 +52,6 @@ sections:
         data:
           - [0x002E30E0, ObjFuncTbl.1, data, 0x0000]
           - [0x00370500, null, lit4, 0x0000]
-          - [0x00370504, null, lit4, 0x0000]
-          - [0x00370508, null, lit4, 0x0000]
-          - [0x0037050C, null, lit4, 0x0000]
-          - [0x00370510, null, lit4, 0x0000]
-          - [0x00370514, null, lit4, 0x0000]
-          - [0x00370518, null, lit4, 0x0000]
-          - [0x0037051C, null, lit4, 0x0000]
-          - [0x00370520, null, lit4, 0x0000]
-          - [0x00370524, null, lit4, 0x0000]
-          - [0x00370528, null, lit4, 0x0000]
-          - [0x0037052C, null, lit4, 0x0000]
-          - [0x00370530, null, lit4, 0x0000]
-          - [0x00370534, null, lit4, 0x0000]
-          - [0x00370538, null, lit4, 0x0000]
       - name: firetest.c
         functions:
           - [0x00100FC8, FiretestInit]
@@ -109,7 +95,6 @@ sections:
         data:
           - [0x002E3310, hr_v_avt_tbl, data, 0x0010]
           - [0x0037053C, null, lit4, 0x0000]
-          - [0x00370540, null, lit4, 0x0000]
       - name: hr_anmvp.c
         functions:
           - [0x00101D90, hr_cross]
@@ -143,7 +128,6 @@ sections:
           - [0x002E4160, hrbgbin, data, 0x0018]
           - [0x0035FFA0, null, rodata, 0x0000]
           - [0x0037054C, null, lit4, 0x0000]
-          - [0x00370550, null, lit4, 0x0000]
           - [0x00373B50, hrbgbuff, sdata, 0x0004]
           - [0x00373B54, hrcntbg, sdata, 0x0004]
           - [0x00373B58, hrcntdrawbg, sdata, 0x0004]
@@ -259,8 +243,6 @@ sections:
         data:
           - [0x003603C0, null, rodata, 0x0000]
           - [0x00370554, null, lit4, 0x0000]
-          - [0x00370558, null, lit4, 0x0000]
-          - [0x0037055C, null, lit4, 0x0000]
           - [0x00373C8C, hrmaxlcnt, sdata, 0x0004]
       - name: hr_mapv.c
         functions:
@@ -322,9 +304,6 @@ sections:
           - [0x002E6270, HrPtFuncTbl, data, 0x0000]
           - [0x003603F0, null, rodata, 0x0000]
           - [0x00370564, null, lit4, 0x0000]
-          - [0x00370568, null, lit4, 0x0000]
-          - [0x0037056C, null, lit4, 0x0000]
-          - [0x00370570, null, lit4, 0x0000]
           - [0x00373C90, null, sdata, 0x0000]
           - [0x00375800, hr_gmsdata, sbss, 0x0004]
           - [0x00375804, hr_gmsdatab, sbss, 0x0004]
@@ -380,9 +359,6 @@ sections:
           - [0x002E6340, hfmcam, data, 0x02C0]
           - [0x00360A10, null, rodata, 0x0000]
           - [0x003705A4, null, lit4, 0x0000]
-          - [0x003705A8, null, lit4, 0x0000]
-          - [0x003705AC, null, lit4, 0x0000]
-          - [0x003705B0, null, lit4, 0x0000]
           - [0x00373E18, hfmircnt, sdata, 0x0004]
           - [0x00373E1C, hcmircnt, sdata, 0x0004]
           - [0x00373E20, hrmirflush, sdata, 0x0004]
@@ -459,8 +435,6 @@ sections:
         data:
           - [0x002E6E10, hrSwitchTrgTbl, data, 0x0000]
           - [0x003705D8, null, lit4, 0x0000]
-          - [0x003705DC, null, lit4, 0x0000]
-          - [0x003705E0, null, lit4, 0x0000]
       - name: hr_obcon2.c
         functions:
           - [0x00110130, hr_start_gpt]
@@ -526,9 +500,6 @@ sections:
         data:
           - [0x002E6F18, hr_0100_treeRC, data, 0x0040]
           - [0x003705E8, null, lit4, 0x0000]
-          - [0x003705EC, null, lit4, 0x0000]
-          - [0x003705F0, null, lit4, 0x0000]
-          - [0x003705F4, null, lit4, 0x0000]
           - [0x00373EA0, hrObjExFuncTbl, sdata, 0x0004]
           - [0x00373EA8, hrExResTbl, sdata, 0x0002]
       - name: hr_pall.c
@@ -570,7 +541,6 @@ sections:
           - [0x002E73B0, ppsys, data, 0x0680]
           - [0x00360CD8, null, rodata, 0x0000]
           - [0x00370608, null, lit4, 0x0000]
-          - [0x0037060C, null, lit4, 0x0000]
           - [0x00373F70, hrpcam, sdata, 0x0004]
           - [0x00373F74, hrpt_addr, sdata, 0x0004]
           - [0x00373F78, hrptm_addr, sdata, 0x0004]
@@ -1203,18 +1173,6 @@ sections:
         data:
           - [0x00361410, null, rodata, 0x0000]
           - [0x00370654, null, lit4, 0x0000]
-          - [0x00370658, null, lit4, 0x0000]
-          - [0x0037065C, null, lit4, 0x0000]
-          - [0x00370660, null, lit4, 0x0000]
-          - [0x00370664, null, lit4, 0x0000]
-          - [0x00370668, null, lit4, 0x0000]
-          - [0x0037066C, null, lit4, 0x0000]
-          - [0x00370670, null, lit4, 0x0000]
-          - [0x00370674, null, lit4, 0x0000]
-          - [0x00370678, null, lit4, 0x0000]
-          - [0x0037067C, null, lit4, 0x0000]
-          - [0x00370680, null, lit4, 0x0000]
-          - [0x00370684, null, lit4, 0x0000]
       - name: ht_b02deb.c
         functions:
           - [0x001218B0, htSetValue01.1]
@@ -1226,7 +1184,6 @@ sections:
         data:
           - [0x003618E0, null, rodata, 0x0000]
           - [0x003706A0, null, lit4, 0x0000]
-          - [0x003706A4, null, lit4, 0x0000]
       - name: ht_b03deb.c
         functions:
           - [0x00122E08, htSetValue01.2]
@@ -1237,12 +1194,6 @@ sections:
         data:
           - [0x00361C30, null, rodata, 0x0000]
           - [0x003706AC, null, lit4, 0x0000]
-          - [0x003706B0, null, lit4, 0x0000]
-          - [0x003706B4, null, lit4, 0x0000]
-          - [0x003706B8, null, lit4, 0x0000]
-          - [0x003706BC, null, lit4, 0x0000]
-          - [0x003706C0, null, lit4, 0x0000]
-          - [0x003706C4, null, lit4, 0x0000]
       - name: ht_b04deb.c
         functions:
           - [0x00124368, htSetValue01.3]
@@ -1267,7 +1218,6 @@ sections:
         data:
           - [0x00362310, null, rodata, 0x0000]
           - [0x003706E8, null, lit4, 0x0000]
-          - [0x003706EC, null, lit4, 0x0000]
       - name: ht_b07deb.c
         functions:
           - [0x00129850, htSetValue01.5]
@@ -1278,11 +1228,6 @@ sections:
         data:
           - [0x00362D20, null, rodata, 0x0000]
           - [0x003706F0, null, lit4, 0x0000]
-          - [0x003706F4, null, lit4, 0x0000]
-          - [0x003706F8, null, lit4, 0x0000]
-          - [0x003706FC, null, lit4, 0x0000]
-          - [0x00370700, null, lit4, 0x0000]
-          - [0x00370704, null, lit4, 0x0000]
       - name: ht_b08deb.c
         functions:
           - [0x0012A9D8, htSetValue01.6]
@@ -1331,7 +1276,6 @@ sections:
           - [0x002E8250, ObjB2_EffTbl, data, 0x0000]
           - [0x002E8278, ObjB2_EffTblSub, data, 0x0000]
           - [0x00370708, null, lit4, 0x0000]
-          - [0x0037070C, null, lit4, 0x0000]
       - name: ht_bcommon.c
         functions:
           - [0x0012D4B8, htInitRand]
@@ -1400,10 +1344,6 @@ sections:
         data:
           - [0x00363110, null, rodata, 0x0000]
           - [0x00370848, null, lit4, 0x0000]
-          - [0x0037084C, null, lit4, 0x0000]
-          - [0x00370850, null, lit4, 0x0000]
-          - [0x00370854, null, lit4, 0x0000]
-          - [0x00370858, null, lit4, 0x0000]
       - name: ht_bdraw.c
         functions:
           - [0x00132960, htGifPacketInit]
@@ -1434,11 +1374,6 @@ sections:
         data:
           - [0x003631F0, null, rodata, 0x0000]
           - [0x00370870, null, lit4, 0x0000]
-          - [0x00370874, null, lit4, 0x0000]
-          - [0x00370878, null, lit4, 0x0000]
-          - [0x0037087C, null, lit4, 0x0000]
-          - [0x00370880, null, lit4, 0x0000]
-          - [0x00370884, null, lit4, 0x0000]
       - name: ht_bmyu.c
         functions:
           - [0x001376C0, htSetBoardMyuPa]
@@ -1475,8 +1410,6 @@ sections:
           - [0x002E82A0, ObjBMyuTbl, data, 0x0000]
           - [0x002E82B0, ObjBMyuSubTbl, data, 0x0000]
           - [0x003708E0, null, lit4, 0x0000]
-          - [0x003708E4, null, lit4, 0x0000]
-          - [0x003708E8, null, lit4, 0x0000]
       - name: ht_boss01.c
         functions:
           - [0x00138418, htVecRotKlonoa]
@@ -1709,10 +1642,6 @@ sections:
           - [0x002EA1D8, ObjAttackTopTbl, data, 0x0000]
           - [0x003632B0, null, rodata, 0x0000]
           - [0x003708FC, null, lit4, 0x0000]
-          - [0x00370900, null, lit4, 0x0000]
-          - [0x00370904, null, lit4, 0x0000]
-          - [0x00370908, null, lit4, 0x0000]
-          - [0x0037090C, null, lit4, 0x0000]
       - name: ht_boss02.c
         functions:
           - [0x0013F048, htDrawDamageGauge]
@@ -2078,8 +2007,6 @@ sections:
           - [0x002EA600, ObjAttackNutTbl, data, 0x0000]
           - [0x002EA618, ObjAttackIceTbl, data, 0x0000]
           - [0x00370D34, null, lit4, 0x0000]
-          - [0x00370D38, null, lit4, 0x0000]
-          - [0x00370D3C, null, lit4, 0x0000]
       - name: ht_boss06.c
         functions:
           - [0x0014E630, htDeleteMist]
@@ -2229,8 +2156,6 @@ sections:
           - [0x002EA7C8, ObjBoss06MistBallTbl, data, 0x0000]
           - [0x00363348, null, rodata, 0x0000]
           - [0x00370E78, null, lit4, 0x0000]
-          - [0x00370E7C, null, lit4, 0x0000]
-          - [0x00370E80, null, lit4, 0x0000]
       - name: ht_boss07.c
         functions:
           - [0x001536B0, htBezPointSet]
@@ -2289,7 +2214,6 @@ sections:
           - [0x002EA870, ObjB7BitSubTbl, data, 0x0000]
           - [0x003633E8, null, rodata, 0x0000]
           - [0x00370F74, null, lit4, 0x0000]
-          - [0x00370F78, null, lit4, 0x0000]
       - name: ht_boss08.c
         functions:
           - [0x00155358, htSetBoss08]
@@ -2302,7 +2226,6 @@ sections:
         data:
           - [0x002EA8A0, ObjBoss08Tbl, data, 0x0000]
           - [0x00370FB0, null, lit4, 0x0000]
-          - [0x00370FB4, null, lit4, 0x0000]
       - name: ht_func.c
         functions:
           - [0x001556F0, htInit]
@@ -2353,7 +2276,6 @@ sections:
           - [0x002EAF00, htBoss_GimmTbl, data, 0x0000]
           - [0x003635F0, null, rodata, 0x0000]
           - [0x00370FB8, null, lit4, 0x0000]
-          - [0x00370FBC, null, lit4, 0x0000]
       - name: ht_item.c
         functions:
           - [0x00156008, htSetItem]
@@ -2586,10 +2508,6 @@ sections:
         data:
           - [0x003639C0, null, rodata, 0x0000]
           - [0x00371038, null, lit4, 0x0000]
-          - [0x0037103C, null, lit4, 0x0000]
-          - [0x00371040, null, lit4, 0x0000]
-          - [0x00371044, null, lit4, 0x0000]
-          - [0x00371048, null, lit4, 0x0000]
           - [0x00375898, NoStageData, sbss, 0x0004]
           - [0x0037589C, NoEvent, sbss, 0x0004]
           - [0x003758A0, EvFlag, sbss, 0x0004]
@@ -2625,6 +2543,7 @@ sections:
         data:
           - [0x002ED9F0, MainFuncTbl.3, data, 0x0000]
           - [0x002EDA08, HFuncTbl, data, 0x0000]
+          - [0x00374158, null, sdata, 0x0000]
       - name: h_game.c
         functions:
           - [0x0015F0E0, hInitGame]
@@ -2704,14 +2623,6 @@ sections:
           - [0x002F2390, SeVoice, data, 0x0300]
           - [0x00363D18, null, rodata, 0x0000]
           - [0x00371058, null, lit4, 0x0000]
-          - [0x0037105C, null, lit4, 0x0000]
-          - [0x00371060, null, lit4, 0x0000]
-          - [0x00371064, null, lit4, 0x0000]
-          - [0x00371068, null, lit4, 0x0000]
-          - [0x0037106C, null, lit4, 0x0000]
-          - [0x00371070, null, lit4, 0x0000]
-          - [0x00371074, null, lit4, 0x0000]
-          - [0x00371078, null, lit4, 0x0000]
           - [0x00374164, seGrp, sdata, 0x0004]
           - [0x00374168, seObj, sdata, 0x0004]
           - [0x0037416C, seVo, sdata, 0x0004]
@@ -2859,9 +2770,6 @@ sections:
           - [0x002F3820, SndData, data, 0x08C8]
           - [0x00364060, null, rodata, 0x0000]
           - [0x00371088, null, lit4, 0x0000]
-          - [0x0037108C, null, lit4, 0x0000]
-          - [0x00371090, null, lit4, 0x0000]
-          - [0x00371094, null, lit4, 0x0000]
           - [0x0037418C, sD, sdata, 0x0004]
           - [0x00390080, SndPacket, bss, 0x0400]
           - [0x00390480, SndTempBuff, bss, 0x100000]
@@ -2914,7 +2822,6 @@ sections:
           - [0x002F5E00, PptData, data, 0x013C]
           - [0x00364180, null, rodata, 0x0000]
           - [0x003710A4, null, lit4, 0x0000]
-          - [0x003710A8, null, lit4, 0x0000]
           - [0x00374190, bD, sdata, 0x0004]
           - [0x00374194, pD, sdata, 0x0004]
       - name: h_test.c
@@ -2934,13 +2841,6 @@ sections:
           - [0x002F6028, hTestFuncTbl, data, 0x0000]
           - [0x00364210, null, rodata, 0x0000]
           - [0x003710CC, null, lit4, 0x0000]
-          - [0x003710D0, null, lit4, 0x0000]
-          - [0x003710D4, null, lit4, 0x0000]
-          - [0x003710D8, null, lit4, 0x0000]
-          - [0x003710DC, null, lit4, 0x0000]
-          - [0x003710E0, null, lit4, 0x0000]
-          - [0x003710E4, null, lit4, 0x0000]
-          - [0x003710E8, null, lit4, 0x0000]
           - [0x003741D8, TestMode, sdata, 0x0004]
           - [0x003741DC, cur_y.0, sdata, 0x0004]
           - [0x003741E0, 'no', sdata, 0x0004]
@@ -3194,20 +3094,6 @@ sections:
         data:
           - [0x002F6588, ObjFuncTbl.2, data, 0x0000]
           - [0x00371108, null, lit4, 0x0000]
-          - [0x0037110C, null, lit4, 0x0000]
-          - [0x00371110, null, lit4, 0x0000]
-          - [0x00371114, null, lit4, 0x0000]
-          - [0x00371118, null, lit4, 0x0000]
-          - [0x0037111C, null, lit4, 0x0000]
-          - [0x00371120, null, lit4, 0x0000]
-          - [0x00371124, null, lit4, 0x0000]
-          - [0x00371128, null, lit4, 0x0000]
-          - [0x0037112C, null, lit4, 0x0000]
-          - [0x00371130, null, lit4, 0x0000]
-          - [0x00371134, null, lit4, 0x0000]
-          - [0x00371138, null, lit4, 0x0000]
-          - [0x0037113C, null, lit4, 0x0000]
-          - [0x00371140, null, lit4, 0x0000]
       - name: sample.c
         functions:
           - [0x0016B288, SampleInit.1]
@@ -4592,11 +4478,6 @@ sections:
           - [0x002FBB60, Windows, data, 0x0000]
           - [0x003649A0, null, rodata, 0x0000]
           - [0x00371148, null, lit4, 0x0000]
-          - [0x0037114C, null, lit4, 0x0000]
-          - [0x00371150, null, lit4, 0x0000]
-          - [0x00371154, null, lit4, 0x0000]
-          - [0x00371158, null, lit4, 0x0000]
-          - [0x0037115C, null, lit4, 0x0000]
           - [0x00374738, ParaDcStd_Ttl_00, sdata, 0x0008]
           - [0x00374740, ParaDcStd_Ttl_01, sdata, 0x0008]
           - [0x00374748, ParaDcStd_Fil_04, sdata, 0x0008]
@@ -4734,15 +4615,6 @@ sections:
           - [0x002FBC60, kzWorldMapJobTbl, data, 0x0000]
           - [0x003649C0, null, rodata, 0x0000]
           - [0x00371174, null, lit4, 0x0000]
-          - [0x00371178, null, lit4, 0x0000]
-          - [0x0037117C, null, lit4, 0x0000]
-          - [0x00371180, null, lit4, 0x0000]
-          - [0x00371184, null, lit4, 0x0000]
-          - [0x00371188, null, lit4, 0x0000]
-          - [0x0037118C, null, lit4, 0x0000]
-          - [0x00371190, null, lit4, 0x0000]
-          - [0x00371194, null, lit4, 0x0000]
-          - [0x00371198, null, lit4, 0x0000]
           - [0x00374AC8, vpo.0, sdata, 0x0004]
           - [0x00374AD4, rack_mode, sdata, 0x0004]
           - [0x00374AD8, vpo.1, sdata, 0x0004]
@@ -4804,7 +4676,6 @@ sections:
           - [0x002FBC90, cmnor0701, data, 0x0000]
           - [0x00364B80, null, rodata, 0x0000]
           - [0x003711A0, null, lit4, 0x0000]
-          - [0x003711A4, null, lit4, 0x0000]
           - [0x00375924, camNor, sbss, 0x0004]
           - [0x00375928, camFix, sbss, 0x0004]
           - [0x00490ED0, ViCon, bss, 0x0090]
@@ -4912,11 +4783,6 @@ sections:
           - [0x0017BD88, DrawGameScreen]
         data:
           - [0x00371410, null, lit4, 0x0000]
-          - [0x00371414, null, lit4, 0x0000]
-          - [0x00371418, null, lit4, 0x0000]
-          - [0x0037141C, null, lit4, 0x0000]
-          - [0x00371420, null, lit4, 0x0000]
-          - [0x00371424, null, lit4, 0x0000]
           - [0x00491290, PsfxHeart, bss, 0x00F0]
           - [0x00491380, PsfxYumekake, bss, 0x0050]
           - [0x004913D0, PsfxZanki, bss, 0x0050]
@@ -4939,13 +4805,6 @@ sections:
           - [0x00303C90, nkScr, data, 0x02C0]
           - [0x00303F50, nkff, data, 0x0100]
           - [0x003714A4, null, lit4, 0x0000]
-          - [0x003714A8, null, lit4, 0x0000]
-          - [0x003714AC, null, lit4, 0x0000]
-          - [0x003714B0, null, lit4, 0x0000]
-          - [0x003714B4, null, lit4, 0x0000]
-          - [0x003714B8, null, lit4, 0x0000]
-          - [0x003714BC, null, lit4, 0x0000]
-          - [0x003714C0, null, lit4, 0x0000]
       - name: herosub.c
         functions:
           - [0x0017E8C8, HeroRootChangeSub]
@@ -5015,74 +4874,6 @@ sections:
           - [0x00182160, DrawSfxKlonoa_BH]
         data:
           - [0x003714E4, null, lit4, 0x0000]
-          - [0x003714E8, null, lit4, 0x0000]
-          - [0x003714EC, null, lit4, 0x0000]
-          - [0x003714F0, null, lit4, 0x0000]
-          - [0x003714F4, null, lit4, 0x0000]
-          - [0x003714F8, null, lit4, 0x0000]
-          - [0x003714FC, null, lit4, 0x0000]
-          - [0x00371500, null, lit4, 0x0000]
-          - [0x00371504, null, lit4, 0x0000]
-          - [0x00371508, null, lit4, 0x0000]
-          - [0x0037150C, null, lit4, 0x0000]
-          - [0x00371510, null, lit4, 0x0000]
-          - [0x00371514, null, lit4, 0x0000]
-          - [0x00371518, null, lit4, 0x0000]
-          - [0x0037151C, null, lit4, 0x0000]
-          - [0x00371520, null, lit4, 0x0000]
-          - [0x00371524, null, lit4, 0x0000]
-          - [0x00371528, null, lit4, 0x0000]
-          - [0x0037152C, null, lit4, 0x0000]
-          - [0x00371530, null, lit4, 0x0000]
-          - [0x00371534, null, lit4, 0x0000]
-          - [0x00371538, null, lit4, 0x0000]
-          - [0x0037153C, null, lit4, 0x0000]
-          - [0x00371540, null, lit4, 0x0000]
-          - [0x00371544, null, lit4, 0x0000]
-          - [0x00371548, null, lit4, 0x0000]
-          - [0x0037154C, null, lit4, 0x0000]
-          - [0x00371550, null, lit4, 0x0000]
-          - [0x00371554, null, lit4, 0x0000]
-          - [0x00371558, null, lit4, 0x0000]
-          - [0x0037155C, null, lit4, 0x0000]
-          - [0x00371560, null, lit4, 0x0000]
-          - [0x00371564, null, lit4, 0x0000]
-          - [0x00371568, null, lit4, 0x0000]
-          - [0x0037156C, null, lit4, 0x0000]
-          - [0x00371570, null, lit4, 0x0000]
-          - [0x00371574, null, lit4, 0x0000]
-          - [0x00371578, null, lit4, 0x0000]
-          - [0x0037157C, null, lit4, 0x0000]
-          - [0x00371580, null, lit4, 0x0000]
-          - [0x00371584, null, lit4, 0x0000]
-          - [0x00371588, null, lit4, 0x0000]
-          - [0x0037158C, null, lit4, 0x0000]
-          - [0x00371590, null, lit4, 0x0000]
-          - [0x00371594, null, lit4, 0x0000]
-          - [0x00371598, null, lit4, 0x0000]
-          - [0x0037159C, null, lit4, 0x0000]
-          - [0x003715A0, null, lit4, 0x0000]
-          - [0x003715A4, null, lit4, 0x0000]
-          - [0x003715A8, null, lit4, 0x0000]
-          - [0x003715AC, null, lit4, 0x0000]
-          - [0x003715B0, null, lit4, 0x0000]
-          - [0x003715B4, null, lit4, 0x0000]
-          - [0x003715B8, null, lit4, 0x0000]
-          - [0x003715BC, null, lit4, 0x0000]
-          - [0x003715C0, null, lit4, 0x0000]
-          - [0x003715C4, null, lit4, 0x0000]
-          - [0x003715C8, null, lit4, 0x0000]
-          - [0x003715CC, null, lit4, 0x0000]
-          - [0x003715D0, null, lit4, 0x0000]
-          - [0x003715D4, null, lit4, 0x0000]
-          - [0x003715D8, null, lit4, 0x0000]
-          - [0x003715DC, null, lit4, 0x0000]
-          - [0x003715E0, null, lit4, 0x0000]
-          - [0x003715E4, null, lit4, 0x0000]
-          - [0x003715E8, null, lit4, 0x0000]
-          - [0x003715EC, null, lit4, 0x0000]
-          - [0x003715F0, null, lit4, 0x0000]
-          - [0x003715F4, null, lit4, 0x0000]
       - name: klohit0.c
         functions:
           - [0x00183398, HeroKabeCheck]
@@ -5094,20 +4885,12 @@ sections:
           - [0x001846C8, TenjoHit]
         data:
           - [0x00371644, null, lit4, 0x0000]
-          - [0x00371648, null, lit4, 0x0000]
-          - [0x0037164C, null, lit4, 0x0000]
-          - [0x00371650, null, lit4, 0x0000]
-          - [0x00371654, null, lit4, 0x0000]
-          - [0x00371658, null, lit4, 0x0000]
       - name: klohit2.c
         functions:
           - [0x001849E0, sbHeroKabeCheck2]
           - [0x001849E8, sbHeroKabeCheck]
         data:
           - [0x003716BC, null, lit4, 0x0000]
-          - [0x003716C0, null, lit4, 0x0000]
-          - [0x003716C4, null, lit4, 0x0000]
-          - [0x003716C8, null, lit4, 0x0000]
       - name: klopipe.c
         functions:
           - [0x00184CD0, nkKpGetJyuryoku]
@@ -5118,7 +4901,6 @@ sections:
           - [0x00185160, KloSlidePipe]
         data:
           - [0x003716CC, null, lit4, 0x0000]
-          - [0x003716D0, null, lit4, 0x0000]
           - [0x00491440, klpJyuVec, bss, 0x0010]
       - name: light.c
         functions:
@@ -5153,17 +4935,6 @@ sections:
           - [0x00304170, nkLgt0703_01, data, 0x0028]
           - [0x00304198, nkLgt1100_00, data, 0x0028]
           - [0x003717E8, null, lit4, 0x0000]
-          - [0x003717EC, null, lit4, 0x0000]
-          - [0x003717F0, null, lit4, 0x0000]
-          - [0x003717F4, null, lit4, 0x0000]
-          - [0x003717F8, null, lit4, 0x0000]
-          - [0x003717FC, null, lit4, 0x0000]
-          - [0x00371800, null, lit4, 0x0000]
-          - [0x00371804, null, lit4, 0x0000]
-          - [0x00371808, null, lit4, 0x0000]
-          - [0x0037180C, null, lit4, 0x0000]
-          - [0x00371810, null, lit4, 0x0000]
-          - [0x00371814, null, lit4, 0x0000]
           - [0x00375948, lgtLwd, sbss, 0x0004]
           - [0x00491450, lgtMng, bss, 0x0100]
           - [0x00491550, nkNormalLight, bss, 0x0040]
@@ -5216,8 +4987,6 @@ sections:
           - [0x00188468, nkDrawMap]
         data:
           - [0x00371830, null, lit4, 0x0000]
-          - [0x00371834, null, lit4, 0x0000]
-          - [0x00371838, null, lit4, 0x0000]
       - name: map01.c
         functions:
           - [0x00188490, DecodeUNPACK]
@@ -5262,8 +5031,6 @@ sections:
           - [0x0030B2C8, MenuCont.5, data, 0x00C0]
           - [0x0030B388, MenuFuncTbl, data, 0x0000]
           - [0x00371848, null, lit4, 0x0000]
-          - [0x0037184C, null, lit4, 0x0000]
-          - [0x00371850, null, lit4, 0x0000]
           - [0x006B18F0, MenuGbl.5, bss, 0x0018]
           - [0x006B1908, VLmtx, bss, 0x0040]
           - [0x006B1948, theta, bss, 0x0010]
@@ -5324,10 +5091,6 @@ sections:
         data:
           - [0x0030B428, ObjFuncTbl.3, data, 0x0000]
           - [0x00371860, null, lit4, 0x0000]
-          - [0x00371864, null, lit4, 0x0000]
-          - [0x00371868, null, lit4, 0x0000]
-          - [0x0037186C, null, lit4, 0x0000]
-          - [0x00371870, null, lit4, 0x0000]
       - name: objklo0.c
         functions:
           - [0x0018C818, Init_Restart]
@@ -5352,14 +5115,6 @@ sections:
           - [0x0018EFB8, KloSlideSide]
         data:
           - [0x0037188C, null, lit4, 0x0000]
-          - [0x00371890, null, lit4, 0x0000]
-          - [0x00371894, null, lit4, 0x0000]
-          - [0x00371898, null, lit4, 0x0000]
-          - [0x0037189C, null, lit4, 0x0000]
-          - [0x003718A0, null, lit4, 0x0000]
-          - [0x003718A4, null, lit4, 0x0000]
-          - [0x003718A8, null, lit4, 0x0000]
-          - [0x003718AC, null, lit4, 0x0000]
       - name: objklo2.c
         functions:
           - [0x001905F8, DrawKloBhd]
@@ -5370,8 +5125,6 @@ sections:
           - [0x00192048, _nkSbDrawTTriangle]
         data:
           - [0x003718F4, null, lit4, 0x0000]
-          - [0x003718F8, null, lit4, 0x0000]
-          - [0x003718FC, null, lit4, 0x0000]
       - name: objnfunc.c
         functions:
           - [0x00192378, ObjNFunc]
@@ -5387,10 +5140,6 @@ sections:
         data:
           - [0x0030B4A0, ObjFuncTbl.5, data, 0x0000]
           - [0x003719F4, null, lit4, 0x0000]
-          - [0x003719F8, null, lit4, 0x0000]
-          - [0x003719FC, null, lit4, 0x0000]
-          - [0x00371A00, null, lit4, 0x0000]
-          - [0x00371A04, null, lit4, 0x0000]
       - name: popuka.c
         functions:
           - [0x00192650, DrawObj.1]
@@ -5407,10 +5156,6 @@ sections:
         data:
           - [0x0030B4A8, ObjFuncTbl.6, data, 0x0000]
           - [0x00371A08, null, lit4, 0x0000]
-          - [0x00371A0C, null, lit4, 0x0000]
-          - [0x00371A10, null, lit4, 0x0000]
-          - [0x00371A14, null, lit4, 0x0000]
-          - [0x00371A18, null, lit4, 0x0000]
       - name: raycrs.c
         functions:
           - [0x00193138, GdCheck]
@@ -5480,15 +5225,6 @@ sections:
           - [0x00197B80, testmove]
         data:
           - [0x00371A60, null, lit4, 0x0000]
-          - [0x00371A64, null, lit4, 0x0000]
-          - [0x00371A68, null, lit4, 0x0000]
-          - [0x00371A6C, null, lit4, 0x0000]
-          - [0x00371A70, null, lit4, 0x0000]
-          - [0x00371A74, null, lit4, 0x0000]
-          - [0x00371A78, null, lit4, 0x0000]
-          - [0x00371A7C, null, lit4, 0x0000]
-          - [0x00371A80, null, lit4, 0x0000]
-          - [0x00371A84, null, lit4, 0x0000]
           - [0x00375960, testid, sbss, 0x0004]
           - [0x006B9D80, pRoute, bss, 0x0100]
       - name: rtconn.c
@@ -5516,9 +5252,6 @@ sections:
           - [0x00198D40, VertClip]
         data:
           - [0x00371AA4, null, lit4, 0x0000]
-          - [0x00371AA8, null, lit4, 0x0000]
-          - [0x00371AAC, null, lit4, 0x0000]
-          - [0x00371AB0, null, lit4, 0x0000]
       - name: vstart.c
         functions:
           - [0x00198DC0, nkVisionStartInit]
@@ -5540,9 +5273,6 @@ sections:
           - [0x00199D80, nkDrawWipe]
         data:
           - [0x00371AB4, null, lit4, 0x0000]
-          - [0x00371AB8, null, lit4, 0x0000]
-          - [0x00371ABC, null, lit4, 0x0000]
-          - [0x00371AC0, null, lit4, 0x0000]
           - [0x006BA080, PsfxWipeKlo, bss, 0x0050]
       - name: wmeter.c
         functions:
@@ -5585,14 +5315,6 @@ sections:
           - [0x0019B640, M_Chip00]
         data:
           - [0x00371AC4, null, lit4, 0x0000]
-          - [0x00371AC8, null, lit4, 0x0000]
-          - [0x00371ACC, null, lit4, 0x0000]
-          - [0x00371AD0, null, lit4, 0x0000]
-          - [0x00371AD4, null, lit4, 0x0000]
-          - [0x00371AD8, null, lit4, 0x0000]
-          - [0x00371ADC, null, lit4, 0x0000]
-          - [0x00371AE0, null, lit4, 0x0000]
-          - [0x00371AE4, null, lit4, 0x0000]
       - name: object.c
         functions:
           - [0x0019BB98, OkOutFlagInit]
@@ -5632,8 +5354,6 @@ sections:
         data:
           - [0x0030B688, Zako_Move_Sub.1, data, 0x0000]
           - [0x00371AEC, null, lit4, 0x0000]
-          - [0x00371AF0, null, lit4, 0x0000]
-          - [0x00371AF4, null, lit4, 0x0000]
       - name: okawk00.c
         functions:
           - [0x0019DD60, Whai11_Taiki_Sub2]
@@ -5677,9 +5397,6 @@ sections:
           - [0x001A27F0, CamAngFollow]
         data:
           - [0x00371B10, null, lit4, 0x0000]
-          - [0x00371B14, null, lit4, 0x0000]
-          - [0x00371B18, null, lit4, 0x0000]
-          - [0x00371B1C, null, lit4, 0x0000]
           - [0x0037596C, ang, sbss, 0x0004]
           - [0x00375970, zoom, sbss, 0x0004]
           - [0x00375974, zoom2, sbss, 0x0004]
@@ -5729,9 +5446,6 @@ sections:
         data:
           - [0x0030B718, Move_Sub.0, data, 0x0000]
           - [0x00371EF0, null, lit4, 0x0000]
-          - [0x00371EF4, null, lit4, 0x0000]
-          - [0x00371EF8, null, lit4, 0x0000]
-          - [0x00371EFC, null, lit4, 0x0000]
       - name: okgbs11.c
         functions:
           - [0x001A4C10, OkBASE11MoveSub]
@@ -5760,8 +5474,6 @@ sections:
         data:
           - [0x0030B768, Move_Sub.2, data, 0x0000]
           - [0x003720A8, null, lit4, 0x0000]
-          - [0x003720AC, null, lit4, 0x0000]
-          - [0x003720B0, null, lit4, 0x0000]
       - name: okgbs13.c
         functions:
           - [0x001A64D8, GimDraw.3]
@@ -5810,13 +5522,6 @@ sections:
         data:
           - [0x0030B7C0, Move_Sub.4, data, 0x0000]
           - [0x003720F8, null, lit4, 0x0000]
-          - [0x003720FC, null, lit4, 0x0000]
-          - [0x00372100, null, lit4, 0x0000]
-          - [0x00372104, null, lit4, 0x0000]
-          - [0x00372108, null, lit4, 0x0000]
-          - [0x0037210C, null, lit4, 0x0000]
-          - [0x00372110, null, lit4, 0x0000]
-          - [0x00372114, null, lit4, 0x0000]
       - name: okgjmp00.c
         functions:
           - [0x001A8ED0, WalkAndMapHit4]
@@ -5828,9 +5533,6 @@ sections:
           - [0x0030B7F8, jmphittbl, data, 0x0010]
           - [0x0030B808, Move_Sub.5, data, 0x0000]
           - [0x00372140, null, lit4, 0x0000]
-          - [0x00372144, null, lit4, 0x0000]
-          - [0x00372148, null, lit4, 0x0000]
-          - [0x0037214C, null, lit4, 0x0000]
       - name: okgmain.c
         functions:
           - [0x001A9650, OkHpoInit]
@@ -5856,8 +5558,6 @@ sections:
           - [0x0030BA58, vpop, data, 0x0040]
           - [0x0030BA98, pOKRouteG, data, 0x0100]
           - [0x00372170, null, lit4, 0x0000]
-          - [0x00372174, null, lit4, 0x0000]
-          - [0x00372178, null, lit4, 0x0000]
           - [0x00374E40, hmpptr, sdata, 0x0004]
           - [0x00374E44, hmpptr2, sdata, 0x0004]
           - [0x00374E48, hmpptr3, sdata, 0x0004]
@@ -5884,19 +5584,12 @@ sections:
         data:
           - [0x0030BB98, WhrWrk, data, 0x0000]
           - [0x003721D0, null, lit4, 0x0000]
-          - [0x003721D4, null, lit4, 0x0000]
-          - [0x003721D8, null, lit4, 0x0000]
-          - [0x003721DC, null, lit4, 0x0000]
       - name: okgwnd10.c
         functions:
           - [0x001AA7D0, OkGupWndSub]
           - [0x001AA908, G_Wnd10]
         data:
           - [0x003721E0, null, lit4, 0x0000]
-          - [0x003721E4, null, lit4, 0x0000]
-          - [0x003721E8, null, lit4, 0x0000]
-          - [0x003721EC, null, lit4, 0x0000]
-          - [0x003721F0, null, lit4, 0x0000]
       - name: okimain.c
         functions:
           - [0x001AAA88, OkDefLight]
@@ -5942,59 +5635,6 @@ sections:
           - [0x001ACBD0, OkSwitchMot]
         data:
           - [0x00372218, null, lit4, 0x0000]
-          - [0x0037221C, null, lit4, 0x0000]
-          - [0x00372220, null, lit4, 0x0000]
-          - [0x00372224, null, lit4, 0x0000]
-          - [0x00372228, null, lit4, 0x0000]
-          - [0x0037222C, null, lit4, 0x0000]
-          - [0x00372230, null, lit4, 0x0000]
-          - [0x00372234, null, lit4, 0x0000]
-          - [0x00372238, null, lit4, 0x0000]
-          - [0x0037223C, null, lit4, 0x0000]
-          - [0x00372240, null, lit4, 0x0000]
-          - [0x00372244, null, lit4, 0x0000]
-          - [0x00372248, null, lit4, 0x0000]
-          - [0x0037224C, null, lit4, 0x0000]
-          - [0x00372250, null, lit4, 0x0000]
-          - [0x00372254, null, lit4, 0x0000]
-          - [0x00372258, null, lit4, 0x0000]
-          - [0x0037225C, null, lit4, 0x0000]
-          - [0x00372260, null, lit4, 0x0000]
-          - [0x00372264, null, lit4, 0x0000]
-          - [0x00372268, null, lit4, 0x0000]
-          - [0x0037226C, null, lit4, 0x0000]
-          - [0x00372270, null, lit4, 0x0000]
-          - [0x00372274, null, lit4, 0x0000]
-          - [0x00372278, null, lit4, 0x0000]
-          - [0x0037227C, null, lit4, 0x0000]
-          - [0x00372280, null, lit4, 0x0000]
-          - [0x00372284, null, lit4, 0x0000]
-          - [0x00372288, null, lit4, 0x0000]
-          - [0x0037228C, null, lit4, 0x0000]
-          - [0x00372290, null, lit4, 0x0000]
-          - [0x00372294, null, lit4, 0x0000]
-          - [0x00372298, null, lit4, 0x0000]
-          - [0x0037229C, null, lit4, 0x0000]
-          - [0x003722A0, null, lit4, 0x0000]
-          - [0x003722A4, null, lit4, 0x0000]
-          - [0x003722A8, null, lit4, 0x0000]
-          - [0x003722AC, null, lit4, 0x0000]
-          - [0x003722B0, null, lit4, 0x0000]
-          - [0x003722B4, null, lit4, 0x0000]
-          - [0x003722B8, null, lit4, 0x0000]
-          - [0x003722BC, null, lit4, 0x0000]
-          - [0x003722C0, null, lit4, 0x0000]
-          - [0x003722C4, null, lit4, 0x0000]
-          - [0x003722C8, null, lit4, 0x0000]
-          - [0x003722CC, null, lit4, 0x0000]
-          - [0x003722D0, null, lit4, 0x0000]
-          - [0x003722D4, null, lit4, 0x0000]
-          - [0x003722D8, null, lit4, 0x0000]
-          - [0x003722DC, null, lit4, 0x0000]
-          - [0x003722E0, null, lit4, 0x0000]
-          - [0x003722E4, null, lit4, 0x0000]
-          - [0x003722E8, null, lit4, 0x0000]
-          - [0x003722EC, null, lit4, 0x0000]
       - name: okinit.c
         functions:
           - [0x001AD8F8, OkMainInit]
@@ -6176,33 +5816,11 @@ sections:
           - [0x001B26E8, M_Cam01]
         data:
           - [0x003723F8, null, lit4, 0x0000]
-          - [0x003723FC, null, lit4, 0x0000]
-          - [0x00372400, null, lit4, 0x0000]
-          - [0x00372404, null, lit4, 0x0000]
-          - [0x00372408, null, lit4, 0x0000]
-          - [0x0037240C, null, lit4, 0x0000]
-          - [0x00372410, null, lit4, 0x0000]
-          - [0x00372414, null, lit4, 0x0000]
-          - [0x00372418, null, lit4, 0x0000]
-          - [0x0037241C, null, lit4, 0x0000]
-          - [0x00372420, null, lit4, 0x0000]
-          - [0x00372424, null, lit4, 0x0000]
       - name: okmcam02.c
         functions:
           - [0x001B3040, M_Cam02]
         data:
           - [0x00372428, null, lit4, 0x0000]
-          - [0x0037242C, null, lit4, 0x0000]
-          - [0x00372430, null, lit4, 0x0000]
-          - [0x00372434, null, lit4, 0x0000]
-          - [0x00372438, null, lit4, 0x0000]
-          - [0x0037243C, null, lit4, 0x0000]
-          - [0x00372440, null, lit4, 0x0000]
-          - [0x00372444, null, lit4, 0x0000]
-          - [0x00372448, null, lit4, 0x0000]
-          - [0x0037244C, null, lit4, 0x0000]
-          - [0x00372450, null, lit4, 0x0000]
-          - [0x00372454, null, lit4, 0x0000]
       - name: okmenu.c
         functions:
           - [0x001B3B98, OkMenuInit]
@@ -6219,21 +5837,6 @@ sections:
           - [0x001B4038, M_Msil00]
         data:
           - [0x00372458, null, lit4, 0x0000]
-          - [0x0037245C, null, lit4, 0x0000]
-          - [0x00372460, null, lit4, 0x0000]
-          - [0x00372464, null, lit4, 0x0000]
-          - [0x00372468, null, lit4, 0x0000]
-          - [0x0037246C, null, lit4, 0x0000]
-          - [0x00372470, null, lit4, 0x0000]
-          - [0x00372474, null, lit4, 0x0000]
-          - [0x00372478, null, lit4, 0x0000]
-          - [0x0037247C, null, lit4, 0x0000]
-          - [0x00372480, null, lit4, 0x0000]
-          - [0x00372484, null, lit4, 0x0000]
-          - [0x00372488, null, lit4, 0x0000]
-          - [0x0037248C, null, lit4, 0x0000]
-          - [0x00372490, null, lit4, 0x0000]
-          - [0x00372494, null, lit4, 0x0000]
       - name: okprint.c
         functions:
           - [0x001B4B60, OkSetIDprofile]
@@ -6285,7 +5888,6 @@ sections:
           - [0x001B6C18, OktModelInit]
         data:
           - [0x00372498, null, lit4, 0x0000]
-          - [0x0037249C, null, lit4, 0x0000]
       - name: okzakoio.c
         functions:
           - [0x001B6CA8, OkSetZStatus]
@@ -6378,8 +5980,6 @@ sections:
           - [0x00329D80, bhit.1, data, 0x0010]
           - [0x00329D90, ashihit, data, 0x0010]
           - [0x003724A0, null, lit4, 0x0000]
-          - [0x003724A4, null, lit4, 0x0000]
-          - [0x003724A8, null, lit4, 0x0000]
           - [0x003750D8, okkldmhit, sdata, 0x0004]
           - [0x003750DC, okkzathit, sdata, 0x0004]
           - [0x003750E0, okitgthit, sdata, 0x0004]
@@ -6446,13 +6046,6 @@ sections:
         data:
           - [0x00329DA0, klnor, data, 0x0010]
           - [0x00372554, null, lit4, 0x0000]
-          - [0x00372558, null, lit4, 0x0000]
-          - [0x0037255C, null, lit4, 0x0000]
-          - [0x00372560, null, lit4, 0x0000]
-          - [0x00372564, null, lit4, 0x0000]
-          - [0x00372568, null, lit4, 0x0000]
-          - [0x0037256C, null, lit4, 0x0000]
-          - [0x00372570, null, lit4, 0x0000]
           - [0x003750E4, rto, sdata, 0x0004]
           - [0x006BC220, nlx.0, bss, 0x0040]
           - [0x006BC260, lcx.0, bss, 0x0040]
@@ -6489,13 +6082,6 @@ sections:
         data:
           - [0x00329DB0, Move_Sub.6, data, 0x0000]
           - [0x003727A0, null, lit4, 0x0000]
-          - [0x003727A4, null, lit4, 0x0000]
-          - [0x003727A8, null, lit4, 0x0000]
-          - [0x003727AC, null, lit4, 0x0000]
-          - [0x003727B0, null, lit4, 0x0000]
-          - [0x003727B4, null, lit4, 0x0000]
-          - [0x003727B8, null, lit4, 0x0000]
-          - [0x003727BC, null, lit4, 0x0000]
       - name: okzfk00.c
         functions:
           - [0x001BF2B0, Z_BalloonXX]
@@ -6565,7 +6151,6 @@ sections:
         data:
           - [0x00329E80, Zako_Move_Sub.6, data, 0x0000]
           - [0x003729CC, null, lit4, 0x0000]
-          - [0x003729D0, null, lit4, 0x0000]
       - name: okzfl01.c
         functions:
           - [0x001C5C58, Fly00_RouteFly_Sub]
@@ -6634,8 +6219,6 @@ sections:
           - [0x001C8258, OkDispKloInfo]
         data:
           - [0x00372A70, null, lit4, 0x0000]
-          - [0x00372A74, null, lit4, 0x0000]
-          - [0x00372A78, null, lit4, 0x0000]
       - name: okzmain.c
         functions:
           - [0x001C83C0, ZAKO_Out]
@@ -6773,14 +6356,6 @@ sections:
           - [0x001CF090, Z_Walk01]
         data:
           - [0x00372B1C, null, lit4, 0x0000]
-          - [0x00372B20, null, lit4, 0x0000]
-          - [0x00372B24, null, lit4, 0x0000]
-          - [0x00372B28, null, lit4, 0x0000]
-          - [0x00372B2C, null, lit4, 0x0000]
-          - [0x00372B30, null, lit4, 0x0000]
-          - [0x00372B34, null, lit4, 0x0000]
-          - [0x00372B38, null, lit4, 0x0000]
-          - [0x00372B3C, null, lit4, 0x0000]
       - name: okzwk02.c
         functions:
           - [0x001CFBC0, OkWalk02WalkCore]
@@ -6794,9 +6369,6 @@ sections:
         data:
           - [0x00329F38, Move_Sub.10, data, 0x0000]
           - [0x00372B58, null, lit4, 0x0000]
-          - [0x00372B5C, null, lit4, 0x0000]
-          - [0x00372B60, null, lit4, 0x0000]
-          - [0x00372B64, null, lit4, 0x0000]
       - name: okzwk03.c
       - name: okzwk04.c
         functions:
@@ -6810,15 +6382,6 @@ sections:
         data:
           - [0x00329F50, Move_Sub.11, data, 0x0000]
           - [0x00372B8C, null, lit4, 0x0000]
-          - [0x00372B90, null, lit4, 0x0000]
-          - [0x00372B94, null, lit4, 0x0000]
-          - [0x00372B98, null, lit4, 0x0000]
-          - [0x00372B9C, null, lit4, 0x0000]
-          - [0x00372BA0, null, lit4, 0x0000]
-          - [0x00372BA4, null, lit4, 0x0000]
-          - [0x00372BA8, null, lit4, 0x0000]
-          - [0x00372BAC, null, lit4, 0x0000]
-          - [0x00372BB0, null, lit4, 0x0000]
       - name: okzwk05.c
         functions:
           - [0x001D0D60, OkZWALK05MoveSub]
@@ -6832,8 +6395,6 @@ sections:
         data:
           - [0x00329F68, Move_Sub.12, data, 0x0000]
           - [0x00372BB4, null, lit4, 0x0000]
-          - [0x00372BB8, null, lit4, 0x0000]
-          - [0x00372BBC, null, lit4, 0x0000]
       - name: okzwk06.c
         functions:
           - [0x001D1550, OkEzRouteHit]
@@ -6848,13 +6409,6 @@ sections:
         data:
           - [0x00329F88, Move_Sub.13, data, 0x0000]
           - [0x00372BE0, null, lit4, 0x0000]
-          - [0x00372BE4, null, lit4, 0x0000]
-          - [0x00372BE8, null, lit4, 0x0000]
-          - [0x00372BEC, null, lit4, 0x0000]
-          - [0x00372BF0, null, lit4, 0x0000]
-          - [0x00372BF4, null, lit4, 0x0000]
-          - [0x00372BF8, null, lit4, 0x0000]
-          - [0x00372BFC, null, lit4, 0x0000]
       - name: okzwk10.c
         functions:
           - [0x001D22D8, OkWalk10WalkSub]
@@ -6883,8 +6437,6 @@ sections:
           - [0x001D3818, LightInit]
         data:
           - [0x00372C80, null, lit4, 0x0000]
-          - [0x00372C84, null, lit4, 0x0000]
-          - [0x00372C88, null, lit4, 0x0000]
       - name: drawsub.c
         functions:
           - [0x001D38F0, DrawTexPoly]
@@ -6962,7 +6514,6 @@ sections:
           - [0x001D7F08, AcxDecodeMotion]
         data:
           - [0x00372C98, null, lit4, 0x0000]
-          - [0x00372C9C, null, lit4, 0x0000]
       - name: motsys2.c
         functions:
           - [0x001D8408, GetSfxWorldMatrix]
@@ -7101,9 +6652,6 @@ sections:
           - [0x00348FC0, vmin, data, 0x0010]
           - [0x00348FD0, vmax, data, 0x0010]
           - [0x00372CB0, null, lit4, 0x0000]
-          - [0x00372CB4, null, lit4, 0x0000]
-          - [0x00372CB8, null, lit4, 0x0000]
-          - [0x00372CBC, null, lit4, 0x0000]
       - name: sfxdraw.c
         functions:
           - [0x001DD858, SfxDrawOutLine]
@@ -7166,10 +6714,6 @@ sections:
           - [0x0034C620, Kumo1GsEnv, data, 0x0400]
           - [0x0034CA20, Kumo2GsEnv, data, 0x0400]
           - [0x00372CE0, null, lit4, 0x0000]
-          - [0x00372CE4, null, lit4, 0x0000]
-          - [0x00372CE8, null, lit4, 0x0000]
-          - [0x00372CEC, null, lit4, 0x0000]
-          - [0x00372CF0, null, lit4, 0x0000]
           - [0x003752C8, KumoCnt, sdata, 0x0004]
           - [0x003752CC, LogoGsEnvInd, sdata, 0x0004]
           - [0x003752D0, Kumo1GsEnvInd, sdata, 0x0004]
@@ -7308,10 +6852,6 @@ sections:
         data:
           - [0x0034D2D0, ObjFuncTbl.7, data, 0x0000]
           - [0x00372D08, null, lit4, 0x0000]
-          - [0x00372D0C, null, lit4, 0x0000]
-          - [0x00372D10, null, lit4, 0x0000]
-          - [0x00372D14, null, lit4, 0x0000]
-          - [0x00372D18, null, lit4, 0x0000]
       - name: door04pazzle.c
         functions:
           - [0x001E4C40, DrawObj.3]
@@ -7322,16 +6862,6 @@ sections:
         data:
           - [0x0034D2D8, ObjFuncTbl.8, data, 0x0000]
           - [0x00372D1C, null, lit4, 0x0000]
-          - [0x00372D20, null, lit4, 0x0000]
-          - [0x00372D24, null, lit4, 0x0000]
-          - [0x00372D28, null, lit4, 0x0000]
-          - [0x00372D2C, null, lit4, 0x0000]
-          - [0x00372D30, null, lit4, 0x0000]
-          - [0x00372D34, null, lit4, 0x0000]
-          - [0x00372D38, null, lit4, 0x0000]
-          - [0x00372D3C, null, lit4, 0x0000]
-          - [0x00372D40, null, lit4, 0x0000]
-          - [0x00372D44, null, lit4, 0x0000]
       - name: fobj00.c
         functions:
           - [0x001E4FF8, ObjInit.9]
@@ -7369,10 +6899,6 @@ sections:
           - [0x0034D2F8, gimmove, data, 0x0000]
           - [0x0034D368, ObjFuncTbl.10, data, 0x0000]
           - [0x00372D50, null, lit4, 0x0000]
-          - [0x00372D54, null, lit4, 0x0000]
-          - [0x00372D58, null, lit4, 0x0000]
-          - [0x00372D5C, null, lit4, 0x0000]
-          - [0x00372D60, null, lit4, 0x0000]
       - name: gim_test2.c
         functions:
           - [0x001E5E88, DrawObj.5]
@@ -7383,9 +6909,6 @@ sections:
         data:
           - [0x0034D370, ObjFuncTbl.11, data, 0x0000]
           - [0x00372DAC, null, lit4, 0x0000]
-          - [0x00372DB0, null, lit4, 0x0000]
-          - [0x00372DB4, null, lit4, 0x0000]
-          - [0x00372DB8, null, lit4, 0x0000]
       - name: gimsys.c
         functions:
           - [0x001E6310, gmRotMoveRtCnt]
@@ -7401,10 +6924,6 @@ sections:
         data:
           - [0x0034D378, ObjFuncTbl.12, data, 0x0000]
           - [0x00372DDC, null, lit4, 0x0000]
-          - [0x00372DE0, null, lit4, 0x0000]
-          - [0x00372DE4, null, lit4, 0x0000]
-          - [0x00372DE8, null, lit4, 0x0000]
-          - [0x00372DEC, null, lit4, 0x0000]
       - name: gpdoor1.c
         functions:
           - [0x001E67A0, DrawObj.7]
@@ -7415,8 +6934,6 @@ sections:
         data:
           - [0x0034D380, ObjFuncTbl.13, data, 0x0000]
           - [0x00372DF0, null, lit4, 0x0000]
-          - [0x00372DF4, null, lit4, 0x0000]
-          - [0x00372DF8, null, lit4, 0x0000]
       - name: hpobj.c
         functions:
           - [0x001E6B00, GetHitBlocks2]
@@ -7439,9 +6956,6 @@ sections:
         data:
           - [0x0034D388, ObjFuncTbl.14, data, 0x0000]
           - [0x00372E08, null, lit4, 0x0000]
-          - [0x00372E0C, null, lit4, 0x0000]
-          - [0x00372E10, null, lit4, 0x0000]
-          - [0x00372E14, null, lit4, 0x0000]
           - [0x006BCAA0, objTatto, bss, 0x00F0]
       - name: smpl_myu.c
         functions:
@@ -7470,8 +6984,6 @@ sections:
         data:
           - [0x0034D3C0, ObjFuncTbl.16, data, 0x0000]
           - [0x00372E1C, null, lit4, 0x0000]
-          - [0x00372E20, null, lit4, 0x0000]
-          - [0x00372E24, null, lit4, 0x0000]
       - name: st01gim.c
         functions:
           - [0x001E9640, nkSt01GimInit]
@@ -7504,10 +7016,6 @@ sections:
           - [0x001EA410, nkTattoMain]
         data:
           - [0x00372E40, null, lit4, 0x0000]
-          - [0x00372E44, null, lit4, 0x0000]
-          - [0x00372E48, null, lit4, 0x0000]
-          - [0x00372E4C, null, lit4, 0x0000]
-          - [0x00372E50, null, lit4, 0x0000]
           - [0x006BCC10, actModel, bss, 0x0060]
       - name: train.c
         functions:
@@ -7519,10 +7027,6 @@ sections:
         data:
           - [0x0034D3D8, ObjFuncTbl.18, data, 0x0000]
           - [0x00372EC4, null, lit4, 0x0000]
-          - [0x00372EC8, null, lit4, 0x0000]
-          - [0x00372ECC, null, lit4, 0x0000]
-          - [0x00372ED0, null, lit4, 0x0000]
-          - [0x00372ED4, null, lit4, 0x0000]
       - name: tree_st01.c
       - name: viking.c
         functions:
@@ -7535,14 +7039,6 @@ sections:
         data:
           - [0x0034D3E0, ObjFuncTbl.19, data, 0x0000]
           - [0x00372EFC, null, lit4, 0x0000]
-          - [0x00372F00, null, lit4, 0x0000]
-          - [0x00372F04, null, lit4, 0x0000]
-          - [0x00372F08, null, lit4, 0x0000]
-          - [0x00372F0C, null, lit4, 0x0000]
-          - [0x00372F10, null, lit4, 0x0000]
-          - [0x00372F14, null, lit4, 0x0000]
-          - [0x00372F18, null, lit4, 0x0000]
-          - [0x00372F1C, null, lit4, 0x0000]
       - name: w_slider.c
         functions:
           - [0x001EB440, klW_Slider]
@@ -7552,10 +7048,6 @@ sections:
         data:
           - [0x0034D3E8, wbup0203, data, 0x0000]
           - [0x00372F50, null, lit4, 0x0000]
-          - [0x00372F54, null, lit4, 0x0000]
-          - [0x00372F58, null, lit4, 0x0000]
-          - [0x00372F5C, null, lit4, 0x0000]
-          - [0x00372F60, null, lit4, 0x0000]
   - id: okanoyo/debug:c
     path: okanoyo/debug
     units:
@@ -7617,16 +7109,6 @@ sections:
           - [0x001ECE00, aoVu0ViewClipMatrix]
         data:
           - [0x00372F64, null, lit4, 0x0000]
-          - [0x00372F68, null, lit4, 0x0000]
-          - [0x00372F6C, null, lit4, 0x0000]
-          - [0x00372F70, null, lit4, 0x0000]
-          - [0x00372F74, null, lit4, 0x0000]
-          - [0x00372F78, null, lit4, 0x0000]
-          - [0x00372F7C, null, lit4, 0x0000]
-          - [0x00372F80, null, lit4, 0x0000]
-          - [0x00372F84, null, lit4, 0x0000]
-          - [0x00372F88, null, lit4, 0x0000]
-          - [0x00372F8C, null, lit4, 0x0000]
       - name: aoVU1pkt.c
         functions:
           - [0x001ECE90, DrawParticle]
@@ -7641,24 +7123,6 @@ sections:
         data:
           - [0x0034D4F0, data, data, 0x00C0]
           - [0x00372F90, null, lit4, 0x0000]
-          - [0x00372F94, null, lit4, 0x0000]
-          - [0x00372F98, null, lit4, 0x0000]
-          - [0x00372F9C, null, lit4, 0x0000]
-          - [0x00372FA0, null, lit4, 0x0000]
-          - [0x00372FA4, null, lit4, 0x0000]
-          - [0x00372FA8, null, lit4, 0x0000]
-          - [0x00372FAC, null, lit4, 0x0000]
-          - [0x00372FB0, null, lit4, 0x0000]
-          - [0x00372FB4, null, lit4, 0x0000]
-          - [0x00372FB8, null, lit4, 0x0000]
-          - [0x00372FBC, null, lit4, 0x0000]
-          - [0x00372FC0, null, lit4, 0x0000]
-          - [0x00372FC4, null, lit4, 0x0000]
-          - [0x00372FC8, null, lit4, 0x0000]
-          - [0x00372FCC, null, lit4, 0x0000]
-          - [0x00372FD0, null, lit4, 0x0000]
-          - [0x00372FD4, null, lit4, 0x0000]
-          - [0x00372FD8, null, lit4, 0x0000]
           - [0x003753B0, param, sdata, 0x0004]
           - [0x003753C0, p_param, sdata, 0x0004]
       - name: vu1dump.c
@@ -7743,7 +7207,6 @@ sections:
           - [0x001F4C68, kitGetWaveHeight]
         data:
           - [0x0037307C, null, lit4, 0x0000]
-          - [0x00373080, null, lit4, 0x0000]
   - id: vtusr/taro:c
     path: vtusr/taro
     units:
@@ -8224,9 +7687,6 @@ sections:
         data:
           - [0x0034D5B0, effect_color, data, 0x0000]
           - [0x003730F0, null, lit4, 0x0000]
-          - [0x003730F4, null, lit4, 0x0000]
-          - [0x003730F8, null, lit4, 0x0000]
-          - [0x003730FC, null, lit4, 0x0000]
           - [0x00375478, _11CObjEbWaveA$modelData, sdata, 0x0004]
       - name: ab_exp00.cc
         functions:
@@ -8255,8 +7715,6 @@ sections:
         data:
           - [0x0034D5D0, ObjFuncTbl.20, data, 0x000C]
           - [0x00373118, null, lit4, 0x0000]
-          - [0x0037311C, null, lit4, 0x0000]
-          - [0x00373120, null, lit4, 0x0000]
           - [0x00375480, count.5, sdata, 0x0004]
           - [0x003759A0, ptclModelData.0, sbss, 0x0004]
           - [0x003759A4, ptclModel.0, sbss, 0x0004]
@@ -8295,14 +7753,6 @@ sections:
         data:
           - [0x0034D5E0, ObjFuncTbl.21, data, 0x000C]
           - [0x00373138, null, lit4, 0x0000]
-          - [0x0037313C, null, lit4, 0x0000]
-          - [0x00373140, null, lit4, 0x0000]
-          - [0x00373144, null, lit4, 0x0000]
-          - [0x00373148, null, lit4, 0x0000]
-          - [0x0037314C, null, lit4, 0x0000]
-          - [0x00373150, null, lit4, 0x0000]
-          - [0x00373154, null, lit4, 0x0000]
-          - [0x00373158, null, lit4, 0x0000]
           - [0x00375498, smoke_count, sdata, 0x0004]
       - name: ab_file.cc
         functions:
@@ -8469,50 +7919,6 @@ sections:
           - [0x00224DF8, deallocate__Q23ntlt9allocator1Z15CParticleHamonBP15CParticleHamonB.0]
         data:
           - [0x0037315C, null, lit4, 0x0000]
-          - [0x00373160, null, lit4, 0x0000]
-          - [0x00373164, null, lit4, 0x0000]
-          - [0x00373168, null, lit4, 0x0000]
-          - [0x0037316C, null, lit4, 0x0000]
-          - [0x00373170, null, lit4, 0x0000]
-          - [0x00373174, null, lit4, 0x0000]
-          - [0x00373178, null, lit4, 0x0000]
-          - [0x0037317C, null, lit4, 0x0000]
-          - [0x00373180, null, lit4, 0x0000]
-          - [0x00373184, null, lit4, 0x0000]
-          - [0x00373188, null, lit4, 0x0000]
-          - [0x0037318C, null, lit4, 0x0000]
-          - [0x00373190, null, lit4, 0x0000]
-          - [0x00373194, null, lit4, 0x0000]
-          - [0x00373198, null, lit4, 0x0000]
-          - [0x0037319C, null, lit4, 0x0000]
-          - [0x003731A0, null, lit4, 0x0000]
-          - [0x003731A4, null, lit4, 0x0000]
-          - [0x003731A8, null, lit4, 0x0000]
-          - [0x003731AC, null, lit4, 0x0000]
-          - [0x003731B0, null, lit4, 0x0000]
-          - [0x003731B4, null, lit4, 0x0000]
-          - [0x003731B8, null, lit4, 0x0000]
-          - [0x003731BC, null, lit4, 0x0000]
-          - [0x003731C0, null, lit4, 0x0000]
-          - [0x003731C4, null, lit4, 0x0000]
-          - [0x003731C8, null, lit4, 0x0000]
-          - [0x003731CC, null, lit4, 0x0000]
-          - [0x003731D0, null, lit4, 0x0000]
-          - [0x003731D4, null, lit4, 0x0000]
-          - [0x003731D8, null, lit4, 0x0000]
-          - [0x003731DC, null, lit4, 0x0000]
-          - [0x003731E0, null, lit4, 0x0000]
-          - [0x003731E4, null, lit4, 0x0000]
-          - [0x003731E8, null, lit4, 0x0000]
-          - [0x003731EC, null, lit4, 0x0000]
-          - [0x003731F0, null, lit4, 0x0000]
-          - [0x003731F4, null, lit4, 0x0000]
-          - [0x003731F8, null, lit4, 0x0000]
-          - [0x003731FC, null, lit4, 0x0000]
-          - [0x00373200, null, lit4, 0x0000]
-          - [0x00373204, null, lit4, 0x0000]
-          - [0x00373208, null, lit4, 0x0000]
-          - [0x0037320C, null, lit4, 0x0000]
           - [0x003754C4, prefixObject, sdata, 0x0004]
           - [0x003754CC, prefixFireB, sdata, 0x0004]
           - [0x003754D4, prefixSmokeA, sdata, 0x0004]
@@ -8680,18 +8086,6 @@ sections:
         data:
           - [0x0034D5F0, ObjFuncTbl.22, data, 0x0010]
           - [0x00373214, null, lit4, 0x0000]
-          - [0x00373218, null, lit4, 0x0000]
-          - [0x0037321C, null, lit4, 0x0000]
-          - [0x00373220, null, lit4, 0x0000]
-          - [0x00373224, null, lit4, 0x0000]
-          - [0x00373228, null, lit4, 0x0000]
-          - [0x0037322C, null, lit4, 0x0000]
-          - [0x00373230, null, lit4, 0x0000]
-          - [0x00373234, null, lit4, 0x0000]
-          - [0x00373238, null, lit4, 0x0000]
-          - [0x0037323C, null, lit4, 0x0000]
-          - [0x00373240, null, lit4, 0x0000]
-          - [0x00373244, null, lit4, 0x0000]
           - [0x00375518, FireBTool, sdata, 0x0004]
           - [0x003759A8, ptclModelData.1, sbss, 0x0004]
           - [0x003759AC, ptclModel.1, sbss, 0x0004]
@@ -8708,14 +8102,6 @@ sections:
           - [0x00230290, abVu0OuterProduct__FPfT0T0.3]
         data:
           - [0x003732F8, null, lit4, 0x0000]
-          - [0x003732FC, null, lit4, 0x0000]
-          - [0x00373300, null, lit4, 0x0000]
-          - [0x00373304, null, lit4, 0x0000]
-          - [0x00373308, null, lit4, 0x0000]
-          - [0x0037330C, null, lit4, 0x0000]
-          - [0x00373310, null, lit4, 0x0000]
-          - [0x00373314, null, lit4, 0x0000]
-          - [0x00373318, null, lit4, 0x0000]
           - [0x0037552C, FireSPModel, sdata, 0x0004]
           - [0x006BCF50, stq, bss, 0x0000]
       - name: ab_fixedmodel.cc
@@ -8785,7 +8171,6 @@ sections:
         data:
           - [0x0034D600, ObjFuncTbl.23, data, 0x000C]
           - [0x00373328, null, lit4, 0x0000]
-          - [0x0037332C, null, lit4, 0x0000]
           - [0x003759B0, ptclModelData.2, sbss, 0x0004]
           - [0x003759B4, ptclModel.2, sbss, 0x0004]
       - name: ab_hamon_a.cc
@@ -8807,9 +8192,6 @@ sections:
         data:
           - [0x0034D610, ObjFuncTbl.24, data, 0x000C]
           - [0x0037333C, null, lit4, 0x0000]
-          - [0x00373340, null, lit4, 0x0000]
-          - [0x00373344, null, lit4, 0x0000]
-          - [0x00373348, null, lit4, 0x0000]
           - [0x00375548, hamonModelData, sdata, 0x0004]
           - [0x0037554C, hamonModel, sdata, 0x0004]
       - name: ab_hamon_b.cc
@@ -8831,7 +8213,6 @@ sections:
           - [0x00235430, abVu0MulMatrix__FPA3_fT0T0.18]
         data:
           - [0x00373358, null, lit4, 0x0000]
-          - [0x0037335C, null, lit4, 0x0000]
           - [0x00375550, _10CObjHamonB$m_instance, sdata, 0x0004]
           - [0x00375554, _15CParticleHamonB$ptclModelData, sdata, 0x0004]
       - name: ab_hanabi_a.cc
@@ -8903,7 +8284,6 @@ sections:
           - [0x0023A1A8, SetSpeed__16CParticleHoushiA.0]
         data:
           - [0x00373364, null, lit4, 0x0000]
-          - [0x00373368, null, lit4, 0x0000]
           - [0x00375564, _11CObjHoushiA$m_objw, sdata, 0x0004]
           - [0x00375568, _16CParticleHoushiA$ptclModelData, sdata, 0x0004]
       - name: ab_init.cc
@@ -9048,28 +8428,6 @@ sections:
           - [0x00243528, abVu0MulMatrix__FPA3_fT0T0.22]
         data:
           - [0x00373380, null, lit4, 0x0000]
-          - [0x00373384, null, lit4, 0x0000]
-          - [0x00373388, null, lit4, 0x0000]
-          - [0x0037338C, null, lit4, 0x0000]
-          - [0x00373390, null, lit4, 0x0000]
-          - [0x00373394, null, lit4, 0x0000]
-          - [0x00373398, null, lit4, 0x0000]
-          - [0x0037339C, null, lit4, 0x0000]
-          - [0x003733A0, null, lit4, 0x0000]
-          - [0x003733A4, null, lit4, 0x0000]
-          - [0x003733A8, null, lit4, 0x0000]
-          - [0x003733AC, null, lit4, 0x0000]
-          - [0x003733B0, null, lit4, 0x0000]
-          - [0x003733B4, null, lit4, 0x0000]
-          - [0x003733B8, null, lit4, 0x0000]
-          - [0x003733BC, null, lit4, 0x0000]
-          - [0x003733C0, null, lit4, 0x0000]
-          - [0x003733C4, null, lit4, 0x0000]
-          - [0x003733C8, null, lit4, 0x0000]
-          - [0x003733CC, null, lit4, 0x0000]
-          - [0x003733D0, null, lit4, 0x0000]
-          - [0x003733D4, null, lit4, 0x0000]
-          - [0x003733D8, null, lit4, 0x0000]
       - name: ab_itemptcl_a.cc
         functions:
           - [0x00243530, Initialize__18CParticleItemptclA]
@@ -9140,8 +8498,6 @@ sections:
           - [0x00247420, abVu0MulMatrix__FPA3_fT0T0.24]
         data:
           - [0x003733F0, null, lit4, 0x0000]
-          - [0x003733F4, null, lit4, 0x0000]
-          - [0x003733F8, null, lit4, 0x0000]
           - [0x003755AC, _13CObjItemptclB$ptclModelData, sdata, 0x0004]
       - name: ab_jetimo_a.cc
         functions:
@@ -9190,9 +8546,6 @@ sections:
         data:
           - [0x0034D690, ObjFuncTbl.25, data, 0x000C]
           - [0x00373424, null, lit4, 0x0000]
-          - [0x00373428, null, lit4, 0x0000]
-          - [0x0037342C, null, lit4, 0x0000]
-          - [0x00373430, null, lit4, 0x0000]
           - [0x003755B8, DrawFunc.0, sdata, 0x0008]
           - [0x003755C0, jigenModel, sdata, 0x0004]
           - [0x003755C4, jigenModelData, sdata, 0x0004]
@@ -9219,7 +8572,6 @@ sections:
           - [0x0024E688, abVu0MulMatrix__FPA3_fT0T0.27]
         data:
           - [0x00373454, null, lit4, 0x0000]
-          - [0x00373458, null, lit4, 0x0000]
           - [0x003755C8, _14CParticleKazeA$ptclModelTable, sdata, 0x0004]
           - [0x003755CC, _14CParticleKazeA$ptclModelData, sdata, 0x0004]
       - name: ab_kazedama.cc
@@ -9247,7 +8599,6 @@ sections:
         data:
           - [0x0034D6A0, ObjFuncTbl.26, data, 0x000C]
           - [0x0037345C, null, lit4, 0x0000]
-          - [0x00373460, null, lit4, 0x0000]
           - [0x003755E0, Kazedama, sdata, 0x0004]
           - [0x003759C0, tamaModelData, sbss, 0x0004]
           - [0x003759C4, tamaModel, sbss, 0x0004]
@@ -9301,8 +8652,6 @@ sections:
           - [0x002530D0, abVu0OuterProduct__FPfT0T0.8]
         data:
           - [0x00373480, null, lit4, 0x0000]
-          - [0x00373484, null, lit4, 0x0000]
-          - [0x00373488, null, lit4, 0x0000]
           - [0x003755F8, _10CObjKiryuA$m_objw, sdata, 0x0004]
           - [0x003755FC, _15CParticleKiryuA$ptclModelData, sdata, 0x0004]
       - name: ab_lensflaer.cc
@@ -9316,7 +8665,6 @@ sections:
           - [0x00253BC8, abVu0MulMatrix__FPA3_fT0T0.31]
         data:
           - [0x00373490, null, lit4, 0x0000]
-          - [0x00373494, null, lit4, 0x0000]
           - [0x003759D4, flaerModelData, sbss, 0x0004]
           - [0x003759D8, flaerModel, sbss, 0x0004]
       - name: ab_lightning_a.cc
@@ -9352,7 +8700,6 @@ sections:
           - [0x00256AC0, abVu0OuterProduct__FPfT0T0.9]
         data:
           - [0x00373498, null, lit4, 0x0000]
-          - [0x0037349C, null, lit4, 0x0000]
           - [0x00375608, _14CObjLightningA$m_instance, sdata, 0x0004]
           - [0x0037560C, _19CParticleLightningA$ptclModelData, sdata, 0x0004]
       - name: ab_mfifo.cc
@@ -9922,9 +9269,6 @@ sections:
           - [0x0034DC28, UpdateTable.47, data, 0x0018]
           - [0x0034DC40, UpdateTable.48, data, 0x0018]
           - [0x003734E4, null, lit4, 0x0000]
-          - [0x003734E8, null, lit4, 0x0000]
-          - [0x003734EC, null, lit4, 0x0000]
-          - [0x003734F0, null, lit4, 0x0000]
           - [0x00375650, count.6, sdata, 0x0004]
       - name: ab_ougu_a.cc
         functions:
@@ -9994,7 +9338,6 @@ sections:
           - [0x0027BA20, deallocate__Q23ntlt9allocator1Z15CParticleHamonBP15CParticleHamonB.3]
         data:
           - [0x00373930, null, lit4, 0x0000]
-          - [0x00373934, null, lit4, 0x0000]
           - [0x00375660, _9CObjPoolA$m_instance, sdata, 0x0004]
           - [0x00375664, _14CParticlePoolA$ptclModelData, sdata, 0x0004]
       - name: ab_pteff.cc
@@ -10138,7 +9481,6 @@ sections:
           - [0x00281058, Instance__11CXsiManager.1]
         data:
           - [0x00373938, null, lit4, 0x0000]
-          - [0x0037393C, null, lit4, 0x0000]
           - [0x003759E8, instance.1, sbss, 0x0004]
           - [0x006D0078, instance.2, bss, 0x0018]
       - name: ab_ptmodel.cc
@@ -10210,11 +9552,6 @@ sections:
         data:
           - [0x0034DCA0, _15CObjRikriStoneA$m_speed_table, data, 0x0000]
           - [0x00373948, null, lit4, 0x0000]
-          - [0x0037394C, null, lit4, 0x0000]
-          - [0x00373950, null, lit4, 0x0000]
-          - [0x00373954, null, lit4, 0x0000]
-          - [0x00373958, null, lit4, 0x0000]
-          - [0x0037395C, null, lit4, 0x0000]
           - [0x00375698, _20CParticleRikriStoneA$ptclModelData, sdata, 0x0004]
       - name: ab_shabon_a.cc
         functions:
@@ -10263,7 +9600,6 @@ sections:
           - [0x0028A1D8, abVu0OuterProduct__FPfT0T0.13]
         data:
           - [0x00373978, null, lit4, 0x0000]
-          - [0x0037397C, null, lit4, 0x0000]
           - [0x003759EC, draw_num, sbss, 0x0004]
           - [0x006D0130, matrix_table, bss, 0x0000]
           - [0x006D2130, shadow_model, bss, 0x0000]
@@ -10302,8 +9638,6 @@ sections:
           - [0x0028CDB8, abVu0MulMatrix__FPA3_fT0T0.40]
         data:
           - [0x00373990, null, lit4, 0x0000]
-          - [0x00373994, null, lit4, 0x0000]
-          - [0x00373998, null, lit4, 0x0000]
           - [0x003756A0, _19CObjShibukiAManager$m_instance, sdata, 0x0004]
           - [0x003756A4, _17CParticleShibukiA$ptclModelData, sdata, 0x0004]
           - [0x003756A8, ShibukiATool, sdata, 0x0004]
@@ -10355,7 +9689,6 @@ sections:
           - [0x00291160, abVu0MulMatrix__FPA3_fT0T0.42]
         data:
           - [0x003739BC, null, lit4, 0x0000]
-          - [0x003739C0, null, lit4, 0x0000]
           - [0x003756B0, _12CObjShibukiC$m_instance, sdata, 0x0004]
           - [0x003756B4, _17CParticleShibukiC$ptclModelData, sdata, 0x0004]
       - name: ab_shizuku_a.cc
@@ -10572,13 +9905,6 @@ sections:
         data:
           - [0x0034F1B0, ObjFuncTbl.29, data, 0x000C]
           - [0x003739D8, null, lit4, 0x0000]
-          - [0x003739DC, null, lit4, 0x0000]
-          - [0x003739E0, null, lit4, 0x0000]
-          - [0x003739E4, null, lit4, 0x0000]
-          - [0x003739E8, null, lit4, 0x0000]
-          - [0x003739EC, null, lit4, 0x0000]
-          - [0x003739F0, null, lit4, 0x0000]
-          - [0x003739F4, null, lit4, 0x0000]
           - [0x003756F8, SmokeATool, sdata, 0x0004]
           - [0x003759F8, ptclModelData.3, sbss, 0x0004]
           - [0x003759FC, ptclModel.3, sbss, 0x0004]
@@ -10633,7 +9959,6 @@ sections:
           - [0x002A2100, abVu0MulMatrix__FPA3_fT0T0.47]
         data:
           - [0x00373A30, null, lit4, 0x0000]
-          - [0x00373A34, null, lit4, 0x0000]
           - [0x0037570C, _10CObjSonicA$modelData, sdata, 0x0004]
       - name: ab_sparc_a.cc
         functions:
@@ -10677,7 +10002,6 @@ sections:
           - [0x002A4F60, abVu0MulMatrix__FPA3_fT0T0.48]
         data:
           - [0x00373A38, null, lit4, 0x0000]
-          - [0x00373A3C, null, lit4, 0x0000]
           - [0x0037571C, _16CParticleSwitchA$ptclModelData, sdata, 0x0004]
       - name: ab_sys.cc
         functions:
@@ -10716,10 +10040,6 @@ sections:
           - [0x002A80A0, abVu0OuterProduct__FPfT0T0.14]
         data:
           - [0x00373A44, null, lit4, 0x0000]
-          - [0x00373A48, null, lit4, 0x0000]
-          - [0x00373A4C, null, lit4, 0x0000]
-          - [0x00373A50, null, lit4, 0x0000]
-          - [0x00373A54, null, lit4, 0x0000]
           - [0x00375734, flg, sdata, 0x0004]
           - [0x00375738, _9CObjTakiA$m_instance, sdata, 0x0004]
           - [0x0037573C, _14CParticleTakiA$ptclModelData, sdata, 0x0004]
@@ -10878,22 +10198,6 @@ sections:
           - [0x002AE8C8, abVu0MulMatrix__FPA3_fT0T0.52]
         data:
           - [0x00373A60, null, lit4, 0x0000]
-          - [0x00373A64, null, lit4, 0x0000]
-          - [0x00373A68, null, lit4, 0x0000]
-          - [0x00373A6C, null, lit4, 0x0000]
-          - [0x00373A70, null, lit4, 0x0000]
-          - [0x00373A74, null, lit4, 0x0000]
-          - [0x00373A78, null, lit4, 0x0000]
-          - [0x00373A7C, null, lit4, 0x0000]
-          - [0x00373A80, null, lit4, 0x0000]
-          - [0x00373A84, null, lit4, 0x0000]
-          - [0x00373A88, null, lit4, 0x0000]
-          - [0x00373A8C, null, lit4, 0x0000]
-          - [0x00373A90, null, lit4, 0x0000]
-          - [0x00373A94, null, lit4, 0x0000]
-          - [0x00373A98, null, lit4, 0x0000]
-          - [0x00373A9C, null, lit4, 0x0000]
-          - [0x00373AA0, null, lit4, 0x0000]
           - [0x0037575C, speed, sdata, 0x0004]
           - [0x00375760, rotspeed, sdata, 0x0004]
       - name: ab_tsumuji_a.cc
@@ -10933,18 +10237,6 @@ sections:
           - [0x0034F330, _7abe_sys$taki_scroll, data, 0x0000]
           - [0x0034F340, RandMT, data, 0x0BB0]
           - [0x00373AAC, null, lit4, 0x0000]
-          - [0x00373AB0, null, lit4, 0x0000]
-          - [0x00373AB4, null, lit4, 0x0000]
-          - [0x00373AB8, null, lit4, 0x0000]
-          - [0x00373ABC, null, lit4, 0x0000]
-          - [0x00373AC0, null, lit4, 0x0000]
-          - [0x00373AC4, null, lit4, 0x0000]
-          - [0x00373AC8, null, lit4, 0x0000]
-          - [0x00373ACC, null, lit4, 0x0000]
-          - [0x00373AD0, null, lit4, 0x0000]
-          - [0x00373AD4, null, lit4, 0x0000]
-          - [0x00373AD8, null, lit4, 0x0000]
-          - [0x00373ADC, null, lit4, 0x0000]
           - [0x00375768, rndnum, sdata, 0x0002]
           - [0x00375778, _7abe_sys$klonoa, sdata, 0x0008]
           - [0x00375780, _7abe_sys$env2, sdata, 0x0004]
@@ -11119,11 +10411,6 @@ sections:
           - [0x0034FF38, PadPressKeyAssignFromDigital, data, 0x0030]
           - [0x0034FF80, pad, data, 0x0380]
           - [0x00373AE0, null, lit4, 0x0000]
-          - [0x00373AE4, null, lit4, 0x0000]
-          - [0x00373AE8, null, lit4, 0x0000]
-          - [0x00373AEC, null, lit4, 0x0000]
-          - [0x00373AF0, null, lit4, 0x0000]
-          - [0x00373AF4, null, lit4, 0x0000]
           - [0x003757C8, align_dualshock, sdata, 0x0006]
           - [0x003757D0, align_jogcon, sdata, 0x0006]
           - [0x003757D8, _12CPressButton$default_pressure, sdata, 0x0004]

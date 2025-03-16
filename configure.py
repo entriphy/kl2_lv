@@ -267,6 +267,7 @@ def create_paruu_config(elf: ELFFile, stdump_json: str) -> list[Section]:
                             data = Data(None, load_address, "lit4", 0)
                             unit.data.append(data)
                             lit4_check = True
+                            break
 
             for local_variable in map(lambda x: stdump["local_variables"][x], function.get("local_variables", [])):
                 if local_variable["storage"]["type"] not in {"register", "stack"}:
@@ -289,6 +290,7 @@ def create_paruu_config(elf: ELFFile, stdump_json: str) -> list[Section]:
             "hr_mapv.c": 0x373C90
         },
         "hoshino:c": {
+            "h_func.c": 0x374158,
             "h_util.c": 0x3743A8,
         },
         "kazuya:c": {

@@ -568,6 +568,11 @@ typedef enum {
     HRAV_SINT2D,
 } HRAV;
 
+typedef struct {
+    s32 (**func)();
+    s32 mod;
+} FUNCTBL;
+
 // From nakano/main.h
 extern GAME_WORK GameGbl;
 extern SYSGBL SysGbl;
