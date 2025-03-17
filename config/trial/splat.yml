@@ -111,9 +111,9 @@ segments:
       - [0x05DDC8, c, hoshino/h_cdvd]
       - [0x05E810, c, hoshino/h_debug]
       - [0x05E820, asm, hoshino/h_event]
-      - [0x05FD90, asm, hoshino/h_file]
+      - [0x05FD90, c, hoshino/h_file]
       - [0x05FEA0, c, hoshino/h_func]
-      - [0x0600E0, asm, hoshino/h_game]
+      - [0x0600E0, c, hoshino/h_game]
       - [0x060CE8, asm, hoshino/h_gamesnd]
       - [0x062748, asm, hoshino/h_init]
       - [0x0629E0, asm, hoshino/h_menu]
@@ -458,7 +458,7 @@ segments:
       - [0x1EC068, data, hato/ht_zako]
       - [0x1EC0D0, .data, hoshino/h_cdvd]
       - [0x1EE9F0, .data, hoshino/h_func]
-      - [0x1EEA10, data, hoshino/h_game]
+      - [0x1EEA10, .data, hoshino/h_game]
       - [0x1F0310, data, hoshino/h_gamesnd]
       - [0x1F3690, data, hoshino/h_init]
       - [0x1F36B0, data, hoshino/h_menu]
@@ -627,8 +627,8 @@ segments:
       - [0x264890, rodata, hato/ht_zako]
       - [0x2648E0, .rodata, hoshino/h_cdvd]
       - [0x2649C0, rodata, hoshino/h_event]
-      - [0x264A48, rodata, hoshino/h_file]
-      - [0x264A70, rodata, hoshino/h_game]
+      - [0x264A48, .rodata, hoshino/h_file]
+      - [0x264A70, .rodata, hoshino/h_game]
       - [0x264D18, rodata, hoshino/h_gamesnd]
       - [0x264E58, rodata, hoshino/h_init]
       - [0x265028, rodata, hoshino/h_menu]
@@ -865,7 +865,7 @@ segments:
       - [0x2750F4, sdata, hato/ht_gblpara]
       - [0x27514C, .sdata, hoshino/h_cdvd]
       - [0x275158, .sdata, hoshino/h_func]
-      - [0x275160, sdata, hoshino/h_game]
+      - [0x275160, .sdata, hoshino/h_game]
       - [0x275164, sdata, hoshino/h_gamesnd]
       - [0x275170, sdata, hoshino/h_init]
       - [0x27518C, sdata, hoshino/h_sound]
@@ -963,7 +963,7 @@ segments:
       - {start: 0x276800, type: sbss, vram: 0x375890, name: harada/hr_tchr}
       - {start: 0x276800, type: sbss, vram: 0x375894, name: harada/hr_vpov}
       - {start: 0x276800, type: sbss, vram: 0x375898, name: hoshino/h_event}
-      - {start: 0x276800, type: sbss, vram: 0x3758C0, name: hoshino/h_file}
+      - {start: 0x276800, type: .sbss, vram: 0x3758C0, name: hoshino/h_file}
       - {start: 0x276800, type: sbss, vram: 0x3758C8, name: hoshino/h_packet}
       - {start: 0x276800, type: sbss, vram: 0x3758CC, name: hoshino/h_test_se}
       - {start: 0x276800, type: sbss, vram: 0x3758E0, name: kazuya/bios}

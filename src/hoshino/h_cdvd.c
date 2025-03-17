@@ -452,8 +452,9 @@ void hCdReadDataBlock(s32 no, void *buff) {
 #endif
 }
 
-void hCdReadData(s32 no, s32 buff) {
-    hCdCuePush((cD->Fp).lsn + FileData[no].lsn, FileData[no].sectors, buff, 4, cD->eeCnt);
+// Note: buff type changed from s32 to void*
+void hCdReadData(s32 no, void *buff) {
+    hCdCuePush((cD->Fp).lsn + FileData[no].lsn, FileData[no].sectors, (s32)buff, 4, cD->eeCnt);
 }
 
 s32 hCdReadSync() {

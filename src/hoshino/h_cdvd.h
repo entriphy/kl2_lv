@@ -59,7 +59,7 @@ extern s32  hCdRead(u32 lsn, u32 sectors, void *buff, sceCdRMode *mode);
 extern s32  hCdReadIOPm(u32 lsn, u32 sectors, void *buff, sceCdRMode *mode);
 extern s32  hCdGetSize(s32 no);
 extern void hCdReadDataBlock(s32 no, void *buff);
-extern void hCdReadData(s32 no, s32 buff);
+extern void hCdReadData(s32 no, void *buff);
 extern s32  hCdReadSync();
 extern s32  hCdDataStat();
 extern void hCdInit();

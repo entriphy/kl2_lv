@@ -137,6 +137,9 @@ typedef volatile s128 vs128 __attribute__((mode(TI)));
 #define SPR_SEND SPR_SRC(SPR_MEM)
 #define UNCACHED(p) ((void *)((u32)p | 0x20000000))
 
+#define KL2_VISION(vision, area) (vision << 16 | area)
+#define KL2_VAG(splt, prog, bank, grp, unk, flag, bendh, bendl) ((u64)(splt) | (u64)(prog) << 8 | (u64)(bank) << 15 | (u64)(grp) << 16 | (u64)(unk) << 20 | (u64)(flag) << 24 | (u64)(bendh) << 32 | (u64)(bendl) << 44)
+
 #define KL2_PI  (3.141592f)
 #define KL2_2PI (2.0f * KL2_PI)
 #define KL2_3PI (3.0f * KL2_PI)
