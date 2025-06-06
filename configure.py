@@ -435,7 +435,7 @@ def write_symbol_addrs(version: str, sections: list[Section]):
                     f.write(f"{data.name:<32} = 0x{data.address:08X}; // size:{data.size} allow_duplicated:True\n")
                 f.write("\n")
 
-def write_splat_config(version: str, sections: list[Section], asm_only: bool = False):
+def write_splat_config(version: str, sections: list[Section]):
     subsegments = [
         SplatSegment(0x1000, "asm", "lib/crt0"),
         SplatSegment(0x10C8, "asm", "lib/tmp"),
@@ -455,13 +455,13 @@ def write_splat_config(version: str, sections: list[Section], asm_only: bool = F
         for unit in section.units:
             matching = os.path.exists(f"src/{section.path}/{unit.name}")
             if len(unit.functions) > 0:
-                subsegments.append(SplatSegment(unit.functions[0].address - 0x100000 + 0x1000, unit.name.split(".")[1] if matching and not asm_only else "asm", f"{section.path}/{unit.name.split(".")[0]}"))
+                subsegments.append(SplatSegment(unit.functions[0].address - 0x100000 + 0x1000, unit.name.split(".")[1] if matching else "asm", f"{section.path}/{unit.name.split(".")[0]}"))
             for elf_section in ["data", "sdata", "sbss", "bss", "rodata", "lit4"]:
                 data = unit.get_section_start(elf_section)
                 if data is not None:
                     subsegments.append(SplatSegment(
                         (data.address - 0x100000 + 0x1000) if elf_section not in SECTION_ADDRS or elf_section == "rodata" else SECTION_ADDRS[elf_section],
-                        f"{"." if matching and not asm_only else ""}{elf_section}",
+                        f"{"." if matching else ""}{elf_section}",
                         f"{section.path}/{unit.name.split(".")[0]}",
                         data.address if elf_section in {"sbss", "bss"} else None
                     ))
@@ -524,7 +524,7 @@ def write_objdiff_config(sections: list[Section]):
             unit_name = unit.name.split(".")[0]
             objdiff_units.append({
                 "name": f"{section.path}/{unit_name}",
-                "target_path": f"build/objdiff/{section.path}/{unit_name}.o",
+                "target_path": f"build/asm/{section.path}/{unit_name}.o",
                 "base_path": f"build/src/{section.path}/{unit_name}.o"
             })
     
@@ -537,11 +537,11 @@ def write_objdiff_config(sections: list[Section]):
         }, f, indent=4)
 
 def splat_stuff(version: str) -> list[LinkerEntry]:
-    yaml_file = f"config/{version}/splat.yml"
-    split.main([yaml_file], modes="all", verbose=False)
+    yaml_file = Path(f"config/{version}/splat.yml")
+    split.main([yaml_file], modes="all", verbose=False, make_full_disasm_for_code=True)
     return split.linker_writer.entries.copy()
 
-def write_ninja_config(version: str, linker_entries: list[LinkerEntry], objdiff_entries: list[LinkerEntry], debug: bool = False):
+def write_ninja_config(version: str, linker_entries: list[LinkerEntry], debug: bool = False):
     built_objects: set[Path] = set()
 
     def build(
@@ -551,7 +551,7 @@ def write_ninja_config(version: str, linker_entries: list[LinkerEntry], objdiff_
         variables: dict[str, str] = {},
         implicit: list[str] = [],
         implicit_outputs: list[str] = [],
-        asm_only: bool = False
+        link: bool = True
     ):
         if not isinstance(object_paths, list):
             object_paths = [object_paths]
@@ -559,7 +559,7 @@ def write_ninja_config(version: str, linker_entries: list[LinkerEntry], objdiff_
         object_strs = [str(obj) for obj in object_paths]
 
         for object_path in object_paths:
-            if object_path.suffix == ".o" and not asm_only:
+            if object_path.suffix == ".o" and link:
                 built_objects.add(object_path)
             ninja.build(
                 outputs=object_strs,
@@ -625,6 +625,12 @@ def write_ninja_config(version: str, linker_entries: list[LinkerEntry], objdiff_
         "tools/elf_patcher.c"
     )
 
+    ninja.rule(
+        "ld_asm",
+        description="ld_asm $out",
+        command=f"{CROSS}-ld -EL -r $in -o $out"
+    )
+
     for entry in linker_entries:
         seg = entry.segment
 
@@ -638,8 +644,43 @@ def write_ninja_config(version: str, linker_entries: list[LinkerEntry], objdiff_
             build(entry.object_path, entry.src_paths, "as", implicit=["build/tools/elf_patcher"])
         elif isinstance(seg, splat.segtypes.common.cpp.CommonSegCpp):
             build(entry.object_path, entry.src_paths, "cpp")
+
+            # Build ASM for objdiff
+            # src_path = list(entry.src_paths[0].with_suffix(".s").parts)
+            # src_path[0] = "asm"
+            # object_path = list(entry.object_path.parts)
+            # object_path[1] = "asm"
+            # build(Path(*object_path), [Path(*src_path)], "as", implicit=["build/tools/elf_patcher"], link=False)
         elif isinstance(seg, splat.segtypes.common.c.CommonSegC):
+            link_asm: list[Path] = []
+
+            # Build code source
             build(entry.object_path, entry.src_paths, "c")
+
+            # Build code ASM
+            src_path = list(entry.src_paths[0].with_suffix(".s").parts)
+            src_path[0] = "asm"
+            object_path = list(entry.object_path.parts)
+            object_path[1] = "asm"
+            src = Path(*src_path)
+            obj = Path(*object_path).with_suffix(".text.o")
+            build(obj, [src], "as", implicit=["build/tools/elf_patcher"], link=False)
+            link_asm.append(obj)
+
+            # Build data ASMs
+            src_path.insert(1, "data")
+            object_path.insert(2, "data")
+            for section, sibling in seg.siblings.items():
+                src = Path(*src_path).with_suffix(section + ".s")
+                obj = Path(*object_path).with_suffix(section + ".o")
+                if src.exists():
+                    build(obj, [src], "as", implicit=["build/tools/elf_patcher"], link=False)
+                    link_asm.append(obj)
+            
+            # Link code + data ASMs
+            del src_path[1]
+            del object_path[2]
+            build(Path(*object_path), link_asm, "ld_asm", link=False)
         elif isinstance(seg, splat.segtypes.common.data.CommonSegData):
             build(entry.object_path, entry.src_paths, "as", implicit=["build/tools/elf_patcher"])
         elif isinstance(seg, splat.segtypes.common.databin.CommonSegDatabin):
@@ -675,29 +716,6 @@ def write_ninja_config(version: str, linker_entries: list[LinkerEntry], objdiff_
         f"config/{version}/checksum.sha1",
         implicit=[elf_path],
     )
-
-    if len(objdiff_entries) > 0:
-        ninja.rule(
-            "objdiff",
-            description="objdiff $out",
-            command=f"{CROSS}-ld -EL -r $in -o $out"
-        )
-
-        objdiff_ld: dict[str, list[LinkerEntry]] = {}
-        for entry in objdiff_entries:
-            if entry.segment.name not in objdiff_ld:
-                objdiff_ld[entry.segment.name] = []
-            objdiff_ld[entry.segment.name].append(entry)
-        for unit, entries in objdiff_ld.items():
-            inputs = []
-            for entry in entries:
-                build(entry.object_path, entry.src_paths, "as", asm_only=True, implicit=["build/tools/elf_patcher"])
-                inputs.append(str(entry.object_path))
-            ninja.build(
-                f"build/objdiff/{unit}.o",
-                "objdiff",
-                inputs
-            )
 
 def read_elf(elf_path: str) -> ELFFile:
     with open(elf_path, "rb") as f:
@@ -764,11 +782,6 @@ if __name__ == "__main__":
         help="generate symbol_addrs.txt",
         default=True
     )
-    parser.add_argument(
-        "-obj", "--objdiff",
-        action="store_true",
-        help="generate objdiff.json and add build/link commands to ninja config (note that this will run splat twice to generate all required build files)"
-    )
 
     args = parser.parse_args()
 
@@ -785,18 +798,10 @@ if __name__ == "__main__":
         write_symbol_addrs(args.version, paruu)
 
     if args.splat:
-        if args.objdiff:
-            write_splat_config(args.version, paruu, asm_only=True) # this
-            yeet1 = splat_stuff(args.version) # is
-            write_splat_config(args.version, paruu, asm_only=False) # dumb
-            yeet2 = splat_stuff(args.version) # but i have to do this to force splat to emit the assembly per-segment if the source file exists D:
-            write_objdiff_config(paruu)
-            objdiff_entries = set(LinkerEntryWrapper(entry) for entry in yeet1) - set(LinkerEntryWrapper(entry) for entry in yeet2)
-        else:
-            write_splat_config(args.version, paruu)
-            splat_stuff(args.version)
-            objdiff_entries = []
+        write_objdiff_config(paruu)
+        write_splat_config(args.version, paruu)
+        splat_stuff(args.version)
         
-        write_ninja_config(args.version, split.linker_writer.entries, [entry.entry for entry in objdiff_entries], debug=True)
+        write_ninja_config(args.version, split.linker_writer.entries, debug=True)
         with open("compile_commands.json", "wb") as f:
             subprocess.run(["ninja", "-t", "compdb"], stdout=f)
