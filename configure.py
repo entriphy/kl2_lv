@@ -121,8 +121,10 @@ class Unit:
 
     def dump(self) -> dict:
         d = { "name": self.name }
-        if self.functions: d["functions"] = self.functions
-        if self.data: d["data"] = self.data
+        if self.functions:
+            d["functions"] = self.functions
+        if self.data:
+            d["data"] = self.data
         return d
     
     def get_section_start(self, section: str) -> Data | None:
@@ -170,10 +172,10 @@ class SplatSegment:
         ) if data.vram is None else yaml.MappingNode(
             "tag:yaml.org,2002:map",
             [
-                (yaml.ScalarNode("tag:yaml.org,2002:str", f"start"), yaml.ScalarNode("tag:yaml.org,2002:int", f"0x{data.start:06X}")),
-                (yaml.ScalarNode("tag:yaml.org,2002:str", f"type"), yaml.ScalarNode("tag:yaml.org,2002:str", data.type)),
-                (yaml.ScalarNode("tag:yaml.org,2002:str", f"vram"), yaml.ScalarNode("tag:yaml.org,2002:int", f"0x{data.vram:06X}")),
-                (yaml.ScalarNode("tag:yaml.org,2002:str", f"name"), yaml.ScalarNode("tag:yaml.org,2002:str", data.name)),
+                (yaml.ScalarNode("tag:yaml.org,2002:str", "start"), yaml.ScalarNode("tag:yaml.org,2002:int", f"0x{data.start:06X}")),
+                (yaml.ScalarNode("tag:yaml.org,2002:str", "type"), yaml.ScalarNode("tag:yaml.org,2002:str", data.type)),
+                (yaml.ScalarNode("tag:yaml.org,2002:str", "vram"), yaml.ScalarNode("tag:yaml.org,2002:int", f"0x{data.vram:06X}")),
+                (yaml.ScalarNode("tag:yaml.org,2002:str", "name"), yaml.ScalarNode("tag:yaml.org,2002:str", data.name)),
             ],
             flow_style=True
         )
@@ -187,16 +189,20 @@ def get_gp_value(elf: ELFFile) -> int:
     text_data = text_section.data()
     registers = {"zero": 0}
     for i in range(32):
-        word = struct.unpack(f"<i", text_data[i * 4:(i + 1) * 4])[0]
+        word = struct.unpack("<i", text_data[i * 4:(i + 1) * 4])[0]
         instr = rabbitizer.Instruction(word)
         if instr.canBeHi() or instr.canBeLo() or instr.maybeIsMove():
             if instr.rt.name not in registers:
                 registers[instr.rt.name] = 0
             match instr.getOpcodeName():
-                case "lui": registers[instr.rt.name] = instr.getProcessedImmediate() << 16
-                case "addiu": registers[instr.rt.name] = registers[instr.rs.name] + instr.getProcessedImmediate()
-                case "daddu": registers[instr.rd.name] = registers[instr.rs.name] + registers[instr.rt.name]
-                case _: raise Exception(f"Unknown instruction {instr}")
+                case "lui":
+                    registers[instr.rt.name] = instr.getProcessedImmediate() << 16
+                case "addiu":
+                    registers[instr.rt.name] = registers[instr.rs.name] + instr.getProcessedImmediate()
+                case "daddu":
+                    registers[instr.rd.name] = registers[instr.rs.name] + registers[instr.rt.name]
+                case _:
+                    raise Exception(f"Unknown instruction {instr}")
         if "gp" in registers:
             break
     if "gp" not in registers:
@@ -206,10 +212,8 @@ def get_gp_value(elf: ELFFile) -> int:
 # this will be removed eventually
 def create_paruu_config(elf: ELFFile, stdump_json: str) -> list[Section]:
     text_section = elf.get_section_by_name(".text")
-    rodata_section = elf.get_section_by_name(".rodata")
     lit4_section = elf.get_section_by_name(".lit4")
     text_data = text_section.data()
-    rodata_range = (rodata_section.header.sh_addr, rodata_section.header.sh_addr + rodata_section.header.sh_size)
     lit4_range = (lit4_section.header.sh_addr, lit4_section.header.sh_addr + lit4_section.header.sh_size)
 
     with open(stdump_json) as f:
@@ -221,7 +225,6 @@ def create_paruu_config(elf: ELFFile, stdump_json: str) -> list[Section]:
     lib_section = Section("lib", "lib", [])
     lib_unit = Unit("sdk", [], [])
     lib_section.units.append(lib_unit)
-    registers = {"zero": 0}
     for source_file in stdump["source_files"]:
         source_file_split: str = source_file["name"].split("/home/hoshino/trial/src/")
         if len(source_file_split) == 1:
@@ -291,6 +294,7 @@ def create_paruu_config(elf: ELFFile, stdump_json: str) -> list[Section]:
         },
         "hoshino:c": {
             "h_func.c": 0x374158,
+            "h_menu.c": 0x374174,
             "h_util.c": 0x3743A8,
         },
         "kazuya:c": {
@@ -431,7 +435,8 @@ def write_symbol_addrs(version: str, sections: list[Section]):
                 for function in unit.functions:
                     f.write(f"{function.name:<32} = 0x{function.address:08X}; // type:func allow_duplicated:True\n")
                 for data in unit.data:
-                    if data.name is None: continue
+                    if data.name is None:
+                        continue
                     f.write(f"{data.name:<32} = 0x{data.address:08X}; // size:{data.size} allow_duplicated:True\n")
                 f.write("\n")
 

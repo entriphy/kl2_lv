@@ -64,5 +64,8 @@ int main(int argc, const char *argv[]) {
 
     // Cleanup
     fclose(file);
+    free(ehdr);
+    free(shdr);
+    free(string_tbl);
     return 0;
 }

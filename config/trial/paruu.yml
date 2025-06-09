@@ -2647,6 +2647,7 @@ sections:
           - [0x002F26B0, MenuCont.3, data, 0x0010]
           - [0x002F26C0, hMenuFuncTbl, data, 0x0000]
           - [0x00364028, null, rodata, 0x0000]
+          - [0x00374174, null, sdata, 0x0000]
           - [0x00387750, hG, bss, 0x05D0]
           - [0x00387D20, RpcArg, bss, 0x0040]
           - [0x00387D60, hPacketArea, bss, 0x8000]
