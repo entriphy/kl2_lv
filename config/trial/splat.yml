@@ -110,7 +110,7 @@ segments:
       - [0x05BD70, asm, hato/ht_zako]
       - [0x05DDC8, c, hoshino/h_cdvd]
       - [0x05E810, c, hoshino/h_debug]
-      - [0x05E820, asm, hoshino/h_event]
+      - [0x05E820, c, hoshino/h_event]
       - [0x05FD90, c, hoshino/h_file]
       - [0x05FEA0, c, hoshino/h_func]
       - [0x0600E0, c, hoshino/h_game]
@@ -626,7 +626,7 @@ segments:
       - [0x2647B0, rodata, hato/ht_tat2]
       - [0x264890, rodata, hato/ht_zako]
       - [0x2648E0, .rodata, hoshino/h_cdvd]
-      - [0x2649C0, rodata, hoshino/h_event]
+      - [0x2649C0, .rodata, hoshino/h_event]
       - [0x264A48, .rodata, hoshino/h_file]
       - [0x264A70, .rodata, hoshino/h_game]
       - [0x264D18, .rodata, hoshino/h_gamesnd]
@@ -695,7 +695,7 @@ segments:
       - [0x271FD0, lit4, hato/ht_tat]
       - [0x271FDC, lit4, hato/ht_tat2]
       - [0x271FE4, lit4, hato/ht_zako]
-      - [0x272038, lit4, hoshino/h_event]
+      - [0x272038, .lit4, hoshino/h_event]
       - [0x272058, .lit4, hoshino/h_gamesnd]
       - [0x272088, lit4, hoshino/h_sound]
       - [0x2720A4, lit4, hoshino/h_str]
@@ -963,7 +963,7 @@ segments:
       - {start: 0x276800, type: sbss, vram: 0x37588C, name: harada/hr_prm}
       - {start: 0x276800, type: sbss, vram: 0x375890, name: harada/hr_tchr}
       - {start: 0x276800, type: sbss, vram: 0x375894, name: harada/hr_vpov}
-      - {start: 0x276800, type: sbss, vram: 0x375898, name: hoshino/h_event}
+      - {start: 0x276800, type: .sbss, vram: 0x375898, name: hoshino/h_event}
       - {start: 0x276800, type: .sbss, vram: 0x3758C0, name: hoshino/h_file}
       - {start: 0x276800, type: sbss, vram: 0x3758C8, name: hoshino/h_packet}
       - {start: 0x276800, type: sbss, vram: 0x3758CC, name: hoshino/h_test_se}
@@ -1003,7 +1003,7 @@ segments:
       - {start: 0x276864, type: bss, vram: 0x375BF0, name: harada/hr_mapv}
       - {start: 0x276864, type: bss, vram: 0x375EA0, name: harada/hrmenu}
       - {start: 0x276864, type: bss, vram: 0x375EB0, name: hato/ht_menu}
-      - {start: 0x276864, type: bss, vram: 0x375F00, name: hoshino/h_event}
+      - {start: 0x276864, type: .bss, vram: 0x375F00, name: hoshino/h_event}
       - {start: 0x276864, type: bss, vram: 0x387750, name: hoshino/h_menu}
       - {start: 0x276864, type: bss, vram: 0x38FD70, name: hoshino/h_pad}
       - {start: 0x276864, type: bss, vram: 0x38FF40, name: hoshino/h_rpc}

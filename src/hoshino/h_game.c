@@ -1,4 +1,5 @@
 #include "hoshino/h_game.h"
+#include "hoshino/h_event.h"
 #include "hoshino/h_sound.h"
 #include "hoshino/h_str.h"
 

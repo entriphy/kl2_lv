@@ -1,3 +1,8 @@
+EvMng = 0x375f00;
+EvObj = 0x376200;
+pEvObj = 0x378600;
+EvTbl = 0x378700;
+EvRestart = 0x384f00;
 PsfxWorkBuff = 0x491680;
 p1_packet_buff = 0x691680;
 p1_ot_buff = 0x6b1680;
