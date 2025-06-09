@@ -117,7 +117,7 @@ segments:
       - [0x060CE8, c, hoshino/h_gamesnd]
       - [0x062748, c, hoshino/h_init]
       - [0x0629E0, asm, hoshino/h_menu]
-      - [0x062BE8, asm, hoshino/h_packet]
+      - [0x062BE8, c, hoshino/h_packet]
       - [0x063FC0, asm, hoshino/h_pad]
       - [0x064390, asm, hoshino/h_rpc]
       - [0x0646C8, asm, hoshino/h_sound]
@@ -965,7 +965,7 @@ segments:
       - {start: 0x276800, type: sbss, vram: 0x375894, name: harada/hr_vpov}
       - {start: 0x276800, type: .sbss, vram: 0x375898, name: hoshino/h_event}
       - {start: 0x276800, type: .sbss, vram: 0x3758C0, name: hoshino/h_file}
-      - {start: 0x276800, type: sbss, vram: 0x3758C8, name: hoshino/h_packet}
+      - {start: 0x276800, type: .sbss, vram: 0x3758C8, name: hoshino/h_packet}
       - {start: 0x276800, type: sbss, vram: 0x3758CC, name: hoshino/h_test_se}
       - {start: 0x276800, type: sbss, vram: 0x3758E0, name: kazuya/bios}
       - {start: 0x276800, type: sbss, vram: 0x375910, name: kazuya/obj_klo}
