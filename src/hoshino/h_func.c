@@ -1,6 +1,6 @@
 #include "hoshino/h_func.h"
+#include "hoshino/h_init.h"
 #include "hoshino/h_menu.h"
-// #include "h_init.h"
 // #include "h_test.h"
 #include "okanoyo/okprint.h"
 

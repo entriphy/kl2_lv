@@ -125,7 +125,7 @@ segments:
       - [0x066B38, asm, hoshino/h_test]
       - [0x067928, asm, hoshino/h_test_se]
       - [0x067D70, c, hoshino/h_util]
-      - [0x068210, asm, hoshino/h_wkmng]
+      - [0x068210, c, hoshino/h_wkmng]
       - [0x068318, asm, kazuya/bios]
       - [0x06A688, asm, kazuya/func]
       - [0x06A740, asm, kazuya/interfac]
@@ -1009,7 +1009,7 @@ segments:
       - {start: 0x276864, type: .bss, vram: 0x38FF40, name: hoshino/h_rpc}
       - {start: 0x276864, type: .bss, vram: 0x390080, name: hoshino/h_sound}
       - {start: 0x276864, type: bss, vram: 0x490480, name: hoshino/h_test}
-      - {start: 0x276864, type: bss, vram: 0x490580, name: hoshino/h_wkmng}
+      - {start: 0x276864, type: .bss, vram: 0x490580, name: hoshino/h_wkmng}
       - {start: 0x276864, type: bss, vram: 0x4905B0, name: kazuya/menu}
       - {start: 0x276864, type: bss, vram: 0x4905C0, name: kazuya/obj_klo}
       - {start: 0x276864, type: bss, vram: 0x490A50, name: kazuya/obj_std}
