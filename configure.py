@@ -27,8 +27,8 @@ COMPILER_ID        = "ee-gcc"
 COMPILER_VER       = "2.9-991111-01"
 COMPILER_DIR       = f"{TOOLS_DIR}/cc/{COMPILER_ID}{COMPILER_VER}"
 COMMON_INCLUDES    = f"-Iinclude -Isrc -isystem lib/ee -isystem lib -isystem {COMPILER_DIR}/ee/include -isystem {COMPILER_DIR}/lib/gcc-lib/ee/2.9-ee-991111-01/include"
-COMPILER_FLAGS_C   = "-O1 -gstabs"
-COMPILER_FLAGS_CPP = "-O2 -gstabs -x c++ -fno-exceptions"
+COMPILER_FLAGS_C   = "-O1 -G8 -gstabs"
+COMPILER_FLAGS_CPP = "-O2 -G8 -gstabs -x c++ -fno-exceptions"
 COMPILE_CMD_C      = f"{COMPILER_DIR}/bin/ee-gcc -c {COMMON_INCLUDES} {COMPILER_FLAGS_C}"
 COMPILE_CMD_CPP    = f"{COMPILER_DIR}/bin/ee-gcc -c {COMMON_INCLUDES} {COMPILER_FLAGS_CPP}"
 
@@ -488,6 +488,7 @@ def write_splat_config(version: str, sections: list[Section]):
             "compiler": "EEGCC",
             "platform": "ps2",
             "use_gp_rel_macro_nonmatching": False,
+            "ld_bss_contains_common": True,
             "string_encoding": "SHIFT-JIS",
             "rodata_string_guesser_level": 2,
             "data_string_guesser_level": 2,
@@ -671,6 +672,11 @@ def write_ninja_config(version: str, linker_entries: list[LinkerEntry], debug: b
             obj = Path(*object_path).with_suffix(".text.o")
             build(obj, [src], "as", implicit=["build/tools/elf_patcher"], link=False)
             link_asm.append(obj)
+            # Fix ACC register
+            with src.open("r") as f:
+                asm = f.read()
+            with src.open("w") as f:
+                f.write(asm.replace(" ACC,", " $ACC,"))
 
             # Build data ASMs
             src_path.insert(1, "data")

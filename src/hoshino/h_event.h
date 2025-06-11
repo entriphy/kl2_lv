@@ -2,8 +2,8 @@
 #define __H_EVENT_H
 
 #include "common.h"
-#include "hoshino/h_wkmng.h"
 #include "sfx.h"
+#include "hoshino/h_wkmng.h"
 
 typedef struct { // 0xe4
 #ifdef KL2_VER_RETAIL
@@ -92,11 +92,11 @@ typedef struct { // 0x90
 #endif
 } hEvOBJECT;
 
-// extern hMNGLIST EvMng[64];
-// extern hEvOBJECT EvObj[64];
-// extern hEvOBJECT *pEvObj[64];
-// extern hEvTABLE EvTbl[20][128];
-// extern hEvRESTART EvRestart[20][128];
+extern hMNGLIST EvMng[64];
+extern hEvOBJECT EvObj[64];
+extern hEvOBJECT *pEvObj[64];
+extern hEvTABLE EvTbl[20][128];
+extern hEvRESTART EvRestart[20][128];
 
 extern void hEvInitFrame();
 extern void hEvObjMake(hEvTABLE *pt);

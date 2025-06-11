@@ -11,6 +11,7 @@ options:
   compiler: EEGCC
   platform: ps2
   use_gp_rel_macro_nonmatching: false
+  ld_bss_contains_common: true
   string_encoding: SHIFT-JIS
   rodata_string_guesser_level: 2
   data_string_guesser_level: 2
