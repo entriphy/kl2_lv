@@ -2,7 +2,7 @@
 #include "hoshino/h_menu.h"
 // #include "h_init.h"
 // #include "h_test.h"
-// #include "okanoyo/okprint.h"
+#include "okanoyo/okprint.h"
 
 #ifdef KL2_VER_TRIAL
 #define FONT_WIDTH  12
@@ -13,7 +13,6 @@
 #endif
 
 // TODO: delete
-extern s32 (*hMenuFuncTbl[])();
 extern s32 (*hTestFuncTbl[])();
 extern s32 TestMode;
 

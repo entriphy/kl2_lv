@@ -11,6 +11,7 @@
 #include <libvu0.h>
 #include <libgraph.h>
 #include <sifdev.h>
+#include <libcdvd.h>
 
 #ifndef __KL2_TYPES
 #define __KL2_TYPES

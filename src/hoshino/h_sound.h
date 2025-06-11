@@ -4,16 +4,18 @@
 #include "common.h"
 
 typedef enum {
-    SNDCMD_KEYON = 0,
-    SNDCMD_KEYOFF = 1,
-    SNDCMD_KEYOFFALL = 2,
-    SNDCMD_PITCH = 3,
-    SNDCMD_PALPITCH = 4,
-    SNDCMD_VOL = 5,
-    SNDCMD_MVOL = 6,
-    SNDCMD_MVOLALL = 7,
-    SNDCMD_EFFECT = 8,
-    SNDCMD_EVOL = 9
+    SNDCMD_KEYON,
+    SNDCMD_KEYOFF,
+    SNDCMD_KEYOFFALL,
+    SNDCMD_PITCH,
+#ifdef KL2_VER_RETAIL
+    SNDCMD_PALPITCH,
+#endif
+    SNDCMD_VOL,
+    SNDCMD_MVOL,
+    SNDCMD_MVOLALL,
+    SNDCMD_EFFECT,
+    SNDCMD_EVOL
 } SNDCMD;
 
 typedef enum {
@@ -122,8 +124,13 @@ typedef struct {
     s32 delay;
     s32 feed;
     s32 dry;
+#ifdef KL2_VER_RETAIL
     f32 vol_ppt;
+#endif
     f32 workf0;
+#ifdef KL2_VER_TRIAL
+	f32 workf1;
+#endif
     s32 worki0;
     s32 worki1;
 } EFXSE;
@@ -142,6 +149,7 @@ extern void hSndPkKeyOffAll();
 extern s32  hSndPkGetSize();
 extern void hSndReset();
 extern void hSndFadeOutAll(s32 frame);
+extern void hSndMute();
 extern void hSndFadeInAll(s32 frame);
 extern void hSndSetMVol(f32 vol);
 extern s32  hSndFader(f32 vol);
@@ -155,11 +163,12 @@ extern void hSndEffSetArea();
 extern void hSndEffSetVolIdx(s32 idx);
 extern void hSndEffSetVol_PPTstart();
 extern void hSndEffSetVol_PPTend();
-extern void hSndEffSetVol(f32 vol);
+extern void hSndEffSetVol(KL2_VER_COND(s32, f32) vol);
 extern void hSndSetStereo(SND_MODE i);
 
-extern u8 SndPacket[1024];
-extern u8 SndTempBuff[1048576];
+extern u8 SndPacket[0x400];
+extern u8 SndTempBuff[0x100000];
+
 extern hSNDDATA *sD;
 
 #endif

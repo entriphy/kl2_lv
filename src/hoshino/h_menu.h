@@ -16,6 +16,13 @@ typedef struct { // 0x5d0
     /* 0x5bc */ u8 light_col[4][4];
 } hGLOBAL;
 
+typedef struct { // 0x10
+    /* 0x0 */ s32 mode;
+    /* 0x4 */ s32 vision;
+    /* 0x8 */ s32 flag;
+    /* 0xc */ s32 vscnt;
+} MENU_WORK;
+
 extern s32 (*hMenuFuncTbl[])();
 extern hGLOBAL hG;
 extern s32 RpcArg[0x10];

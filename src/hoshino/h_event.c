@@ -5,11 +5,11 @@
 #include "nakano/light.h"
 #include "take/motsys.h"
 
-hMNGLIST EvMng[64];
-hEvOBJECT EvObj[64];
-hEvOBJECT *pEvObj[64];
-hEvTABLE EvTbl[20][128];
-hEvRESTART EvRestart[20][128];
+hMNGLIST EvMng[64] __attribute__((section(".bss")));
+hEvOBJECT EvObj[64] __attribute__((section(".bss")));
+hEvOBJECT *pEvObj[64] __attribute__((section(".bss")));
+hEvTABLE EvTbl[20][128] __attribute__((section(".bss")));
+hEvRESTART EvRestart[20][128] __attribute__((section(".bss")));
 static s32 NoStageData;
 static s32 NoEvent;
 static u32 EvFlag;

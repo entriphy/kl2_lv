@@ -2,6 +2,7 @@
 #define __H_STR_H
 
 #include "common.h"
+#include "hoshino/h_sound.h"
 
 #ifdef KL2_VER_TRIAL
 typedef enum {
@@ -106,6 +107,140 @@ typedef enum {
     BGM085,
     BGM086,
 } BGM;
+#endif
+
+typedef struct {
+    /* 0x00 */ sceCdlFILE file;
+    /* 0x20 */ s32 Command;
+    /* 0x24 */ BGM bgmNo;
+    /* 0x28 */ s32 bgmCh;
+    /* 0x2c */ s32 bgmChMax;
+#ifdef KL2_VER_RETAIL
+    /* 0x30 */ s32 bgmLength;
+    /* 0x34 */ s32 bgmSkipSize;
+#endif
+    /* 0x38 */ s32 bgmNo2;
+    /* 0x3c */ f32 bgmVol;
+    /* 0x40 */ s32 bgmMute;
+    /* 0x44 */ s32 fadeFlag;
+    /* 0x48 */ s32 fadeCnt;
+    /* 0x4c */ s32 fadeMax;
+    /* 0x50 */ BGM nextNo;
+    /* 0x54 */ s32 nextCh;
+    /* 0x58 */ s32 nextFrame;
+    /* 0x5c */ f32 nextVol;
+    /* 0x60 */ s32 spWk0;
+#ifdef KL2_VER_RETAIL
+    /* 0x64 */ s32 iopPoint;
+#endif
+    /* 0x68 */ s32 iopNext;
+    /* 0x6c */ s32 iopID;
+    /* 0x70 */ s32 iopAddr[2];
+    /* 0x78 */ s32 iopOK[2];
+    /* 0x80 */ s32 iopFineTop[2];
+    /* 0x88 */ s32 iopFine[2];
+    /* 0x90 */ s32 cdReq;
+    /* 0x94 */ s32 cdTop;
+    /* 0x98 */ s32 cdCur;
+    /* 0x9c */ s32 cdSectors;
+    /* 0xa0 */ s32 cdRemain;
+} hBGMDATA;
+
+typedef struct {
+    /* 0x000 */ sceCdlFILE file;
+    /* 0x020 */ s32 reqNum;
+#ifdef KL2_VER_RETAIL
+    /* 0x024 */ u32 reqID;
+#endif
+    f32 reqVol[4];
+    s32 listLoad;
+    s32 listPlay;
+    s32 listPlayIdx;
+    s32 listNum[8];
+    s32 *listTbl[8];
+    s32 pptMute;
+    f32 pptVol[4];
+    s32 pptPlay[4];
+    s32 pptSize[4];
+    s32 pptStop[4];
+#ifdef KL2_VER_RETAIL
+    s32 pptID[4];
+#endif
+    s32 iopID;
+    s32 iopBfID[4];
+    s32 iopNext[4];
+    s32 iopAddr[4][2];
+    s32 eeID;
+    s32 eeAddr[4];
+    s32 eeOffset[4];
+    s32 eeStat[4];
+} hPPTDATA;
+
+#ifdef KL2_VER_RETAIL
+typedef struct {
+    sceCdlFILE files[4];
+    s32 field_0x80;
+    s32 field_0x84;
+    s32 field_0x88;
+    s32 field_0x8C;
+    s32 field_0x90;
+    s32 field_0x94;
+    s32 field_0x98;
+    s32 field_0x9C;
+    s32 field_0xA0;
+    s32 field_0xA4;
+    s32 field_0xA8;
+    s32 AC3stat;
+    s32 field_0xB0;
+    s32 field_0xB4[2];
+    s32 field_0xBC;
+    s32 field_0xC0;
+    s32 field_0xC4;
+    s32 field_0xC8[2];
+    s32 field_0xD0[2];
+    s32 field_0xD8;
+    s32 field_0xDC;
+    s32 field_0xE0;
+    s32 field_0xE4;
+    s32 field_0xE8;
+    s32 field_0xEC;
+} hAC3DATA; // ?
+#endif
+
+typedef struct {
+    s32 eeCnt;
+    s32 Command;
+    SND_MODE BGMstereo;
+    s32 BGMlength;
+    s32 BGMskipsize;
+    s32 BGMvol;
+    s8 BGMch;
+    s8 BGMchmax;
+    s8 BGMok[2];
+    s32 BGMfinetop[2];
+    s32 BGMfine[2];
+    s32 PPTvol[4];
+    s32 PPTsize[4];
+    s8 PPTstop[4];
+    s32 work0;
+    s32 idk;
+} STRINFO;
+
+typedef struct {
+    /* 0x00 */ s32 BGMnext;
+#ifdef KL2_VER_RETAIL
+    /* 0x04 */ s32 BGMpoint;
+#endif
+    /* 0x08 */ s32 PPTnext[4];
+#ifdef KL2_VER_RETAIL
+    /* 0x18 */ s32 AC3stat;
+#endif
+} STRINFO2;
+
+extern hBGMDATA *bD;
+extern hPPTDATA *pD;
+#ifdef KL2_VER_RETAIL
+extern hAC3DATA *aD;
 #endif
 
 extern s32  hBgmGetPlaySize();

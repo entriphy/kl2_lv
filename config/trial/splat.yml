@@ -11,7 +11,6 @@ options:
   compiler: EEGCC
   platform: ps2
   use_gp_rel_macro_nonmatching: false
-  ld_bss_contains_common: true
   string_encoding: SHIFT-JIS
   rodata_string_guesser_level: 2
   data_string_guesser_level: 2
@@ -117,11 +116,11 @@ segments:
       - [0x0600E0, c, hoshino/h_game]
       - [0x060CE8, c, hoshino/h_gamesnd]
       - [0x062748, c, hoshino/h_init]
-      - [0x0629E0, asm, hoshino/h_menu]
+      - [0x0629E0, c, hoshino/h_menu]
       - [0x062BE8, c, hoshino/h_packet]
-      - [0x063FC0, asm, hoshino/h_pad]
-      - [0x064390, asm, hoshino/h_rpc]
-      - [0x0646C8, asm, hoshino/h_sound]
+      - [0x063FC0, c, hoshino/h_pad]
+      - [0x064390, c, hoshino/h_rpc]
+      - [0x0646C8, c, hoshino/h_sound]
       - [0x0653E8, asm, hoshino/h_str]
       - [0x066B38, asm, hoshino/h_test]
       - [0x067928, asm, hoshino/h_test_se]
@@ -462,8 +461,8 @@ segments:
       - [0x1EEA10, .data, hoshino/h_game]
       - [0x1F0310, .data, hoshino/h_gamesnd]
       - [0x1F3690, .data, hoshino/h_init]
-      - [0x1F36B0, data, hoshino/h_menu]
-      - [0x1F36C8, data, hoshino/h_sound]
+      - [0x1F36B0, .data, hoshino/h_menu]
+      - [0x1F36C8, .data, hoshino/h_sound]
       - [0x1F50E8, data, hoshino/h_str]
       - [0x1F6F40, data, hoshino/h_test]
       - [0x1F7030, data, hoshino/h_test_se]
@@ -632,9 +631,9 @@ segments:
       - [0x264A70, .rodata, hoshino/h_game]
       - [0x264D18, .rodata, hoshino/h_gamesnd]
       - [0x264E58, .rodata, hoshino/h_init]
-      - [0x265028, rodata, hoshino/h_menu]
-      - [0x265048, rodata, hoshino/h_rpc]
-      - [0x265060, rodata, hoshino/h_sound]
+      - [0x265028, .rodata, hoshino/h_menu]
+      - [0x265048, .rodata, hoshino/h_rpc]
+      - [0x265060, .rodata, hoshino/h_sound]
       - [0x265180, rodata, hoshino/h_str]
       - [0x265210, rodata, hoshino/h_test]
       - [0x265508, rodata, hoshino/h_test_se]
@@ -698,7 +697,7 @@ segments:
       - [0x271FE4, lit4, hato/ht_zako]
       - [0x272038, .lit4, hoshino/h_event]
       - [0x272058, .lit4, hoshino/h_gamesnd]
-      - [0x272088, lit4, hoshino/h_sound]
+      - [0x272088, .lit4, hoshino/h_sound]
       - [0x2720A4, lit4, hoshino/h_str]
       - [0x2720CC, lit4, hoshino/h_test]
       - [0x2720FC, lit4, kazuya/interfac]
@@ -869,8 +868,8 @@ segments:
       - [0x275160, .sdata, hoshino/h_game]
       - [0x275164, .sdata, hoshino/h_gamesnd]
       - [0x275170, .sdata, hoshino/h_init]
-      - [0x275174, sdata, hoshino/h_menu]
-      - [0x27518C, sdata, hoshino/h_sound]
+      - [0x275174, .sdata, hoshino/h_menu]
+      - [0x27518C, .sdata, hoshino/h_sound]
       - [0x275190, sdata, hoshino/h_str]
       - [0x2751D8, sdata, hoshino/h_test]
       - [0x2753A8, .sdata, hoshino/h_util]
@@ -1005,10 +1004,10 @@ segments:
       - {start: 0x276864, type: bss, vram: 0x375EA0, name: harada/hrmenu}
       - {start: 0x276864, type: bss, vram: 0x375EB0, name: hato/ht_menu}
       - {start: 0x276864, type: .bss, vram: 0x375F00, name: hoshino/h_event}
-      - {start: 0x276864, type: bss, vram: 0x387750, name: hoshino/h_menu}
-      - {start: 0x276864, type: bss, vram: 0x38FD70, name: hoshino/h_pad}
-      - {start: 0x276864, type: bss, vram: 0x38FF40, name: hoshino/h_rpc}
-      - {start: 0x276864, type: bss, vram: 0x390080, name: hoshino/h_sound}
+      - {start: 0x276864, type: .bss, vram: 0x387750, name: hoshino/h_menu}
+      - {start: 0x276864, type: .bss, vram: 0x38FD70, name: hoshino/h_pad}
+      - {start: 0x276864, type: .bss, vram: 0x38FF40, name: hoshino/h_rpc}
+      - {start: 0x276864, type: .bss, vram: 0x390080, name: hoshino/h_sound}
       - {start: 0x276864, type: bss, vram: 0x490480, name: hoshino/h_test}
       - {start: 0x276864, type: bss, vram: 0x490580, name: hoshino/h_wkmng}
       - {start: 0x276864, type: bss, vram: 0x4905B0, name: kazuya/menu}
