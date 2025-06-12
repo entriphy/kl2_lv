@@ -390,9 +390,19 @@ def create_paruu_config(elf: ELFFile, stdump_json: str) -> list[Section]:
             "capture.c": 0x364D68,
             "dma.c": 0x364DE0,
         },
+        "take:c": {
+            "outline.c": 0x3695C8,
+            "sfxbios.c": 0x3695E8,
+        },
         "hoshino/kit:c": {
             "kitoutlinefunc.c": 0x369A38
         },
+    }
+
+    DATA_FIX = {
+        "take:c": {
+            "motip.c": 0x329FF0
+        }
     }
 
     for section, units in SDATA_FIX.items():
@@ -402,6 +412,10 @@ def create_paruu_config(elf: ELFFile, stdump_json: str) -> list[Section]:
     for section, units in RODATA_FIX.items():
         for unit, address in units.items():
             next(u for u in sections[section].units if u.name == unit).data.append(Data(None, address, "rodata", 0))
+
+    for section, units in DATA_FIX.items():
+        for unit, address in units.items():
+            next(u for u in sections[section].units if u.name == unit).data.append(Data(None, address, "data", 0))
     
     for section in sections.values():
         for unit in section.units:
@@ -673,13 +687,15 @@ def write_ninja_config(version: str, linker_entries: list[LinkerEntry], debug: b
             object_path[1] = "asm"
             src = Path(*src_path)
             obj = Path(*object_path).with_suffix(".text.o")
-            build(obj, [src], "as", implicit=["build/tools/elf_patcher"], link=False)
-            link_asm.append(obj)
-            # Fix ACC register
-            with src.open("r") as f:
-                asm = f.read()
-            with src.open("w") as f:
-                f.write(asm.replace(" ACC,", " $ACC,"))
+            if src.exists():
+                build(obj, [src], "as", implicit=["build/tools/elf_patcher"], link=False)
+                link_asm.append(obj)
+
+                # Fix ACC register
+                with src.open("r") as f:
+                    asm = f.read()
+                with src.open("w") as f:
+                    f.write(asm.replace(" ACC,", " $ACC,").replace(" Q,", " $Q,").replace(", Q", ", $Q"))
 
             # Build data ASMs
             src_path.insert(1, "data")
@@ -694,7 +710,8 @@ def write_ninja_config(version: str, linker_entries: list[LinkerEntry], debug: b
             # Link code + data ASMs
             del src_path[1]
             del object_path[2]
-            build(Path(*object_path), link_asm, "ld_asm", link=False)
+            if len(link_asm) > 0:
+                build(Path(*object_path), link_asm, "ld_asm", link=False)
         elif isinstance(seg, splat.segtypes.common.data.CommonSegData):
             build(entry.object_path, entry.src_paths, "as", implicit=["build/tools/elf_patcher"])
         elif isinstance(seg, splat.segtypes.common.databin.CommonSegDatabin):

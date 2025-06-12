@@ -4,6 +4,11 @@
 #include "common.h"
 #include "kit.h"
 
+#define DECADDR0 ((sceVu0FMATRIX *)0x70000000)
+#define DECADDR1 ((sceVu0FMATRIX *)0x70001000)
+#define DECADDR2 ((sceVu0FMATRIX *)0x70002000)
+#define DECADDR3 ((sceVu0FMATRIX *)0x70003000)
+
 typedef struct tagCOORD { // 0xb0
     /* 0x00 */ sceVu0FVECTOR Rot;
     /* 0x10 */ sceVu0FVECTOR Trans;

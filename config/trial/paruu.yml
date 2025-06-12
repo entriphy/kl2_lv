@@ -6475,6 +6475,7 @@ sections:
           - [0x001D50B8, __sin]
           - [0x001D5118, __cos]
         data:
+          - [0x00329FF0, null, data, 0x0000]
           - [0x00372C94, null, lit4, 0x0000]
       - name: motsys.c
         functions:
@@ -6616,6 +6617,8 @@ sections:
           - [0x001DBA48, DrawSprite]
           - [0x001DBB38, DrawSpriteRegSet]
           - [0x001DBBD0, SetGsRegister]
+        data:
+          - [0x003695C8, null, rodata, 0x0000]
       - name: sfxbios.c
         functions:
           - [0x001DBC00, Fadr]
@@ -6632,6 +6635,7 @@ sections:
           - [0x001DC170, SfxSystemInit]
           - [0x001DC218, GimLoad]
         data:
+          - [0x003695E8, null, rodata, 0x0000]
           - [0x006BC770, sim_fname, bss, 0x0100]
       - name: sfxcalc.c
         functions:
