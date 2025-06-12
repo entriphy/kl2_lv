@@ -290,7 +290,7 @@ segments:
       - [0x0E4B78, c, hoshino/kit/kitoutlinefunc]
       - [0x0E5148, c, hoshino/kit/kitoutlineprog]
       - [0x0E57A0, c, hoshino/kit/packet]
-      - [0x0E5838, asm, hoshino/take/t_vu0work]
+      - [0x0E5838, c, hoshino/take/t_vu0work]
       - [0x0E5840, asm, nakano/gimmick/bridge_b7]
       - [0x0E5C40, asm, nakano/gimmick/door04pazzle]
       - [0x0E5FF8, asm, nakano/gimmick/fobj00]
