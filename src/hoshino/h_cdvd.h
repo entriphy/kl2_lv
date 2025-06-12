@@ -37,11 +37,6 @@ typedef struct {
     hCDCUE Cue;
 } hCDDATA;
 
-typedef struct {
-    s32 lsn;
-    s32 sectors;
-} KLTABLE; // ?
-
 extern hCDDATA *cD;
 
 extern void hCdReadFile(char *filename, u32 *buff);

@@ -1,4 +1,5 @@
 #include "hoshino/h_cdvd.h"
+#include "hoshino/h_str.h"
 
 #ifdef KL2_VER_TRIAL
 #define KLDATA_PATH "\\KLONOA2\\KLDATA.BIN;1"

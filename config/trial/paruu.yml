@@ -2842,6 +2842,7 @@ sections:
           - [0x002F6028, hTestFuncTbl, data, 0x0000]
           - [0x00364210, null, rodata, 0x0000]
           - [0x003710CC, null, lit4, 0x0000]
+          - [0x00374198, null, sdata, 0x0000]
           - [0x003741D8, TestMode, sdata, 0x0004]
           - [0x003741DC, cur_y.0, sdata, 0x0004]
           - [0x003741E0, 'no', sdata, 0x0004]

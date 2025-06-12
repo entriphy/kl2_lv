@@ -4,6 +4,22 @@
 #include "common.h"
 #include "hoshino/h_sound.h"
 
+typedef struct {
+    s32 start;
+    s32 chsize;
+    s32 chnum;
+} BGMTABLE;
+
+typedef struct {
+    s32 top;
+    s32 nsector;
+} PPTTABLE;
+
+typedef struct {
+    s32 lsn;
+    s32 sectors;
+} KLTABLE; // ?
+
 #ifdef KL2_VER_TRIAL
 typedef enum {
     BGM_NO = -1,
@@ -110,7 +126,7 @@ typedef enum {
 #endif
 
 typedef struct {
-    /* 0x00 */ sceCdlFILE file;
+    /* 0x00 */ sceCdlFILE Fp;
     /* 0x20 */ s32 Command;
     /* 0x24 */ BGM bgmNo;
     /* 0x28 */ s32 bgmCh;
@@ -135,7 +151,7 @@ typedef struct {
 #endif
     /* 0x68 */ s32 iopNext;
     /* 0x6c */ s32 iopID;
-    /* 0x70 */ s32 iopAddr[2];
+    /* 0x70 */ s32 iopAddr[KL2_VER_COND(3, 2)];
     /* 0x78 */ s32 iopOK[2];
     /* 0x80 */ s32 iopFineTop[2];
     /* 0x88 */ s32 iopFine[2];
@@ -210,9 +226,11 @@ typedef struct {
 typedef struct {
     s32 eeCnt;
     s32 Command;
+#ifdef KL2_VER_RETAIL
     SND_MODE BGMstereo;
     s32 BGMlength;
     s32 BGMskipsize;
+#endif
     s32 BGMvol;
     s8 BGMch;
     s8 BGMchmax;

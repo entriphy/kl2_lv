@@ -295,6 +295,7 @@ def create_paruu_config(elf: ELFFile, stdump_json: str) -> list[Section]:
         "hoshino:c": {
             "h_func.c": 0x374158,
             "h_menu.c": 0x374174,
+            "h_test.c": 0x374198,
             "h_util.c": 0x3743A8,
         },
         "kazuya:c": {

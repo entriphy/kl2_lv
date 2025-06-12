@@ -43,4 +43,7 @@ typedef struct { // 0x3c
 	/* 0x38 */ s32 deadCnt;
 } hGAMEDATA;
 
+extern hGAMEDATA GameData;
+extern hGAMEDATA *gD;
+
 #endif
