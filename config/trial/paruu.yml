@@ -6821,6 +6821,8 @@ sections:
           - [0x001E3F28, kitOutlinePreRoutine]
           - [0x001E3FF0, kitOutlineColorDefine]
           - [0x001E4098, kitPacketDump]
+        data:
+          - [0x00369A38, null, rodata, 0x0000]
       - name: kitoutlineprog.c
         functions:
           - [0x001E4148, kitInitEffectBufAll]

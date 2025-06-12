@@ -37,7 +37,7 @@ SECTION_ADDRS = {
     "vutext": 0x1E1900,
     "vudata": 0x253000,
     # "rodata": 0x260F00,
-    "rodata": 0x364E30 - 0x100000 + 0x1000,
+    "rodata": 0x369A58 - 0x100000 + 0x1000,
     "gcc_except_table": 0x271400,
     # "lit4": 0x271500,
     "sbss": 0x276800,
@@ -389,8 +389,10 @@ def create_paruu_config(elf: ELFFile, stdump_json: str) -> list[Section]:
             "camera.c": 0x364B80,
             "capture.c": 0x364D68,
             "dma.c": 0x364DE0,
-
-        }
+        },
+        "hoshino/kit:c": {
+            "kitoutlinefunc.c": 0x369A38
+        },
     }
 
     for section, units in SDATA_FIX.items():
