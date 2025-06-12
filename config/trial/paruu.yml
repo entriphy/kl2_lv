@@ -2862,6 +2862,7 @@ sections:
         data:
           - [0x002F6030, bankname, data, 0x0000]
           - [0x00364508, null, rodata, 0x0000]
+          - [0x00374208, null, sdata, 0x0000]
           - [0x003758CC, SEinfo, sbss, 0x0004]
           - [0x003758D0, bank, sbss, 0x0004]
           - [0x003758D4, bank0, sbss, 0x0004]

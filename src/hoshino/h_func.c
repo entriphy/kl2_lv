@@ -1,7 +1,7 @@
 #include "hoshino/h_func.h"
 #include "hoshino/h_init.h"
 #include "hoshino/h_menu.h"
-// #include "h_test.h"
+#include "hoshino/h_test.h"
 #include "okanoyo/okprint.h"
 
 #ifdef KL2_VER_TRIAL
@@ -11,10 +11,6 @@
 #define FONT_WIDTH  16
 #define FONT_HEIGHT 8
 #endif
-
-// TODO: delete
-extern s32 (*hTestFuncTbl[])();
-extern s32 TestMode;
 
 static FUNCTBL MainFuncTbl[] = {
     {hMenuFuncTbl, -1},

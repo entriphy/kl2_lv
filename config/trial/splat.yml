@@ -122,8 +122,8 @@ segments:
       - [0x064390, c, hoshino/h_rpc]
       - [0x0646C8, c, hoshino/h_sound]
       - [0x0653E8, c, hoshino/h_str]
-      - [0x066B38, asm, hoshino/h_test]
-      - [0x067928, asm, hoshino/h_test_se]
+      - [0x066B38, c, hoshino/h_test]
+      - [0x067928, c, hoshino/h_test_se]
       - [0x067D70, c, hoshino/h_util]
       - [0x068210, c, hoshino/h_wkmng]
       - [0x068318, asm, kazuya/bios]
@@ -464,8 +464,8 @@ segments:
       - [0x1F36B0, .data, hoshino/h_menu]
       - [0x1F36C8, .data, hoshino/h_sound]
       - [0x1F50E8, .data, hoshino/h_str]
-      - [0x1F6F40, data, hoshino/h_test]
-      - [0x1F7030, data, hoshino/h_test_se]
+      - [0x1F6F40, .data, hoshino/h_test]
+      - [0x1F7030, .data, hoshino/h_test_se]
       - [0x1F70F8, data, kazuya/cvar]
       - [0x1F7118, data, kazuya/func]
       - [0x1F7148, data, kazuya/menu]
@@ -635,8 +635,8 @@ segments:
       - [0x265048, .rodata, hoshino/h_rpc]
       - [0x265060, .rodata, hoshino/h_sound]
       - [0x265180, .rodata, hoshino/h_str]
-      - [0x265210, rodata, hoshino/h_test]
-      - [0x265508, rodata, hoshino/h_test_se]
+      - [0x265210, .rodata, hoshino/h_test]
+      - [0x265508, .rodata, hoshino/h_test_se]
       - [0x265608, .rodata, hoshino/h_util]
       - [0x265660, rodata, kazuya/bios]
       - [0x265760, rodata, kazuya/menu]
@@ -699,7 +699,7 @@ segments:
       - [0x272058, .lit4, hoshino/h_gamesnd]
       - [0x272088, .lit4, hoshino/h_sound]
       - [0x2720A4, .lit4, hoshino/h_str]
-      - [0x2720CC, lit4, hoshino/h_test]
+      - [0x2720CC, .lit4, hoshino/h_test]
       - [0x2720FC, lit4, kazuya/interfac]
       - [0x272100, lit4, kazuya/obj_klo]
       - [0x272104, lit4, kazuya/obj_std]
@@ -871,7 +871,8 @@ segments:
       - [0x275174, .sdata, hoshino/h_menu]
       - [0x27518C, .sdata, hoshino/h_sound]
       - [0x275190, .sdata, hoshino/h_str]
-      - [0x275198, sdata, hoshino/h_test]
+      - [0x275198, .sdata, hoshino/h_test]
+      - [0x275208, .sdata, hoshino/h_test_se]
       - [0x2753A8, .sdata, hoshino/h_util]
       - [0x2753D8, sdata, kazuya/bios]
       - [0x2753FC, sdata, kazuya/cvar]
@@ -966,7 +967,7 @@ segments:
       - {start: 0x276800, type: .sbss, vram: 0x375898, name: hoshino/h_event}
       - {start: 0x276800, type: .sbss, vram: 0x3758C0, name: hoshino/h_file}
       - {start: 0x276800, type: .sbss, vram: 0x3758C8, name: hoshino/h_packet}
-      - {start: 0x276800, type: sbss, vram: 0x3758CC, name: hoshino/h_test_se}
+      - {start: 0x276800, type: .sbss, vram: 0x3758CC, name: hoshino/h_test_se}
       - {start: 0x276800, type: sbss, vram: 0x3758E0, name: kazuya/bios}
       - {start: 0x276800, type: sbss, vram: 0x375910, name: kazuya/obj_klo}
       - {start: 0x276800, type: sbss, vram: 0x375914, name: kazuya/td_job}
@@ -1008,7 +1009,7 @@ segments:
       - {start: 0x276864, type: .bss, vram: 0x38FD70, name: hoshino/h_pad}
       - {start: 0x276864, type: .bss, vram: 0x38FF40, name: hoshino/h_rpc}
       - {start: 0x276864, type: .bss, vram: 0x390080, name: hoshino/h_sound}
-      - {start: 0x276864, type: bss, vram: 0x490480, name: hoshino/h_test}
+      - {start: 0x276864, type: .bss, vram: 0x490480, name: hoshino/h_test}
       - {start: 0x276864, type: .bss, vram: 0x490580, name: hoshino/h_wkmng}
       - {start: 0x276864, type: bss, vram: 0x4905B0, name: kazuya/menu}
       - {start: 0x276864, type: bss, vram: 0x4905C0, name: kazuya/obj_klo}
