@@ -8,6 +8,8 @@
 #define DECADDR1 ((sceVu0FMATRIX *)0x70001000)
 #define DECADDR2 ((sceVu0FMATRIX *)0x70002000)
 #define DECADDR3 ((sceVu0FMATRIX *)0x70003000)
+#define ALIGN(x) (u32 *)(((u32)x + 0xF) & ~0xF)
+#define ALIGN_ALT(x, y) (u32 *)(((u32)x + y + 0xF) & ~0xF)
 
 typedef struct tagCOORD { // 0xb0
     /* 0x00 */ sceVu0FVECTOR Rot;

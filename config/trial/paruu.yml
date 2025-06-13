@@ -4679,6 +4679,7 @@ sections:
           - [0x002FBC90, cmnor0701, data, 0x0000]
           - [0x00364B80, null, rodata, 0x0000]
           - [0x003711A0, null, lit4, 0x0000]
+          - [0x00374AE0, null, sdata, 0x0000]
           - [0x00375924, camNor, sbss, 0x0004]
           - [0x00375928, camFix, sbss, 0x0004]
           - [0x00490ED0, ViCon, bss, 0x0090]
@@ -6678,6 +6679,7 @@ sections:
         data:
           - [0x0034C190, MainFuncTbl.7, data, 0x0000]
           - [0x0034C1B8, tkFuncTbl, data, 0x0000]
+          - [0x00375278, null, sdata, 0x0000]
       - name: t_menu.c
         functions:
           - [0x001DE1C0, tkMenuInit]
@@ -6692,6 +6694,7 @@ sections:
           - [0x001DE678, SampleMain.2]
         data:
           - [0x0034C208, tkSampleFuncTbl, data, 0x0000]
+          - [0x00369620, null, rodata, 0x0000]
       - name: test.c
         functions:
           - [0x001DE8E8, DrawBbox]
@@ -6720,6 +6723,7 @@ sections:
           - [0x0034C220, LogoGsEnv, data, 0x0400]
           - [0x0034C620, Kumo1GsEnv, data, 0x0400]
           - [0x0034CA20, Kumo2GsEnv, data, 0x0400]
+          - [0x00369668, null, rodata, 0x0000]
           - [0x00372CE0, null, lit4, 0x0000]
           - [0x003752C8, KumoCnt, sdata, 0x0004]
           - [0x003752CC, LogoGsEnvInd, sdata, 0x0004]
@@ -6759,6 +6763,7 @@ sections:
           - [0x0034D150, ReadFileName, data, 0x0040]
           - [0x0034D190, ChrNameTmp, data, 0x0040]
           - [0x00372D04, null, lit4, 0x0000]
+          - [0x003752E8, null, sdata, 0x0000]
           - [0x00375330, TypeNumMax, sdata, 0x0004]
           - [0x00375334, ModelIndex, sdata, 0x0004]
           - [0x00375338, TypeNum, sdata, 0x0004]
@@ -6802,6 +6807,8 @@ sections:
         functions:
           - [0x001E3480, vtLoadVisionData]
           - [0x001E3698, vtLoadFixTexture]
+        data:
+          - [0x00375360, null, sdata, 0x0000]
       - name: vtutil.c
         functions:
           - [0x001E3780, vtFileRead]

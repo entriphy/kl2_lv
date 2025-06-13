@@ -52,6 +52,21 @@ typedef signed int s128 __attribute__((mode(TI)));
 typedef volatile s128 vs128 __attribute__((mode(TI)));
 #endif
 
+#define PAD_UP (0x1000)
+#define PAD_DOWN (0x4000)
+#define PAD_LEFT (0x8000)
+#define PAD_RIGHT (0x2000)
+#define PAD_TRIANG (0x10)
+#define PAD_CROSS (0x40)
+#define PAD_SQUARE (0x80)
+#define PAD_CIRCLE (0x20)
+#define PAD_L1 (0x4)
+#define PAD_L2 (0x1)
+#define PAD_R1 (0x8)
+#define PAD_R2 (0x2)
+#define PAD_START (0x800)
+#define PAD_SELECT (0x100)
+
 #define PAD_TRG_UP(kpd) (kpd.trg & 0x1000)
 #define PAD_TRG_DOWN(kpd) (kpd.trg & 0x4000)
 #define PAD_TRG_LEFT(kpd) (kpd.trg & 0x8000)
@@ -147,8 +162,10 @@ typedef volatile s128 vs128 __attribute__((mode(TI)));
 #define KL2_PI  (3.141592f)
 #define KL2_2PI (2.0f * KL2_PI)
 #define KL2_3PI (3.0f * KL2_PI)
+#define KL2_3PI2 (3.0f * KL2_PI / 2.0f)
 #define KL2_PI2 (KL2_PI / 2.0f)
 #define KL2_PI3 (KL2_PI / 3.0f)
+#define KL2_PI180 (KL2_PI / 180.0f)
 
 #define KL2_PI_CLAMP(f) ({if (f < -KL2_PI) { f += KL2_2PI; } else if (f > KL2_PI) { f -= KL2_2PI; }})
 #define KL2_PI_CLAMP_W(f) ({while (f < -KL2_PI) { f += KL2_2PI; } while (f > KL2_PI) { f -= KL2_2PI; }})
@@ -349,7 +366,9 @@ typedef struct {
     /* 0x068 */ s32 da_muteki;
     /* 0x06c */ s32 noyukatime;
     /* 0x070 */ OBJWORK* mochifuku;
+#ifdef KL2_VER_RETAIL
     /* 0x074 */ s32 jmp_cnt;
+#endif
     /* 0x078 */ f32 saka;
     /* 0x07c */ f32 yarare_yposi;
     /* 0x080 */ u32 f_phcode;
@@ -361,6 +380,10 @@ typedef struct {
     /* 0x098 */ f32 sjump_yspd;
     /* 0x09c */ f32 tenjo_hosei;
     /* 0x0a0 */ s32 retflag;
+#ifdef KL2_VER_TRIAL
+                s32 kage_flag;
+	            f32 jumpspd_limit;
+#endif
     /* 0x0a4 */ s32 left_move;
     /* 0x0a8 */ s32 right_move;
     /* 0x0ac */ s32 up_move;
@@ -372,8 +395,10 @@ typedef struct {
     /* 0x0c4 */ s32 yuka_hit_buf;
     /* 0x0c8 */ s32 ottoto;
     /* 0x0cc */ s32 rakka_flag;
+#ifdef KL2_VER_RETAIL
     /* 0x0d0 */ s32 wahoo_cnt;
     /* 0x0d4 */ s32 wahoo_timer;
+#endif
     /* 0x0d8 */ OBJWORK *okuyuka;
     /* 0x0dc */ s32 con;
     /* 0x0e0 */ s32 b_action;
@@ -387,6 +412,7 @@ typedef struct {
     /* 0x114 */ s32 se_id6;
     /* 0x118 */ s32 se_id7;
     /* 0x11c */ s32 se_id8;
+#ifdef KL2_VER_RETAIL
     /* 0x120 */ s32 se_id9;
     /* 0x124 */ s32 dai_se_cnt;
     /* 0x128 */ s32 yuka_hit_old;
@@ -396,10 +422,17 @@ typedef struct {
     /* 0x138 */ f32 motcnt_end;
     /* 0x13c */ s32 motstop_flag;
     /* 0x140 */ s32 mot_actno;
+#else
+                s32 jyouge;
+	            f32 motcnt;
+	            s32 b_act_rflag;
+	            f32 b_act_rot;
+#endif
     /* 0x144 */ s32 kasokuLvL;
     /* 0x148 */ f32 kasokuTime;
     /* 0x14c */ f32 kasokuMTime;
     /* 0x150 */ f32 center_time;
+#ifdef KL2_VER_RETAIL
     /* 0x154 */ s32 rupu_cnt;
     /* 0x158 */ s32 dead_cnt;
     /* 0x15c */ s32 hima_cnt;
@@ -408,6 +441,7 @@ typedef struct {
     /* 0x168 */ s32 kage_flag;
     /* 0x16c */ f32 jumpspd_limit;
     /* 0x170 */ s32 rakka_cnt;
+#endif
     /* 0x180 */ sceVu0FVECTOR slant;
 } HERO_WORK;
 

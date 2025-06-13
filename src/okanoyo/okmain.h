@@ -3,6 +3,7 @@
 
 #include "common.h"
 
+extern s32 fontDispID;
 extern u8 *scr_p[9];
 
 #endif

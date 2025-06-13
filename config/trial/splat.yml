@@ -145,7 +145,7 @@ segments:
       - [0x0742D8, asm, kazuya/wm_job]
       - [0x074C18, asm, kazuya/wm_main]
       - [0x075360, c, nakano/calc3d]
-      - [0x0753F0, asm, nakano/camera]
+      - [0x0753F0, c, nakano/camera]
       - [0x0784C0, c, nakano/capture]
       - [0x0787A0, asm, nakano/dma]
       - [0x078D50, asm, nakano/drawof]
@@ -273,11 +273,11 @@ segments:
       - [0x0DC090, c, take/outline]
       - [0x0DCC00, asm, take/sfxbios]
       - [0x0DD600, asm, take/sfxcalc]
-      - [0x0DE858, asm, take/sfxdraw]
+      - [0x0DE858, c, take/sfxdraw]
       - [0x0DF138, asm, take/t_func]
       - [0x0DF1C0, asm, take/t_menu]
-      - [0x0DF570, asm, take/t_sample]
-      - [0x0DF8E8, asm, take/test]
+      - [0x0DF570, c, take/t_sample]
+      - [0x0DF8E8, c, take/test]
       - [0x0DF8F8, asm, take/title]
       - [0x0E1CC8, asm, take/view]
       - [0x0E31F0, asm, take/viewer]
@@ -481,7 +481,7 @@ segments:
       - [0x1F9CE0, data, kazuya/td_sys]
       - [0x1FCBD0, data, kazuya/wm_job]
       - [0x1FCC88, data, kazuya/wm_main]
-      - [0x1FCC90, data, nakano/camera]
+      - [0x1FCC90, .data, nakano/camera]
       - [0x1FCD50, .data, nakano/capture]
       - [0x1FCD68, data, nakano/dma]
       - [0x1FCD90, data, nakano/game]
@@ -538,10 +538,10 @@ segments:
       - [0x22AFF0, .data, take/motip]
       - [0x22B040, data, take/object]
       - [0x249FC0, data, take/sfxcalc]
-      - [0x24A000, data, take/sfxdraw]
+      - [0x24A000, .data, take/sfxdraw]
       - [0x24D190, data, take/t_func]
       - [0x24D1C0, data, take/t_menu]
-      - [0x24D208, data, take/t_sample]
+      - [0x24D208, .data, take/t_sample]
       - [0x24D210, data, take/title]
       - [0x24DE40, data, take/view]
       - [0x24E1D0, data, take/viewer]
@@ -651,11 +651,13 @@ segments:
       - [0x2659A0, rodata, kazuya/td_sys]
       - [0x2659C0, rodata, kazuya/wm_job]
       - [0x265AF0, rodata, kazuya/wm_main]
-      - [0x265B80, rodata, nakano/camera]
+      - [0x265B80, .rodata, nakano/camera]
       - [0x265D68, .rodata, nakano/capture]
       - [0x265DE0, rodata, nakano/dma]
       - [0x26A5C8, .rodata, take/outline]
       - [0x26A5E8, rodata, take/sfxbios]
+      - [0x26A620, .rodata, take/t_sample]
+      - [0x26A668, rodata, take/title]
       - [0x26AA38, .rodata, hoshino/kit/kitoutlinefunc]
       - [0x26AA58, rodata, rodata]
       - [0x271400, rodatabin, gcc_except_table]
@@ -711,7 +713,7 @@ segments:
       - [0x272144, lit4, kazuya/td_nejob]
       - [0x272148, lit4, kazuya/td_sys]
       - [0x272174, lit4, kazuya/wm_job]
-      - [0x2721A0, lit4, nakano/camera]
+      - [0x2721A0, .lit4, nakano/camera]
       - [0x272410, lit4, nakano/gscreen]
       - [0x2724A4, lit4, nakano/gssub]
       - [0x2724C4, lit4, nakano/herosub]
@@ -887,6 +889,7 @@ segments:
       - [0x2756D0, sdata, kazuya/td_nejob]
       - [0x275738, sdata, kazuya/td_sys]
       - [0x275AC8, sdata, kazuya/wm_job]
+      - [0x275AE0, .sdata, nakano/camera]
       - [0x275AE8, sdata, nakano/dma]
       - [0x275B38, sdata, nakano/game]
       - [0x275B74, sdata, nakano/main]
@@ -901,9 +904,11 @@ segments:
       - [0x2760D8, sdata, okanoyo/okzbios]
       - [0x2760E4, sdata, okanoyo/okzdraw]
       - [0x276210, sdata, take/object]
-      - [0x276270, sdata, take/sfxdraw]
+      - [0x276270, .sdata, take/sfxdraw]
+      - [0x276278, sdata, take/t_func]
       - [0x2762C8, sdata, take/title]
-      - [0x276330, sdata, take/view]
+      - [0x2762E8, sdata, take/view]
+      - [0x276360, sdata, vtusr/vttmpprog]
       - [0x2763B0, sdata, vtusr/ao/aoVU1pkt]
       - [0x2763D0, sdata, vtusr/kit/kitfiremain]
       - [0x2763E8, sdata, vtusr/taro/taro_movie]
@@ -976,7 +981,7 @@ segments:
       - {start: 0x276800, type: sbss, vram: 0x375910, name: kazuya/obj_klo}
       - {start: 0x276800, type: sbss, vram: 0x375914, name: kazuya/td_job}
       - {start: 0x276800, type: sbss, vram: 0x375920, name: kazuya/td_mhjob}
-      - {start: 0x276800, type: sbss, vram: 0x375924, name: nakano/camera}
+      - {start: 0x276800, type: .sbss, vram: 0x375924, name: nakano/camera}
       - {start: 0x276800, type: sbss, vram: 0x37592C, name: nakano/game}
       - {start: 0x276800, type: sbss, vram: 0x375938, name: nakano/keyfsv}
       - {start: 0x276800, type: sbss, vram: 0x375948, name: nakano/light}
@@ -1019,7 +1024,7 @@ segments:
       - {start: 0x276864, type: bss, vram: 0x4905C0, name: kazuya/obj_klo}
       - {start: 0x276864, type: bss, vram: 0x490A50, name: kazuya/obj_std}
       - {start: 0x276864, type: bss, vram: 0x490AD0, name: kazuya/string}
-      - {start: 0x276864, type: bss, vram: 0x490ED0, name: nakano/camera}
+      - {start: 0x276864, type: .bss, vram: 0x490ED0, name: nakano/camera}
       - {start: 0x276864, type: bss, vram: 0x491190, name: nakano/evrt}
       - {start: 0x276864, type: bss, vram: 0x491290, name: nakano/gscreen}
       - {start: 0x276864, type: bss, vram: 0x491440, name: nakano/klopipe}

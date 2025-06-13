@@ -303,7 +303,15 @@ def create_paruu_config(elf: ELFFile, stdump_json: str) -> list[Section]:
             "bios.c": 0x3743D8
         },
         "nakano:c": {
+            "camera.c": 0x374AE0,
             "map01.c": 0x374BB8
+        },
+        "take:c": {
+            "t_func.c": 0x375278,
+            "view.c": 0x3752E8
+        },
+        "vtusr:c": {
+            "vttmpprog.c": 0x375360
         }
     }
 
@@ -393,6 +401,8 @@ def create_paruu_config(elf: ELFFile, stdump_json: str) -> list[Section]:
         "take:c": {
             "outline.c": 0x3695C8,
             "sfxbios.c": 0x3695E8,
+            "t_sample.c": 0x369620,
+            "title.c": 0x369668
         },
         "hoshino/kit:c": {
             "kitoutlinefunc.c": 0x369A38

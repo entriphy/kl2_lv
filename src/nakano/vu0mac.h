@@ -112,10 +112,10 @@ static inline void vu0_Thing(sceVu0FVECTOR dst, sceVu0FVECTOR src) {
 
 // TODO: properly define M_PIf
 static inline f32 nkRadMask(f32 rad) {
-    if (rad <= -M_PI)
-        rad += M_TWOPI;
-    else if (rad > M_PI)
-        rad -= M_TWOPI;
+    if (rad <= -KL2_PI)
+        rad += KL2_2PI;
+    else if (rad > KL2_PI)
+        rad -= KL2_2PI;
     return rad;
 }
 
