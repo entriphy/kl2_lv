@@ -569,9 +569,9 @@ def write_objdiff_config(sections: list[Section]):
             "units": objdiff_units
         }, f, indent=4)
 
-def splat_stuff(version: str) -> list[LinkerEntry]:
+def splat_stuff(version: str, make_full_disasm_for_code: bool = True) -> list[LinkerEntry]:
     yaml_file = Path(f"config/{version}/splat.yml")
-    split.main([yaml_file], modes="all", verbose=False, make_full_disasm_for_code=True)
+    split.main([yaml_file], modes="all", verbose=False, make_full_disasm_for_code=make_full_disasm_for_code)
     return split.linker_writer.entries.copy()
 
 def write_ninja_config(version: str, linker_entries: list[LinkerEntry], debug: bool = False):
@@ -823,6 +823,12 @@ if __name__ == "__main__":
         help="generate symbol_addrs.txt",
         default=True
     )
+    parser.add_argument(
+        "-p", "--progress",
+        action="store_true",
+        help="generate asm for matched files",
+        default=False
+    )
 
     args = parser.parse_args()
 
@@ -841,7 +847,7 @@ if __name__ == "__main__":
     if args.splat:
         write_objdiff_config(paruu)
         write_splat_config(args.version, paruu)
-        splat_stuff(args.version)
+        splat_stuff(args.version, not args.progress)
         
         write_ninja_config(args.version, split.linker_writer.entries, debug=True)
         with open("compile_commands.json", "wb") as f:
