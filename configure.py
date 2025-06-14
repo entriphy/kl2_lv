@@ -397,6 +397,8 @@ def create_paruu_config(elf: ELFFile, stdump_json: str) -> list[Section]:
             "camera.c": 0x364B80,
             "capture.c": 0x364D68,
             "dma.c": 0x364DE0,
+            "filter.c": 0x364E30,
+            "game.c": 0x364F10
         },
         "take:c": {
             "outline.c": 0x3695C8,

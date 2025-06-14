@@ -149,9 +149,9 @@ segments:
       - [0x0784C0, c, nakano/capture]
       - [0x0787A0, asm, nakano/dma]
       - [0x078D50, c, nakano/drawof]
-      - [0x078EA0, asm, nakano/evrt]
-      - [0x079428, asm, nakano/filter]
-      - [0x07A568, asm, nakano/filter2]
+      - [0x078EA0, c, nakano/evrt]
+      - [0x079428, c, nakano/filter]
+      - [0x07A568, c, nakano/filter2]
       - [0x07A970, asm, nakano/game]
       - [0x07B5D8, asm, nakano/gflow]
       - [0x07B798, asm, nakano/gmiss]
@@ -654,6 +654,8 @@ segments:
       - [0x265B80, .rodata, nakano/camera]
       - [0x265D68, .rodata, nakano/capture]
       - [0x265DE0, rodata, nakano/dma]
+      - [0x265E30, .rodata, nakano/filter]
+      - [0x265F10, rodata, nakano/game]
       - [0x26A5C8, .rodata, take/outline]
       - [0x26A5E8, rodata, take/sfxbios]
       - [0x26A620, rodata, take/t_sample]
@@ -1025,7 +1027,7 @@ segments:
       - {start: 0x276864, type: bss, vram: 0x490A50, name: kazuya/obj_std}
       - {start: 0x276864, type: bss, vram: 0x490AD0, name: kazuya/string}
       - {start: 0x276864, type: .bss, vram: 0x490ED0, name: nakano/camera}
-      - {start: 0x276864, type: bss, vram: 0x491190, name: nakano/evrt}
+      - {start: 0x276864, type: .bss, vram: 0x491190, name: nakano/evrt}
       - {start: 0x276864, type: bss, vram: 0x491290, name: nakano/gscreen}
       - {start: 0x276864, type: bss, vram: 0x491440, name: nakano/klopipe}
       - {start: 0x276864, type: bss, vram: 0x491450, name: nakano/light}

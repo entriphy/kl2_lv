@@ -4737,6 +4737,8 @@ sections:
           - [0x00178B90, make_flt_Div]
           - [0x00178DD0, make_flt_Acc]
           - [0x00179048, nkDrawFilterShadeOff]
+        data:
+          - [0x00364E30, null, rodata, 0x0000]
       - name: filter2.c
         functions:
           - [0x00179568, nkDrawBlackIn]
@@ -4754,6 +4756,7 @@ sections:
           - [0x002FBDA0, GameGbl, data, 0x05E0]
           - [0x002FC380, obj_id, data, 0x0102]
           - [0x002FC490, ObjWorkBuff, data, 0x7800]
+          - [0x00364F10, null, rodata, 0x0000]
           - [0x00374B38, nkGamePauseFlag, sdata, 0x0004]
           - [0x00374B3C, nkLoadTimer, sdata, 0x0004]
           - [0x00374B40, nkLoadStat, sdata, 0x0004]

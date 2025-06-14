@@ -238,6 +238,8 @@ typedef union { // 0x8
     f32 u_f32[2];
 } long_uni;
 
+#endif // __KL2_TYPES
+
 typedef struct {
     SVECTOR vec;
     IVECTOR posi;
@@ -641,7 +643,14 @@ extern sceDmaChan *DmaChtoIPU;
 extern sceDmaChan *DmaChfromSPR;
 extern sceDmaChan *DmaChtoSPR;
 
-#endif // __KL2_TYPES
+#define DMArefe (0<<28)
+#define DMAcnt  (1<<28)
+#define DMAnext (2<<28)
+#define DMAref  (3<<28)
+#define DMArefs (4<<28)
+#define DMAcall (5<<28)
+#define DMAret  (6<<28)
+#define DMAend  (7<<28)
 
 #define SCE_GS_FALSE (0)
 #define SCE_GS_TRUE  (1)
