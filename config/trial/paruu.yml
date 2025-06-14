@@ -4768,6 +4768,8 @@ sections:
       - name: gflow.c
         functions:
           - [0x0017A5D8, GameFlow]
+        data:
+          - [0x00365040, null, rodata, 0x0000]
       - name: gmiss.c
         functions:
           - [0x0017A798, nkSetReStartParam]
@@ -4777,6 +4779,8 @@ sections:
           - [0x0017AA90, nkKloPhCode01]
           - [0x0017AB10, nkKloPhCode03]
           - [0x0017ABC0, nkKloMissMain]
+        data:
+          - [0x00365050, null, rodata, 0x0000]
       - name: gscreen.c
         functions:
           - [0x0017AD50, InitStageGScreen]
@@ -4858,6 +4862,8 @@ sections:
           - [0x0017FDA8, _sin]
           - [0x0017FE08, _cos]
           - [0x0017FE70, _sqrt]
+        data:
+          - [0x00304050, null, data, 0x0000]
       - name: keyfsv.c
         functions:
           - [0x0017FE90, nkKeyFrameSet]
@@ -5231,6 +5237,7 @@ sections:
           - [0x001976E8, DrawDebugRoute]
           - [0x00197B80, testmove]
         data:
+          - [0x00365D00, null, rodata, 0x0000]
           - [0x00371A60, null, lit4, 0x0000]
           - [0x00375960, testid, sbss, 0x0004]
           - [0x006B9D80, pRoute, bss, 0x0100]
@@ -5241,6 +5248,7 @@ sections:
           - [0x00197E30, nkRtConnMng]
           - [0x00198270, nkRtconnKloMode]
         data:
+          - [0x00365D10, null, rodata, 0x0000]
           - [0x00375964, rt_start, sbss, 0x0004]
           - [0x006B9E80, rt_conn, bss, 0x0200]
       - name: sinit.c
@@ -5253,6 +5261,7 @@ sections:
           - [0x00198CF0, nkChangeArea]
           - [0x00198D18, nkChangeArea2]
         data:
+          - [0x00365D30, null, rodata, 0x0000]
           - [0x00371AA0, null, lit4, 0x0000]
       - name: tmddraw.c
         functions:

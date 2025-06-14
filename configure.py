@@ -398,7 +398,12 @@ def create_paruu_config(elf: ELFFile, stdump_json: str) -> list[Section]:
             "capture.c": 0x364D68,
             "dma.c": 0x364DE0,
             "filter.c": 0x364E30,
-            "game.c": 0x364F10
+            "game.c": 0x364F10,
+            "gflow.c": 0x365040,
+            "gmiss.c": 0x365050,
+            "route.c": 0x365D00,
+            "rtconn.c": 0x365D10,
+            "sinit.c": 0x365D30
         },
         "take:c": {
             "outline.c": 0x3695C8,
@@ -412,6 +417,9 @@ def create_paruu_config(elf: ELFFile, stdump_json: str) -> list[Section]:
     }
 
     DATA_FIX = {
+        "nakano:c": {
+            "k_math.c": 0x304050
+        },
         "take:c": {
             "motip.c": 0x329FF0
         }

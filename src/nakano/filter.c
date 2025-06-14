@@ -49,14 +49,14 @@ void nkDrawEffFr() {
     sceDmaSync(DmaChGIF, 0, 0);
 
     de.size_texenv = sceGsSetDefTexEnv2(&de.texenv, 1, 0x1680, 10, 0, 10, 8, 0, 0, 0, 0, 1);
-    de.alpha = 5;
+    de.alpha = SCE_GS_SET_ALPHA_2(SCE_GS_BLEND_RGB_DST, SCE_GS_BLEND_RGB_DST, SCE_GS_BLEND_ALPHA_SRC, SCE_GS_BLEND_RGB_SRC, 0);
     de.alp_addr = SCE_GS_ALPHA_2;
     de.size_texenv++;
     de.gif_texenv.NLOOP = de.size_texenv;
-    de.gif_texenv.EOP = 1;
-    de.gif_texenv.PRE = 0;
+    de.gif_texenv.EOP = SCE_GS_TRUE;
+    de.gif_texenv.PRE = SCE_GS_FALSE;
     de.gif_texenv.PRIM = 0;
-    de.gif_texenv.FLG = 0;
+    de.gif_texenv.FLG = SCE_GIF_PACKED;
     de.gif_texenv.NREG = 1;
     de.gif_texenv.REGS0 = SCE_GIF_PACKED_AD;
 
@@ -69,71 +69,35 @@ void nkDrawEffFr() {
     pp->buf = SPR_MEM;
     pp->buf[pp->size].ul128 = 0;
     pp->buf[pp->size++].ul32[0] = DMAend | 13;
-    pp->buf[pp->size].ul64[0] = 0x318E400000008004;
+    pp->buf[pp->size].ul64[0] = SCE_GIF_SET_TAG(4, SCE_GS_TRUE, SCE_GS_TRUE, SCE_GS_SET_PRIM(SCE_GS_PRIM_TRISTRIP, 1, 1, 0, 0, 0, 1, 1, 0), SCE_GIF_PACKED, 3);
     pp->buf[pp->size++].ul64[1] = SCE_GS_UV | SCE_GS_RGBAQ << 4 | SCE_GS_XYZF2 << 8;
 
-    pp->buf[pp->size].ul32[0] = 0x00;
-    pp->buf[pp->size].ul32[1] = SCR_HEIGHT * 0x10;
-    pp->buf[pp->size].ul32[2] = 0x00;
-    pp->buf[pp->size].ul32[3] = 0x00;
+    SETVEC(pp->buf[pp->size].ul32, 0x00, SCR_HEIGHT * 0x10, 0x00, 0x00);
     pp->size++;
-    pp->buf[pp->size].ul32[0] = 0x88;
-    pp->buf[pp->size].ul32[1] = 0x88;
-    pp->buf[pp->size].ul32[2] = 0x88;
-    pp->buf[pp->size].ul32[3] = 0x40;
+    SETVEC(pp->buf[pp->size].ul32, 0x88, 0x88, 0x88, 0x40);
     pp->size++;
-    pp->buf[pp->size].ul32[0] = GS_X_COORD(0);
-    pp->buf[pp->size].ul32[1] = GS_Y_COORD(SCR_HEIGHT);
-    pp->buf[pp->size].ul32[2] = 0xFFFFF;
-    pp->buf[pp->size].ul32[3] = 0x0000;
+    SETVEC(pp->buf[pp->size].ul32, GS_X_COORD(0), GS_Y_COORD(SCR_HEIGHT), 0xFFFFF, 0x0000);
     pp->size++;
 
-    pp->buf[pp->size].ul32[0] = 0x00;
-    pp->buf[pp->size].ul32[1] = 0x00;
-    pp->buf[pp->size].ul32[2] = 0x00;
-    pp->buf[pp->size].ul32[3] = 0x00;
+    SETVEC(pp->buf[pp->size].ul32, 0x00, 0x00, 0x00, 0x00);
     pp->size++;
-    pp->buf[pp->size].ul32[0] = 0x88;
-    pp->buf[pp->size].ul32[1] = 0x88;
-    pp->buf[pp->size].ul32[2] = 0x88;
-    pp->buf[pp->size].ul32[3] = 0x40;
+    SETVEC(pp->buf[pp->size].ul32, 0x88, 0x88, 0x88, 0x40);
     pp->size++;
-    pp->buf[pp->size].ul32[0] = GS_X_COORD(0);
-    pp->buf[pp->size].ul32[1] = GS_Y_COORD(0);
-    pp->buf[pp->size].ul32[2] = 0xFFFFF;
-    pp->buf[pp->size].ul32[3] = 0x0000;
+    SETVEC(pp->buf[pp->size].ul32, GS_X_COORD(0), GS_Y_COORD(0), 0xFFFFF, 0x0000);
     pp->size++;
 
-    pp->buf[pp->size].ul32[0] = SCR_WIDTH * 0x10;
-    pp->buf[pp->size].ul32[1] = SCR_HEIGHT * 0x10;
-    pp->buf[pp->size].ul32[2] = 0x00;
-    pp->buf[pp->size].ul32[3] = 0x00;
+    SETVEC(pp->buf[pp->size].ul32, SCR_WIDTH * 0x10, SCR_HEIGHT * 0x10, 0x00, 0x00);
     pp->size++;
-    pp->buf[pp->size].ul32[0] = 0x88;
-    pp->buf[pp->size].ul32[1] = 0x88;
-    pp->buf[pp->size].ul32[2] = 0x88;
-    pp->buf[pp->size].ul32[3] = 0x40;
+    SETVEC(pp->buf[pp->size].ul32, 0x88, 0x88, 0x88, 0x40);
     pp->size++;
-    pp->buf[pp->size].ul32[0] = GS_X_COORD(SCR_WIDTH);
-    pp->buf[pp->size].ul32[1] = GS_Y_COORD(SCR_HEIGHT);
-    pp->buf[pp->size].ul32[2] = 0xFFFFF;
-    pp->buf[pp->size].ul32[3] = 0x0000;
+    SETVEC(pp->buf[pp->size].ul32, GS_X_COORD(SCR_WIDTH), GS_Y_COORD(SCR_HEIGHT), 0xFFFFF, 0x0000);
     pp->size++;
 
-    pp->buf[pp->size].ul32[0] = SCR_WIDTH * 0x10;
-    pp->buf[pp->size].ul32[1] = 0x00;
-    pp->buf[pp->size].ul32[2] = 0x00;
-    pp->buf[pp->size].ul32[3] = 0x00;
+    SETVEC(pp->buf[pp->size].ul32, SCR_WIDTH * 0x10, 0x00, 0x00, 0x00);
     pp->size++;
-    pp->buf[pp->size].ul32[0] = 0x88;
-    pp->buf[pp->size].ul32[1] = 0x88;
-    pp->buf[pp->size].ul32[2] = 0x88;
-    pp->buf[pp->size].ul32[3] = 0x40;
+    SETVEC(pp->buf[pp->size].ul32, 0x88, 0x88, 0x88, 0x40);
     pp->size++;
-    pp->buf[pp->size].ul32[0] = GS_X_COORD(SCR_WIDTH);
-    pp->buf[pp->size].ul32[1] = GS_Y_COORD(0);
-    pp->buf[pp->size].ul32[2] = 0xFFFFF;
-    pp->buf[pp->size].ul32[3] = 0x0000;
+    SETVEC(pp->buf[pp->size].ul32, GS_X_COORD(SCR_WIDTH), GS_Y_COORD(0), 0xFFFFF, 0x0000);
     pp->size++;
 
     KL2_VER_TRIAL_ONLY(FlushCache(WRITEBACK_DCACHE));
@@ -160,8 +124,8 @@ static qword* make_flt_Div(qword *p, s32 dv, u64 scissor, u64 *tex0, u64 *frame)
     }
 
     n = 1 << dv;
-    pw = 0x2800 >> dv;
-    ph = 0xE0 << (4 - dv);
+    pw = SCR_WIDTH * 0x10 >> dv;
+    ph = SCR_HEIGHT << (4 - dv);
     nloop = pw / 512;
     offy = 0x70 >> dv;
     offu = dv == 2 ? 0x1400 : 0;
@@ -171,32 +135,33 @@ static qword* make_flt_Div(qword *p, s32 dv, u64 scissor, u64 *tex0, u64 *frame)
     }
     offx <<= 4;
 
-    ((u64 *)&p[0])[0] = 0x108b400000000001;
+    ((u64 *)&p[0])[0] = SCE_GIF_SET_TAG(1, SCE_GS_FALSE, SCE_GS_TRUE, SCE_GS_SET_PRIM(SCE_GS_PRIM_SPRITE, 0, 1, 0, 0, 0, 1, 0, 0), SCE_GIF_PACKED, 1);
     ((u64 *)&p[0])[1] = SCE_GIF_PACKED_AD;
     ((u64 *)&p[1])[0] = scissor;
     ((u64 *)&p[1])[1] = SCE_GS_SCISSOR_1;
     p += 2;
 
     for (i = 0; i < n; i++, tex0++) {
-        ((u64 *)&p[0])[0] = 0x1400000000000001;
+        ((u64 *)&p[0])[0] = SCE_GIF_SET_TAG(1, SCE_GS_FALSE, SCE_GS_FALSE, 0, SCE_GIF_REGLIST, 1);
         ((u64 *)&p[0])[1] = SCE_GS_TEX0_1;
         ((u64 *)&p[1])[0] = *tex0;
         p += 2;
 
         for (j = 0; j < 32; j += 0x10, frame++) {
-            ((u64 *)&p[0])[0] = 0x1000000000000001;
+            ((u64 *)&p[0])[0] = SCE_GIF_SET_TAG(1, SCE_GS_FALSE, SCE_GS_FALSE, 0, SCE_GIF_PACKED, 1);
             ((u64 *)&p[0])[1] = SCE_GIF_PACKED_AD;
             ((u64 *)&p[1])[0] = *frame;
             ((u64 *)&p[1])[1] = SCE_GS_FRAME_1;
-            ((u64 *)&p[2])[0] = nloop | 0x4400000000000000;
+            ((u64 *)&p[2])[0] = SCE_GIF_SET_TAG(nloop, SCE_GS_FALSE, SCE_GS_FALSE, 0, SCE_GIF_REGLIST, 4);
             ((u64 *)&p[2])[1] = SCE_GS_UV << 0 | SCE_GS_XYZ2 << 4 | SCE_GS_UV << 8 | SCE_GS_XYZ2 << 12;
+            p += 3;
 
-            p0 = (u64 *)(p + 3);
+            p0 = (u64 *)p;
             for (k = 0; k < pw; k += 0x200, p0 += 4) {
-                p0[0] = (k + j + offu) | (u64)(j + i * ph) << 0x10;
-                p0[1] = ((k >> 1) + offx) | (u64)(j * offy + i * (offy << 5)) << 0x10;
-                p0[2] = (k + j + offu + 0x1F8) | (u64)(ph + j + i * ph) << 0x10;
-                p0[3] = ((k >> 1) + offx + 0xFC) | (u64)((ph >> 1) + j * offy + i * (offy << 5)) << 0x10;
+                p0[0] = SCE_GS_SET_UV(k + j + offu, j + i * ph);
+                p0[1] = SCE_GS_SET_XYZ2((k >> 1) + offx, j * offy + i * (offy << 5), 0x00);
+                p0[2] = SCE_GS_SET_UV(k + j + offu + 0x1F8, ph + j + i * ph);
+                p0[3] = SCE_GS_SET_XYZ2((k >> 1) + offx + 0xFC, (ph >> 1) + j * offy + i * (offy << 5), 0x00);
             }
             p = (qword *)p0;
         }
@@ -224,8 +189,8 @@ static qword* make_flt_Acc(qword *p, s32 dv, u64 scissor, u64 *tex0, u64 *frame,
     }
 
     n = 1 << dv;
-    pw = 0x2800 >> dv;
-    ph = 0xE0 << (4 - dv);
+    pw = SCR_WIDTH * 0x10 >> dv;
+    ph = SCR_HEIGHT << (4 - dv);
     nloop = pw / 512;
     offy = 0x70 >> dv;
     offu = dv == 2 ? 0x1400 : 0;
@@ -235,21 +200,21 @@ static qword* make_flt_Acc(qword *p, s32 dv, u64 scissor, u64 *tex0, u64 *frame,
     }
     offx <<= 4;
 
-    ((u64 *)&p[0])[0] = 0x10ab400000000001;
+    ((u64 *)&p[0])[0] = SCE_GIF_SET_TAG(1, SCE_GS_FALSE, SCE_GS_TRUE, SCE_GS_SET_PRIM(SCE_GS_PRIM_SPRITE, 0, 1, 0, 1, 0, 1, 0, 0), SCE_GIF_PACKED, 1);
     ((u64 *)&p[0])[1] = SCE_GIF_PACKED_AD;
     ((u64 *)&p[1])[0] = scissor;
     ((u64 *)&p[1])[1] = SCE_GS_SCISSOR_1;
     p += 2;
 
     for (i = 0; i < n; i++, frame++) {
-        ((u64 *)&p[0])[0] = 0x1000000000000001;
+        ((u64 *)&p[0])[0] = SCE_GIF_SET_TAG(1, SCE_GS_FALSE, SCE_GS_FALSE, 0, SCE_GIF_PACKED, 1);
         ((u64 *)&p[0])[1] = SCE_GIF_PACKED_AD;
         ((u64 *)&p[1])[0] = *frame;
         ((u64 *)&p[1])[1] = SCE_GS_FRAME_1;
         p += 2;
 
         for (j = 0; j < 2; j++, tex0++) {
-            ((u64 *)&p[0])[0] = 0x2400000000000001;
+            ((u64 *)&p[0])[0] = SCE_GIF_SET_TAG(1, SCE_GS_FALSE, SCE_GS_FALSE, 0, SCE_GIF_REGLIST, 2);
             ((u64 *)&p[0])[1] = SCE_GS_FINISH;
             p0 = (u64 *)(p + 1);
             if (j == 0) {
@@ -258,16 +223,16 @@ static qword* make_flt_Acc(qword *p, s32 dv, u64 scissor, u64 *tex0, u64 *frame,
                 p0[0] = c1;
             }
             p0[1] = *tex0;
-            ((u64 *)&p[2])[0] = nloop | 0x4400000000000000;
+            ((u64 *)&p[2])[0] = SCE_GIF_SET_TAG(nloop, SCE_GS_FALSE, SCE_GS_FALSE, 0, SCE_GIF_REGLIST, 4);
             ((u64 *)&p[2])[1] = SCE_GS_UV << 0 | SCE_GS_XYZ2 << 4 | SCE_GS_UV << 8 | SCE_GS_XYZ2 << 12;
 
             p0 = (u64 *)(p + 3);
             t = 12 - ((i & 1) << 3);
             for (k = 0; k < pw; k += 0x200, p0 += 4) {
-                p0[0] = ((k >> 1) + t + offx) | (u64)(t + i * ph + (j * (offy << 4))) << 0x10;
-                p0[1] = (k + offu) | (u64)(i * (offy << 5)) << 0x10;
-                p0[2] = ((k >> 1) + t + offx + 0xFC) | (u64)(ph / 2 + t + i * ph + (j * (offy << 4))) << 0x10;
-                p0[3] = (k + offu + 0x1F8) | (u64)(ph + (i * (offy << 5))) << 0x10;
+                p0[0] = SCE_GS_SET_UV((k >> 1) + t + offx, t + i * ph + (j * (offy << 4)));
+                p0[1] = SCE_GS_SET_XYZ2(k + offu, i * (offy << 5), 0x00);
+                p0[2] = SCE_GS_SET_UV((k >> 1) + t + offx + 0xFC, ph / 2 + t + i * ph + (j * (offy << 4)));
+                p0[3] = SCE_GS_SET_XYZ2(k + offu + 0x1F8, ph + (i * (offy << 5)), 0x00);
             }
             p = (qword *)p0;
         }
@@ -381,7 +346,7 @@ void nkDrawFilterShadeOff(sceGsDrawEnv1 *env1, sceGsDrawEnv1 *env1_d, f32 pow) {
         p = make_flt_Acc(p, 0, SCE_GS_SET_SCISSOR(0, 0x27F, 0, 0xDF), tex0_b, (u64 *)env1, c0, c1);
     }
 
-    ((u64 *)&p[0])[0] = 0x1000000000008005;
+    ((u64 *)&p[0])[0] = SCE_GIF_SET_TAG(5, SCE_GS_TRUE, SCE_GS_FALSE, 0, SCE_GIF_PACKED, 1);
     ((u64 *)&p[0])[1] = SCE_GIF_PACKED_AD;
     ((u64 *)&p[1])[0] = *(u64 *)&env1->frame1;
     ((u64 *)&p[1])[1] = SCE_GS_FRAME_1;
@@ -403,8 +368,8 @@ void nkDrawFilterShadeOff(sceGsDrawEnv1 *env1, sceGsDrawEnv1 *env1_d, f32 pow) {
     (*tag)[0] = (u32)tag | t;
     (*tag)[1] = 0;
     (*tag)[2] = 0;
-    (*tag)[3] = 0x50000000 | t;
-    FlushCache(0);
-    sceDmaSend(DmaChGIF, (void *)((u32)tag | 0x80000000));
+    (*tag)[3] = DMAcall | t;
+    FlushCache(WRITEBACK_DCACHE);
+    sceDmaSend(DmaChGIF, SPR_SRC(tag));
     sceDmaSync(DmaChGIF, 0, 0);
 }

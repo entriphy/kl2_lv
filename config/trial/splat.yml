@@ -153,13 +153,13 @@ segments:
       - [0x079428, c, nakano/filter]
       - [0x07A568, c, nakano/filter2]
       - [0x07A970, asm, nakano/game]
-      - [0x07B5D8, asm, nakano/gflow]
+      - [0x07B5D8, c, nakano/gflow]
       - [0x07B798, asm, nakano/gmiss]
       - [0x07BD50, asm, nakano/gscreen]
-      - [0x07D5F0, asm, nakano/gssub]
+      - [0x07D5F0, c, nakano/gssub]
       - [0x07F8C8, asm, nakano/herosub]
-      - [0x080070, asm, nakano/hlzdeco]
-      - [0x080C00, asm, nakano/init]
+      - [0x080070, c, nakano/hlzdeco]
+      - [0x080C00, c, nakano/init]
       - [0x080C78, asm, nakano/k_math]
       - [0x080E90, asm, nakano/keyfsv]
       - [0x080F40, asm, nakano/klmot]
@@ -187,8 +187,8 @@ segments:
       - [0x093650, asm, nakano/popuka]
       - [0x094138, asm, nakano/raycrs]
       - [0x096CB0, asm, nakano/readfile]
-      - [0x096E68, asm, nakano/route]
-      - [0x098C08, asm, nakano/rtconn]
+      - [0x096E68, c, nakano/route]
+      - [0x098C08, c, nakano/rtconn]
       - [0x099368, asm, nakano/sinit]
       - [0x099D40, asm, nakano/tmddraw]
       - [0x099DC0, asm, nakano/vstart]
@@ -485,7 +485,8 @@ segments:
       - [0x1FCD50, .data, nakano/capture]
       - [0x1FCD68, data, nakano/dma]
       - [0x1FCD90, data, nakano/game]
-      - [0x204C90, data, nakano/gssub]
+      - [0x204C90, .data, nakano/gssub]
+      - [0x205050, data, nakano/k_math]
       - [0x205080, data, nakano/light]
       - [0x2051C0, data, nakano/main]
       - [0x20C2C0, data, nakano/mapview]
@@ -656,6 +657,11 @@ segments:
       - [0x265DE0, rodata, nakano/dma]
       - [0x265E30, .rodata, nakano/filter]
       - [0x265F10, rodata, nakano/game]
+      - [0x266040, .rodata, nakano/gflow]
+      - [0x266050, rodata, nakano/gmiss]
+      - [0x266D00, .rodata, nakano/route]
+      - [0x266D10, .rodata, nakano/rtconn]
+      - [0x266D30, rodata, nakano/sinit]
       - [0x26A5C8, .rodata, take/outline]
       - [0x26A5E8, rodata, take/sfxbios]
       - [0x26A620, .rodata, take/t_sample]
@@ -717,7 +723,7 @@ segments:
       - [0x272174, lit4, kazuya/wm_job]
       - [0x2721A0, .lit4, nakano/camera]
       - [0x272410, lit4, nakano/gscreen]
-      - [0x2724A4, lit4, nakano/gssub]
+      - [0x2724A4, .lit4, nakano/gssub]
       - [0x2724C4, lit4, nakano/herosub]
       - [0x2724E4, lit4, nakano/klmot]
       - [0x272644, lit4, nakano/klohit0]
@@ -735,7 +741,7 @@ segments:
       - [0x2729F4, lit4, nakano/ocamtst]
       - [0x272A08, lit4, nakano/popuka]
       - [0x272A34, lit4, nakano/raycrs]
-      - [0x272A60, lit4, nakano/route]
+      - [0x272A60, .lit4, nakano/route]
       - [0x272AA0, lit4, nakano/sinit]
       - [0x272AA4, lit4, nakano/tmddraw]
       - [0x272AB4, lit4, nakano/wipe]
@@ -990,8 +996,8 @@ segments:
       - {start: 0x276800, type: sbss, vram: 0x37594C, name: nakano/map01}
       - {start: 0x276800, type: sbss, vram: 0x375954, name: nakano/mapview}
       - {start: 0x276800, type: sbss, vram: 0x37595C, name: nakano/nk2pcon}
-      - {start: 0x276800, type: sbss, vram: 0x375960, name: nakano/route}
-      - {start: 0x276800, type: sbss, vram: 0x375964, name: nakano/rtconn}
+      - {start: 0x276800, type: .sbss, vram: 0x375960, name: nakano/route}
+      - {start: 0x276800, type: .sbss, vram: 0x375964, name: nakano/rtconn}
       - {start: 0x276800, type: sbss, vram: 0x375968, name: nakano/vstart}
       - {start: 0x276800, type: sbss, vram: 0x37596C, name: okanoyo/okcam}
       - {start: 0x276800, type: sbss, vram: 0x375980, name: take/object}
@@ -1036,8 +1042,8 @@ segments:
       - {start: 0x276864, type: bss, vram: 0x6B18F0, name: nakano/menu}
       - {start: 0x276864, type: bss, vram: 0x6B1980, name: nakano/nkmirr}
       - {start: 0x276864, type: bss, vram: 0x6B1A40, name: nakano/raycrs}
-      - {start: 0x276864, type: bss, vram: 0x6B9D80, name: nakano/route}
-      - {start: 0x276864, type: bss, vram: 0x6B9E80, name: nakano/rtconn}
+      - {start: 0x276864, type: .bss, vram: 0x6B9D80, name: nakano/route}
+      - {start: 0x276864, type: .bss, vram: 0x6B9E80, name: nakano/rtconn}
       - {start: 0x276864, type: bss, vram: 0x6BA080, name: nakano/wipe}
       - {start: 0x276864, type: bss, vram: 0x6BA0D0, name: nakano/wmeter}
       - {start: 0x276864, type: bss, vram: 0x6BA210, name: okanoyo/okmenu}

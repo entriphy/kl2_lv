@@ -67,7 +67,7 @@ void DrawEvRt() {
             vu0_ITOF12Vector(vf, vi);
             vf[3] = 1.0f;
             vu0_LoadMtx(GameGbl.wsm);
-            vu0_Thing(vf0, vf);
+            vu0_ApplyMtx(vf0, vf);
             if (VertClip(vf0) == 0) {
                 vu0_FTOI4Vector(v0, vf0);
                 vi[0] = rtp->vec.x * rtp->co + rtp->posi.x;
@@ -76,7 +76,7 @@ void DrawEvRt() {
                 vu0_ITOF12Vector(vf, vi);
                 vf[3] = 1.0f;
                 vu0_LoadMtx(GameGbl.wsm);
-                vu0_Thing(vf1, vf);
+                vu0_ApplyMtx(vf1, vf);
                 if (VertClip(vf1) == 0) {
                     vu0_FTOI4Vector(v1, vf1);
                     pp->size = 0;

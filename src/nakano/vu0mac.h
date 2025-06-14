@@ -94,7 +94,7 @@ static inline void vu0_LoadMtx(sceVu0FMATRIX mtx) {
 }
 
 // ?
-static inline void vu0_Thing(sceVu0FVECTOR dst, sceVu0FVECTOR src) {
+static inline void vu0_ApplyMtx(sceVu0FVECTOR dst, sceVu0FVECTOR src) {
     __asm__ volatile(
         ".set noreorder\n"
         "lqc2        $vf8, 0x0(%1)\n"

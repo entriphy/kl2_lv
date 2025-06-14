@@ -19,7 +19,7 @@ typedef struct tagCOORD { // 0xb0
     /* 0xa0 */ f32 WipCnt;
     /* 0xa4 */ struct tagCOORD *Super;
     /* 0xa8 */ s32 Flag;
-} tagCOORD;
+} COORD;
 
 typedef struct { // 0x40
     /* 0x00 */ sceVu0FMATRIX Matrix;
@@ -244,8 +244,8 @@ typedef struct { // 0x218
     /* 0x004 */ f32 SubScale;
     /* 0x008 */ s16 ActNum;
     /* 0x00a */ s16 ActNumMax;
-    /* 0x00c */ tagCOORD *pBaseCoord;
-    /* 0x010 */ tagCOORD *pCoord;
+    /* 0x00c */ COORD *pBaseCoord;
+    /* 0x010 */ COORD *pCoord;
     /* 0x014 */ u8 *pInf;
     /* 0x018 */ u8 *pItr;
     /* 0x01c */ u8 *pItrW;
@@ -348,5 +348,34 @@ typedef struct SFXOBJ { // 0xa0
     /* 0x98 */ s32 OutFlag;
     /* 0x9c */ s32 actNum;
 } SFXOBJ;
+
+typedef struct tCOORD {
+    sceVu0FVECTOR Rot;
+    sceVu0FVECTOR Trans;
+    sceVu0FMATRIX LcMtx;
+    sceVu0FMATRIX LwMtx;
+    sceVu0FMATRIX LsMtx;
+    sceVu0FMATRIX LvMtx;
+    sceVu0FMATRIX LcLightMtx;
+    struct tCOORD *Super;
+    s32 Flag;
+} tCOORD;
+
+typedef struct { // 0x1a0
+	/* 0x000 */ tCOORD Base;
+	/* 0x170 */ sceVu0FMATRIX *pNormalLight;
+	/* 0x174 */ sceVu0FMATRIX *pLightColor;
+	/* 0x178 */ f32 Scale;
+	/* 0x17c */ s32 Size;
+	/* 0x180 */ s32 Fuku;
+	/* 0x184 */ s32 OutLine;
+	/* 0x188 */ SFXOBJ *pSfx;
+	/* 0x18c */ MOTION *pMot;
+	/* 0x190 */ s32 ret;
+} tOBJECT;
+
+// what
+typedef tOBJECT HOT;
+typedef tCOORD COLD;
 
 #endif
