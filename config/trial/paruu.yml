@@ -5152,6 +5152,7 @@ sections:
           - [0x001925C8, nkSetOCamTest]
         data:
           - [0x0030B4A0, ObjFuncTbl.5, data, 0x0000]
+          - [0x00365BA0, null, rodata, 0x0000]
           - [0x003719F4, null, lit4, 0x0000]
       - name: popuka.c
         functions:
@@ -5168,6 +5169,7 @@ sections:
           - [0x00193130, nkSetPopuka]
         data:
           - [0x0030B4A8, ObjFuncTbl.6, data, 0x0000]
+          - [0x00365BE0, null, rodata, 0x0000]
           - [0x00371A08, null, lit4, 0x0000]
       - name: raycrs.c
         functions:

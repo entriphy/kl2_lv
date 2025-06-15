@@ -48,7 +48,9 @@ typedef struct { // 0x24
 
 typedef struct { // 0x2d0
     /* 0x000 */ sceVu0FVECTOR mpos;
+#ifdef KL2_VER_RETAIL
     /* 0x010 */ sceVu0FVECTOR mang;
+#endif
     /* 0x020 */ sceVu0FMATRIX wsm;
     /* 0x060 */ sceVu0FMATRIX wvm;
     /* 0x0a0 */ sceVu0FMATRIX vsm;

@@ -210,14 +210,11 @@ def get_gp_value(elf: ELFFile) -> int:
     return registers.get("gp")
 
 # this will be removed eventually
-def create_paruu_config(elf: ELFFile, stdump_json: str) -> list[Section]:
+def create_paruu_config(elf: ELFFile, stdump: dict) -> list[Section]:
     text_section = elf.get_section_by_name(".text")
     lit4_section = elf.get_section_by_name(".lit4")
     text_data = text_section.data()
     lit4_range = (lit4_section.header.sh_addr, lit4_section.header.sh_addr + lit4_section.header.sh_size)
-
-    with open(stdump_json) as f:
-        stdump = json.load(f)
     
     gp_value = get_gp_value(elf)
     sections: dict[str, Section] = {}
@@ -401,6 +398,8 @@ def create_paruu_config(elf: ELFFile, stdump_json: str) -> list[Section]:
             "game.c": 0x364F10,
             "gflow.c": 0x365040,
             "gmiss.c": 0x365050,
+            "ocamtst.c": 0x365BA0,
+            "popuka.c": 0x365BE0,
             "route.c": 0x365D00,
             "rtconn.c": 0x365D10,
             "sinit.c": 0x365D30
@@ -464,7 +463,7 @@ def write_paruu_config(version: str, sections: list[Section]):
         }
         yaml.dump(paruu_config, f, sort_keys=False, Dumper=MyDumper, default_flow_style=False)
 
-def write_symbol_addrs(version: str, sections: list[Section]):
+def write_symbol_addrs(version: str, sections: list[Section], elf: ELFFile, stdump: dict):
     with open(f"config/{version}/symbol_addrs.txt", "w") as f:
         for section in sections:
             f.write(f"// -- {section.id} --\n\n")
@@ -477,6 +476,16 @@ def write_symbol_addrs(version: str, sections: list[Section]):
                         continue
                     f.write(f"{data.name:<32} = 0x{data.address:08X}; // size:{data.size} allow_duplicated:True\n")
                 f.write("\n")
+        
+        f.write("// -- VU Symbols --\n\n")
+        vudata_section = elf.get_section_by_name(".vudata")
+        vutext_section = elf.get_section_by_name(".vutext")
+        vudata_range = (vudata_section.header.sh_addr, vudata_section.header.sh_addr + vudata_section.header.sh_size)
+        vutext_range = (vutext_section.header.sh_addr, vutext_section.header.sh_addr + vutext_section.header.sh_size)
+        for label in stdump["labels"]:
+            if (vudata_range[0] < label["address"] < vudata_range[1] or vutext_range[0] < label["address"] < vutext_range[1]) and not label["name"].startswith(("p", ".")):
+                f.write(f"{label['name']:<32} = 0x{label['address']:08X}; // size:0 allow_duplicated:True\n")
+        f.write("\n")
 
 def write_splat_config(version: str, sections: list[Section]):
     subsegments = [
@@ -847,12 +856,15 @@ if __name__ == "__main__":
         sys.exit(0)
 
     elf = read_elf("MAIN.ELF")
+    with open("stdump.json") as f:
+        stdump = json.load(f)
+    
     if args.paruu:
-        paruu = create_paruu_config(elf, "stdump.json")
+        paruu = create_paruu_config(elf, stdump)
         write_paruu_config(args.version, paruu)
     
     if args.symbols:
-        write_symbol_addrs(args.version, paruu)
+        write_symbol_addrs(args.version, paruu, elf, stdump)
 
     if args.splat:
         write_objdiff_config(paruu)

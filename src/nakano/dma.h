@@ -20,4 +20,6 @@ extern void nkDmaSendVif0(qword *addr);
 extern void nkPathFlush();
 extern void nkPathBlock();
 
+extern s32 nkDmaCdNum;
+
 #endif

@@ -12,4 +12,15 @@ typedef struct { // 0x90
     /* 0x8c */ s32 fg;
 } BGWK;
 
+
+extern BGWK *hrbgbuff;
+extern s32 hrcntbg;
+extern s32 hrcntdrawbg;
+extern mINFO hrbgi[6];
+extern u32 *hrbgbin[6];
+
+extern void hr_bg_onoff(s32 no, s32 fg);
+extern void hr_bginit();
+extern void hr_bg_workclip();
+
 #endif

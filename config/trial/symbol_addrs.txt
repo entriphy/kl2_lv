@@ -11032,3 +11032,32 @@ __ti19__pointer_type_info        = 0x006D7D48; // size:12 allow_duplicated:True
 __ti16__ptmd_type_info           = 0x006D7D58; // size:12 allow_duplicated:True
 __ti19__builtin_type_info        = 0x006D7D68; // size:12 allow_duplicated:True
 
+// -- VU Symbols --
+
+Vu0Prg                           = 0x002E1500; // size:0 allow_duplicated:True
+hr_vu1m_av2                      = 0x00354E00; // size:0 allow_duplicated:True
+My_dma_start                     = 0x002E0F10; // size:0 allow_duplicated:True
+hr_vu1m_av0                      = 0x00353300; // size:0 allow_duplicated:True
+hr_vu1_vpa                       = 0x00355700; // size:0 allow_duplicated:True
+Vu0PrgEff                        = 0x002E1200; // size:0 allow_duplicated:True
+kitFireMicroProgEnd              = 0x002E1F40; // size:0 allow_duplicated:True
+hr_vu1m_iv                       = 0x00356400; // size:0 allow_duplicated:True
+hr_vu1m_bg                       = 0x00358000; // size:0 allow_duplicated:True
+hr_vu1m_mirr                     = 0x00358F00; // size:0 allow_duplicated:True
+hr_vu1m_wire                     = 0x0035A500; // size:0 allow_duplicated:True
+My_param                         = 0x002E0F20; // size:0 allow_duplicated:True
+HT_dma_progmeta                  = 0x002E0A00; // size:0 allow_duplicated:True
+hr_vu1m_av1o                     = 0x00354700; // size:0 allow_duplicated:True
+hr_vu1m_avi                      = 0x00352E00; // size:0 allow_duplicated:True
+kitFireMicroProg                 = 0x002E1D00; // size:0 allow_duplicated:True
+hr_vu1m_fogc                     = 0x0035C000; // size:0 allow_duplicated:True
+Ao_particle_end                  = 0x0035FED0; // size:0 allow_duplicated:True
+hr_vu1_vpa_v                     = 0x00355E00; // size:0 allow_duplicated:True
+My_dma_start0                    = 0x002E0B00; // size:0 allow_duplicated:True
+Ao_particle_start                = 0x0035F700; // size:0 allow_duplicated:True
+hr_vu1m_av1                      = 0x00354000; // size:0 allow_duplicated:True
+kitWaveMicroProg                 = 0x002E1F40; // size:0 allow_duplicated:True
+hr_vu1m_ioff                     = 0x0035AF00; // size:0 allow_duplicated:True
+HT_dma_start                     = 0x002E0A90; // size:0 allow_duplicated:True
+hr_vu1_vpo                       = 0x00359900; // size:0 allow_duplicated:True
+

@@ -1,13 +1,15 @@
 #include "harada/hr_bgwk.h"
 #include "harada/h_vpm2.h"
 
-static void hr_bg_workclipM();
-
 BGWK *hrbgbuff = NULL;
 s32 hrcntbg = 0;
 s32 hrcntdrawbg = 0;
 mINFO hrbgi[6] = {};
 u32 *hrbgbin[6] = {};
+
+// TODO: delete once hr_main.c is implemented
+u32 DELETE_1[] = {0, 0};
+u32 DELETE_2;
 
 void hr_bg_onoff(s32 no, s32 fg) {
     BGWK *bg;
@@ -25,10 +27,8 @@ void hr_bginit() {
 
     hrbgbuff = (BGWK *)getBuff(1, sizeof(BGWK) * 6, "hrbgbuff", &i);
     if ((s32)hrbgbuff == -1) {
-        // NOTE: The string below is in Shift JIS encoding!
-        // The string is "☆☆☆☆BG cansel\n"
-        // Do NOT save this file as Shift JIS or splat will fail to read this file.
-        KL2_DEBUG_PRINT(("��������BG cansel\n"));
+        // "☆☆☆☆BG cansel\n"
+        KL2_DEBUG_PRINT(("\x81\x99\x81\x99\x81\x99\x81\x99""BG cansel\n"));
         hrcntbg = 0;
     } else {
         for (i = 0, bg = hrbgbuff, info = hrbgi; i < hrcntbg; i++, bg++, info++) {

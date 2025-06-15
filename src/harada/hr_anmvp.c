@@ -1,14 +1,14 @@
 #include "harada/hr_anmvp.h"
 #include "harada/h_vpm2.h"
-// #include "harada/hr_mapdr.h"
-// #include "harada/hr_mapv.h"
-// #include "nakano/dma.h"
+#include "harada/hr_mapdr.h"
+#include "harada/hr_mapv.h"
+#include "nakano/dma.h"
 #include "nakano/main.h"
 
 static s32 hr_avp_sint(HRANMV *av, s32 mno);
 static s32 hr_avp_sint2(HRANMV *av, s32 mno);
 
-s32 (*hrAnmVpmTbl[5])(HRANMV *, s32) = {
+s32 (*hrAnmVpmTbl[])(HRANMV *, s32) = {
     NULL,
     hr_avp_sint,
     hr_avp_sint2,
@@ -200,7 +200,7 @@ static s32 hr_avp_sint(HRANMV *av, s32 mno) {
     nkAddRef(&hr_vu1m_av1);
 
     pp = (ATR_AVPSINT0 *)p1_packet;
-    pp->dmatag[0] = 0x10000008;
+    pp->dmatag[0] = DMAcnt | 8;
     pp->dmatag[1] = pp->dmatag[2] = pp->dmatag[3] = 0;
     hrSetObjAttrUnpack(pp->vif0, 0x3AF, 6);
     *(s64 *)pp->tag = 0x302E400000000000;
