@@ -1,4 +1,5 @@
 #include "abe/ab_objtest.h"
+#include "nakano/objfunc.h"
 
 static void DrawObjTest(OBJWORK *objw) {
     abGifPacket pack;
@@ -27,7 +28,6 @@ static void DrawObjTest(OBJWORK *objw) {
     pack.size = 0;
     pack.buf = SPR_MEM;
     pack.buf->ul128 = 0;
-
     pack.buf[pack.size++].ul32[0] = 0x70000007;
     
     pack.buf[pack.size].ul64[0] = 0x2005c00000008003;
@@ -78,10 +78,7 @@ static void ObjMain(OBJWORK *objw) {
     KL2_PI_CLAMP(objw->rot[2]);
 }
 
-static void (*ObjFuncTbl[])(OBJWORK *objw) = {
-    ObjInit,
-    ObjMain
-};
+static void (*ObjFuncTbl[])(OBJWORK *objw) = { ObjInit, ObjMain };
 
 void abObjTest(OBJWORK *objw) {
     ObjFuncTbl[objw->bun0](objw);

@@ -394,7 +394,7 @@ s32 MichiBunki(RT_WRK *rtw, const sceVu0FVECTOR pos) {
         vf[0] = cntf;
         vi[0] = vf[0] * 4096.0f;
         rtw->cnt = vi[0];
-        rtw->rtp = crtp;
+        rtw->rtp = (ROUTE *)crtp;
         return rtn;
     } else {
         return -1;
@@ -482,7 +482,7 @@ s32 MichiBunki1(RT_WRK *rtw, sceVu0FVECTOR pos, ROUTE *rtp) {
         vf[0] = cntf;
         vi[0] = vf[0] * 4096.0f;
         rtw->cnt = vi[0];
-        rtw->rtp = crtp;
+        rtw->rtp = (ROUTE *)crtp;
         return 0;
     } else {
         return -1;
@@ -523,15 +523,15 @@ s32 MichiBunki2(RT_WRK *rtw, sceVu0FVECTOR pos) {
             vi[0] = lrtp->posi.x;
             vi[1] = lrtp->posi.y;
             vi[2] = lrtp->posi.z;
-            vu0_ITOF12Vector(rpf, vi);
+            vu0_ITOF12Vector((f32 *)rpf, (s32 *)vi);
             vi[0] = lrtp->vec.x;
             vi[1] = lrtp->vec.y;
             vi[2] = lrtp->vec.z;
-            vu0_ITOF12Vector(rvf, vi);
+            vu0_ITOF12Vector((f32 *)rvf, (s32 *)vi);
             vf[0] = pos[0] - rpf[0];
             vf[1] = pos[1] - rpf[1];
             vf[2] = pos[2] - rpf[2];
-            vu0_Square(vw1, vf);
+            vu0_Square((f32 *)vw1, (f32 *)vf);
             bf = vw1[0] + vw1[1] + vw1[2];
             cof = lrtp->co;
             vf[0] = pos[0] - (rpf[0] + rvf[0] * cof);
@@ -547,7 +547,7 @@ s32 MichiBunki2(RT_WRK *rtw, sceVu0FVECTOR pos) {
                 vf2[0] = pos[0] - (rpf[0] + rvf[0] * lcof);
                 vf2[1] = pos[1] - (rpf[1] + rvf[1] * lcof);
                 vf2[2] = pos[2] - (rpf[2] + rvf[2] * lcof);
-                vu0_Square(vw2, vf2);
+                vu0_Square((f32 *)vw2, (f32 *)vf2);
                 workf = vw2[0] + vw2[1] + vw2[2];
                 if (workf < minf) {
                     rtn = lp1;
@@ -568,7 +568,7 @@ s32 MichiBunki2(RT_WRK *rtw, sceVu0FVECTOR pos) {
     vf[0] = cntf;
     vi[0] = vf[0] * 4096.0f;
     rtw->cnt = vi[0];
-    rtw->rtp = crtp;
+    rtw->rtp = (ROUTE *)crtp;
     return rtn;
 }
 
@@ -601,15 +601,15 @@ s32 MichiBunki2Cir(RT_WRK *rtw, sceVu0FVECTOR pos) {
             vi[0] = lrtp->posi.x;
             vi[1] = lrtp->posi.y;
             vi[2] = lrtp->posi.z;
-            vu0_ITOF12Vector(rpf, vi);
+            vu0_ITOF12Vector((f32 *)rpf, (s32 *)vi);
             vi[0] = lrtp->vec.x;
             vi[1] = lrtp->vec.y;
             vi[2] = lrtp->vec.z;
-            vu0_ITOF12Vector(rvf, vi);
+            vu0_ITOF12Vector((f32 *)rvf, (s32 *)vi);
             vf[0] = pos[0] - rpf[0];
             vf[1] = pos[1] - rpf[1];
             vf[2] = pos[2] - rpf[2];
-            vu0_Square(vw1, vf);
+            vu0_Square((f32 *)vw1, (f32 *)vf);
             workf = vw1[0] + vw1[2];
             af = vu0_SquareRoot(workf);
             workf = af;
@@ -632,7 +632,7 @@ s32 MichiBunki2Cir(RT_WRK *rtw, sceVu0FVECTOR pos) {
     vf[0] = cntf;
     vi[0] = vf[0] * 4096.0f;
     rtw->cnt = vi[0];
-    rtw->rtp = crtp;
+    rtw->rtp = (ROUTE *)crtp;
     return rtn;
 }
 

@@ -3,11 +3,7 @@
 
 #include "common.h"
 
-#ifndef KL2_VER_TRIAL
-#define __WORK_PATH_SZ 16
-#else
-#define __WORK_PATH_SZ 8
-#endif
+#define WORK_PATH_SZ KL2_VER_COND(8, 16)
 
 typedef struct {
     s32 map_draw_flag;
@@ -18,7 +14,7 @@ typedef struct {
     s32 flag;
     s32 opflag;
     s32 capture_num;
-    s32 work_path[__WORK_PATH_SZ];
+    s32 work_path[WORK_PATH_SZ];
 } NKDEBGBL;
 
 extern NKDEBGBL nkDG;
@@ -29,18 +25,18 @@ extern sceDmaChan *DmaChfromIPU;
 extern sceDmaChan *DmaChtoIPU;
 extern sceDmaChan *DmaChfromSPR;
 extern sceDmaChan *DmaChtoSPR;
-extern qword PsfxWorkBuff[131072];
+extern qword PsfxWorkBuff[0x20000];
 extern vpmINFO VpmInfo;
 extern qword *p1_packet_top;
 extern qword *p1_packet;
 extern qword *p1_packet_cnt;
-extern qword p1_packet_buff[2][4096];
+extern qword p1_packet_buff[2][0x1000];
 extern s32 draw_id;
 extern qword p1_ot_buff[2][5];
 extern qword *p1_ot;
 extern s32 p1_packet_max;
-extern qword vu0mem_image[256];
-extern qword vu1mem_image[1024];
+extern qword vu0mem_image[0x100];
+extern qword vu1mem_image[0x400];
 extern u32 *NakanoPackAdr;
 extern u32 *nkGimPackAdr;
 #ifndef KL2_VER_TRIAL

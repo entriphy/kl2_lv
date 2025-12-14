@@ -5,23 +5,6 @@
 #include "harada/hr_main.h"
 #include "harada/h_vpm2.h"
 
-// TODO: pretty sure this belongs in a Kazuya header
-typedef struct { // 0x50
-    /* 0x00 */ qword DMAtag;
-    /* 0x10 */ qword VIFtag0;
-    /* 0x20 */ sceVu0FVECTOR foga;
-    /* 0x30 */ qword VIFtag1;
-    /* 0x40 */ sceVu0FVECTOR fogb;
-} KVM_FOGDIST;
-
-typedef struct { // 0x40
-    /* 0x00 */ qword DMAtag;
-    /* 0x10 */ qword VIFtag;
-    /* 0x20 */ qword GIFtag;
-    /* 0x30 */ u64 fogcol;
-    /* 0x38 */ u64 GSreg;
-} KGS_FOGCOL;
-
 typedef struct { // 0x8
     /* 0x0 */ f32 len;
     /* 0x4 */ u32 no;

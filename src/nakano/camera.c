@@ -384,7 +384,7 @@ void CamInitNml(nkCamNOR *nml, OBJWORK *objw, CAM_WORK *cam) {
     vf[1] = vwrk->posiy;
     vf[2] = -vwrk->zoom;
     vf[3] = 1.0f;
-    sceVu0ApplyMatrix(cam, mat, vf);
+    sceVu0ApplyMatrix(cam->posi, mat, vf);
     cam->ang[0] = -vwrk->wangx;
     cam->ang[1] = -vwrk->wangy;
     cam->ang[2] = vwrk->angz;
@@ -613,7 +613,7 @@ void CamFollow(OBJWORK *objw, CAM_WORK *cam) {
         wsvec[1] = vwrk->posiy + vwrk->offy;
         wsvec[2] = -vwrk->zoom;
         wsvec[3] = 1.0f;
-        sceVu0ApplyMatrix(cam, wmat, wsvec);
+        sceVu0ApplyMatrix(cam->posi, wmat, wsvec);
         cam->ang[1] = -wang[1];
         cam->ang[0] = -wang[0];
         cam->ang[2] = vwrk->angz;

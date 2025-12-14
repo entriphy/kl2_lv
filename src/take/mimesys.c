@@ -200,12 +200,12 @@ void MimeSet(SFXOBJ *pObj, s32 StartNum, s32 EndNum, f32 Weight) {
                 for (i = 0; i < pSfz0->parts_num; i++, pSfzParts0++, pSfzParts1++) {
                     id = pSfzParts0->parts_id;
                     pObjTmp->pParts[id].type = 3;
-                    pObjTmp->pParts[id].vert_adrs_mime0 = (int *)((int)pSfz0 + (int)pSfzParts0->vert_adrs);
-                    pObjTmp->pParts[id].norm_adrs_mime0 = (int *)((int)pSfz0 + (int)pSfzParts0->norm_adrs);
+                    pObjTmp->pParts[id].vert_adrs_mime0 = (s32 *)((s32)pSfz0 + (s32)pSfzParts0->vert_adrs);
+                    pObjTmp->pParts[id].norm_adrs_mime0 = (s32 *)((s32)pSfz0 + (s32)pSfzParts0->norm_adrs);
                     pObjTmp->pParts[id].MimeWeight = Weight;
                     id = pSfzParts1->parts_id;
-                    pObjTmp->pParts[id].vert_adrs_mime1 = (int *)((int)pSfz1 + (int)pSfzParts1->vert_adrs);
-                    pObjTmp->pParts[id].norm_adrs_mime1 = (int *)((int)pSfz1 + (int)pSfzParts1->norm_adrs);
+                    pObjTmp->pParts[id].vert_adrs_mime1 = (s32 *)((s32)pSfz1 + (s32)pSfzParts1->vert_adrs);
+                    pObjTmp->pParts[id].norm_adrs_mime1 = (s32 *)((s32)pSfz1 + (s32)pSfzParts1->norm_adrs);
                 }
             }
             pObjTmp = pObjTmp->pObjSub;

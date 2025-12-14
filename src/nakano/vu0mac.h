@@ -112,11 +112,18 @@ static inline void vu0_ApplyMtx(sceVu0FVECTOR dst, sceVu0FVECTOR src) {
 
 // TODO: properly define M_PIf
 static inline f32 nkRadMask(f32 rad) {
-    if (rad <= -KL2_PI)
-        rad += KL2_2PI;
-    else if (rad > KL2_PI)
-        rad -= KL2_2PI;
+    if (rad <= -KL2_PI)    rad += KL2_2PI;
+    else if (rad > KL2_PI) rad -= KL2_2PI;
     return rad;
+}
+
+static inline void nkInitRand(f32 rand) {
+    // IMPORTANT: passing float literal in asm
+    __asm__ volatile(
+        "mfc1 $6, %0\n"
+        "qmtc2 $6, $vf4\n"
+        "vrinit R, $vf4x\n"
+    : : "f" (rand));
 }
 
 #endif

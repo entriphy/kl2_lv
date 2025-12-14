@@ -1,9 +1,14 @@
 #include "hoshino/h_event.h"
+#include "hoshino/h_file.h"
 #include "hoshino/h_gamesnd.h"
 #include "hoshino/h_wkmng.h"
 #include "hoshino/h_util.h"
+#include "nakano/evrt.h"
 #include "nakano/light.h"
+#include "nakano/route.h"
 #include "take/motsys.h"
+#include "take/object.h"
+#include "take/sfxbios.h"
 
 hMNGLIST EvMng[64] __attribute__((section(".bss")));
 hEvOBJECT EvObj[64] __attribute__((section(".bss")));
@@ -412,13 +417,13 @@ void hEvObjDraw() {
             nkGetLgtWorkF(&lgtw1, pEO->Light);
             nkLightIp(&lgtw, &lgtw0, &lgtw1, pEO->LightCnt / KL2_VER_COND(32.0f, 120.0f));
             nkCalcMatLgtWork(NormalLight, LightColor, &lgtw, NULL);
-            SetObjNormalLight(pEO->pSfx, NormalLight);
-            SetObjLightColor(pEO->pSfx, LightColor);
+            SetObjNormalLight(pEO->pSfx, &NormalLight);
+            SetObjLightColor(pEO->pSfx, &LightColor);
         } else {
             nkGetLgtWorkF(&lgtw, pEO->Light);
             nkCalcMatLgtWork(NormalLight, LightColor, &lgtw, NULL);
-            SetObjNormalLight(pEO->pSfx, NormalLight);
-            SetObjLightColor(pEO->pSfx, LightColor);
+            SetObjNormalLight(pEO->pSfx, &NormalLight);
+            SetObjLightColor(pEO->pSfx, &LightColor);
         }
 
         if (GameGbl.pause_flag != 0) {
@@ -487,7 +492,7 @@ void hEvTblInit(s32 addr, s32 ar) {
 }
 
 s32 hEvGetAreaAddr(s32 ar) {
-    return (s32)GetFHMAddress(hGetDataAddr(2), ar);
+    return (s32)GetFHMAddress((void *)hGetDataAddr(2), ar);
 }
 
 void hEvAreaInit() {
@@ -511,14 +516,14 @@ void hEvAreaInit() {
     }
 #endif
     
-    if (GetFHMNum(packaddr) == 1) {
+    if (GetFHMNum((void *)packaddr) == 1) {
         KL2_DEBUG_PRINT(("EVENT DATA=NULL\n"));
         NoEvent = 1;
         return;
     }
     
-    nkInitEvRt(GetFHMAddress(packaddr, 0));
-    TblNum = GetFHMNum(GetFHMAddress(packaddr, 1));
+    nkInitEvRt(GetFHMAddress((void *)packaddr, 0));
+    TblNum = GetFHMNum(GetFHMAddress((void *)packaddr, 1));
     for (i = 0; i < TblNum; i++) {
         KL2_VER_RETAIL_ONLY(EvTbl[GameGbl.vision & 0xFF][i].ActObj = 0);
         EvTbl[GameGbl.vision & 0xFF][i].StartApp = 0;
@@ -548,9 +553,9 @@ void hEvStageInit() {
         NoStageData = 1;
         areaMax = 0;
     } else {
-        areaMax = GetFHMNum(hGetDataAddr(2));
+        areaMax = GetFHMNum((void *)hGetDataAddr(2));
         for (ar = 0; ar < areaMax; ar++) {
-            if (GetFHMNum(hEvGetAreaAddr(ar)) == 2)
+            if (GetFHMNum((void *)hEvGetAreaAddr(ar)) == 2)
                 hEvTblInit(hEvGetAreaAddr(ar), ar);
         }
     }

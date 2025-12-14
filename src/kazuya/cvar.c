@@ -1,0 +1,24 @@
+#include "kazuya/cvar.h"
+
+KZ_MC_INFO kzMcInfo;
+KZ_MC_INFO *mci;
+kPadDATA *kpd0;
+kPadDATA *kpd1;
+s32 wm_jobcnt;
+s32 wm_jobcnt_current;
+s32 wm_jobcnt_next0;
+s32 wm_jobcnt_next1;
+s32 wm_jobcnt_sub;
+s32 wm_jobcnt_ret;
+s32 td_jobcnt;
+s32 td_jobcnt_current;
+s32 td_jobcnt_next0;
+s32 td_jobcnt_next1;
+s32 td_jobcnt_sub;
+s32 td_jobcnt_ret;
+s32 fade_count;
+s32 fade_mode;
+s32 vision_count;
+s32 pause_return;
+s32 pause_interval;
+s32 cloud_flag;

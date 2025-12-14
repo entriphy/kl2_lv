@@ -174,10 +174,10 @@ class CGifPacket { // 0x10
     // CGifPacket();
 
     void Init(void *addr) {
-        this->m_buf = (CData *)addr;
-        this->m_end = this->m_buf + 1;
-        this->m_giftag0 = this->m_buf + 2;
-        this->m_giftag1 = this->m_buf + 2;
+        this->m_buf = (CData *)addr; // Line 105
+        this->m_end = this->m_buf + 1; // Line 106
+        this->m_giftag0 = this->m_buf + 2; // Line 107
+        this->m_giftag1 = this->m_buf + 2; // Line 108
     }
 
     // void Terminate();

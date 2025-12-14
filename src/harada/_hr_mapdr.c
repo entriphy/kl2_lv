@@ -7,6 +7,7 @@
 #include "nakano/dma.h"
 #include "okanoyo/okmain.h"
 #include "okanoyo/okprint.h"
+#include "kazuya/bios.h"
 
 extern u32 hr_vu1m_iv __attribute__((section(".vudata")));
 extern u32 hr_vu1_vpo __attribute__((section(".vudata")));

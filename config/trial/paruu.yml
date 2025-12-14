@@ -2973,6 +2973,7 @@ sections:
         data:
           - [0x002F6118, MainFuncTbl.4, data, 0x0000]
           - [0x002F6140, kzFuncTbl, data, 0x0000]
+          - [0x00374450, null, sdata, 0x0000]
       - name: interfac.c
         functions:
           - [0x00169740, kzLoadCommonGms]
@@ -3000,7 +3001,8 @@ sections:
         data:
           - [0x002F6148, MenuCont.4, data, 0x0040]
           - [0x002F6188, kzMenuFuncTbl, data, 0x0000]
-          - [0x00364760, null, rodata, 0x0000]
+          - [0x00364750, null, rodata, 0x0000]
+          - [0x00374464, null, sdata, 0x0000]
           - [0x004905B0, MenuGbl.4, bss, 0x0010]
       - name: obj_klo.c
         functions:
@@ -3116,6 +3118,7 @@ sections:
           - [0x002F65C8, kzBulk0_title, data, 0x0000]
           - [0x002F65E0, kzBulk0_wmap, data, 0x0000]
           - [0x002F65F0, kzBulk0_mommet, data, 0x0000]
+          - [0x00364830, null, rodata, 0x0000]
       - name: string.c
         functions:
           - [0x0016BA10, kzSTR_Draw_Core]
@@ -3757,6 +3760,7 @@ sections:
           - [0x0016CA60, kzTD_Job_Fil_SaveConf]
         data:
           - [0x00364890, null, rodata, 0x0000]
+          - [0x003744A4, null, sdata, 0x0000]
           - [0x003744A8, STRBASE_FIL_NAME, sdata, 0x0004]
           - [0x003744B0, STRBASE_FIL_DATA, sdata, 0x0004]
           - [0x003744B8, STRBASE_FIL_STAGE, sdata, 0x0004]
@@ -3795,6 +3799,7 @@ sections:
         data:
           - [0x002F8B18, kzTwoDmsnJobTbl, data, 0x0000]
           - [0x00364920, null, rodata, 0x0000]
+          - [0x003744F4, null, sdata, 0x0000]
           - [0x003744F8, first_enter, sdata, 0x0004]
           - [0x003744FC, after_puppet_dst, sdata, 0x0004]
           - [0x00374500, offset_X, sdata, 0x0004]
@@ -3858,6 +3863,7 @@ sections:
         data:
           - [0x002F8C78, sel_group, data, 0x0064]
           - [0x00364970, null, rodata, 0x0000]
+          - [0x0037464C, null, sdata, 0x0000]
           - [0x00374650, mommet_mode, sdata, 0x0004]
           - [0x00374654, puppet_group_no, sdata, 0x0004]
           - [0x00374658, STRBASE_MOM_MESSAGE, sdata, 0x0004]
@@ -4757,6 +4763,7 @@ sections:
           - [0x002FC380, obj_id, data, 0x0102]
           - [0x002FC490, ObjWorkBuff, data, 0x7800]
           - [0x00364F10, null, rodata, 0x0000]
+          - [0x00374B34, null, sdata, 0x0000]
           - [0x00374B38, nkGamePauseFlag, sdata, 0x0004]
           - [0x00374B3C, nkLoadTimer, sdata, 0x0004]
           - [0x00374B40, nkLoadStat, sdata, 0x0004]
@@ -4965,6 +4972,7 @@ sections:
           - [0x003062A0, vu0mem_image, data, 0x1000]
           - [0x003072A0, vu1mem_image, data, 0x4000]
           - [0x0030B2A0, vtMovieAdr, data, 0x0020]
+          - [0x00365310, null, rodata, 0x0000]
           - [0x00374B74, DmaChVIF0, sdata, 0x0004]
           - [0x00374B78, DmaChVIF1, sdata, 0x0004]
           - [0x00374B7C, DmaChGIF, sdata, 0x0004]
@@ -5008,6 +5016,7 @@ sections:
           - [0x00188B00, nkInitAtrVu1oIv]
           - [0x00188BC8, nkDrawHitModel]
         data:
+          - [0x00365350, null, rodata, 0x0000]
           - [0x00371840, null, lit4, 0x0000]
           - [0x00374BB8, null, sdata, 0x0000]
           - [0x0037594C, vpo_block_num, sbss, 0x0004]
@@ -5061,6 +5070,8 @@ sections:
           - [0x0018B428, NkDeb2PTblInit]
           - [0x0018B430, NkDeb2PTbl]
         data:
+          - [0x00365768, null, rodata, 0x0000]
+          - [0x00374DB0, null, sdata, 0x0000]
           - [0x0037595C, nkCeCarsol, sbss, 0x0004]
       - name: nkfunc.c
         functions:
@@ -5069,6 +5080,7 @@ sections:
         data:
           - [0x0030B3D0, MainFuncTbl.5, data, 0x0000]
           - [0x0030B3F8, nkFuncTbl, data, 0x0000]
+          - [0x00374DB8, null, sdata, 0x0000]
       - name: nkmirr.c
         functions:
           - [0x0018B770, nkMirClip]
@@ -5077,6 +5089,7 @@ sections:
           - [0x0018B880, nkGetMirrFlag]
           - [0x0018B8A0, nkMirDraw]
         data:
+          - [0x003657C0, null, rodata, 0x0000]
           - [0x006B1980, mrvsm, bss, 0x0040]
           - [0x006B19C0, mrwvm, bss, 0x0040]
           - [0x006B1A00, mrwsm, bss, 0x0040]
@@ -5138,6 +5151,7 @@ sections:
           - [0x00192048, _nkSbDrawTTriangle]
         data:
           - [0x003718F4, null, lit4, 0x0000]
+          - [0x00374DC0, null, sdata, 0x0000]
       - name: objnfunc.c
         functions:
           - [0x00192378, ObjNFunc]
@@ -5208,6 +5222,8 @@ sections:
         functions:
           - [0x00195CB0, read_file]
           - [0x00195D88, read_file128]
+        data:
+          - [0x00365CC8, null, rodata, 0x0000]
       - name: route.c
         functions:
           - [0x00195E68, InitMichi]
@@ -5323,6 +5339,7 @@ sections:
           - [0x0019B288, OkZakoInitArea]
         data:
           - [0x0030B530, restartData, data, 0x0140]
+          - [0x00365DA8, null, rodata, 0x0000]
           - [0x00374DC8, okRestartTrg, sdata, 0x0004]
           - [0x00374DCC, visbak, sdata, 0x0004]
       - name: iotest.c

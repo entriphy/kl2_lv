@@ -378,4 +378,15 @@ typedef struct { // 0x1a0
 typedef tOBJECT HOT;
 typedef tCOORD COLD;
 
+typedef struct { // 0x50
+    /* 0x00 */ sceVu0FVECTOR Trans;
+    /* 0x10 */ sceVu0FVECTOR Rot;
+    /* 0x20 */ sceVu0FVECTOR Scale;
+    /* 0x30 */ SFXOBJ *pObj;
+    /* 0x34 */ s32 ActNum;
+    /* 0x38 */ s32 old_muki;
+    /* 0x3c */ s32 wip_timer;
+    /* 0x40 */ s32 dummy[4];
+} PsfxMODEL;
+
 #endif

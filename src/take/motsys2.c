@@ -1,6 +1,7 @@
 #include "take/motsys2.h"
 #include "take/motip.h"
 #include "take/motsys.h"
+#include "take/object.h"
 
 void GetSfxWorldMatrix(SFXOBJ *pObj) {
     s32 i;

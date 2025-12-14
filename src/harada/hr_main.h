@@ -114,7 +114,7 @@ extern void hr_set_defMVC();
 extern void func_00103E00(u32 *param_1);
 extern void MapConfFileRead();
 extern void hrDataLoad();
-extern void func_00104508();
+extern void hrAreaInit();
 extern void hrAreaEnd();
 extern void hrStageEnd();
 extern void hr_set_vpmfog(vpmINFO *info);

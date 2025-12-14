@@ -1,5 +1,6 @@
 #include "nakano/dma.h"
 #include "nakano/main.h"
+#include <devgif.h>
 
 #define setCHCR(ch, m, t) *((u16 *)&(ch)->chcr) = (m) << D_CHCR_MOD_O | (t) << D_CHCR_TTE_O
 
@@ -12,7 +13,8 @@ static char *nk_dma_mode_name[] = {
     "REFS",
     "CALL",
     "RET",
-    "END"
+    "END",
+    NULL // TODO: idk if this should be here
 };
 
 void jDmaPauseOn() {
@@ -104,20 +106,21 @@ void* nkAddRef(void *p1) {
 }
 
 qword* nkMakeUnpackVif1(qword **pbp, void *data, s32 vu_addr, s32 qwc) {
-    qword *pb;
+    u32 *dat = data;
+    qword *pb = *pbp;
 
     pb = *pbp;
-    pb[0][0] = (qwc + 1) | 0x10000000;
+    pb[0][0] = DMAcnt | (qwc + 1);
     pb[0][2] = pb[0][3] = pb[0][1] = 0;
     pb[1][0] = pb[1][1] = pb[1][2] = 0;
     pb[1][3] = vu_addr | qwc << 0x10 | 0x6C000000;
     pb += 2;
 
     while (qwc-- > 0) {
-        pb[0][0] = *((u32 *)data)++;
-        pb[0][1] = *((u32 *)data)++;
-        pb[0][2] = *((u32 *)data)++;
-        pb[0][3] = *((u32 *)data)++;
+        (*pb)[0] = *dat++;
+        (*pb)[1] = *dat++;
+        (*pb)[2] = *dat++;
+        (*pb)[3] = *dat++;
         pb++;
     }
 
@@ -137,11 +140,9 @@ void nkLoadGms(qword *gms) {
 }
 
 void nkClearOT(qword *tagp, s32 otn, s32 pce) {
-    qword *uncache_tagp;
-    u32 mode;
+    qword *uncache_tagp = UNCACHED(tagp);
+    u32 mode = DMAnext;
 
-    uncache_tagp = (qword *)((u32)tagp | 0x20000000);
-    mode = 0x20000000;
     while (otn-- > 0) {
         (*uncache_tagp)[0] = mode;
         (*uncache_tagp)[1] = (u32)(tagp + 1);
@@ -151,7 +152,7 @@ void nkClearOT(qword *tagp, s32 otn, s32 pce) {
         uncache_tagp++;
     }
 
-    (*uncache_tagp)[0] = 0x70000000;
+    (*uncache_tagp)[0] = DMAend;
     (*uncache_tagp)[1] = 0;
     (*uncache_tagp)[2] = (*uncache_tagp)[3] = 0;
 }

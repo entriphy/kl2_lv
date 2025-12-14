@@ -6,6 +6,7 @@
 #include "hoshino/h_rpc.h"
 #include "hoshino/h_util.h"
 #include "hoshino/h_event.h"
+#include "okanoyo/okio.h"
 
 #ifdef KL2_VER_TRIAL
 EFXSE efdm[] = {
@@ -845,7 +846,7 @@ void hSndPkKeyOffAll() {
     *sD->Pk++ = SNDCMD_KEYOFFALL;
 }
 
-int hSndPkGetSize() {
+s32 hSndPkGetSize() {
     s32 size;
 
     size = (s32)sD->Pk - (s32)SndPacket;
@@ -1094,7 +1095,7 @@ void hSndBankSetMain() {
 
     KL2_DEBUG_PRINT(("hSndBankSetMain ...\n"));
     buff = (s32)getBuff(1, 0x200000, NULL, &i);
-    hCdReadDataBlock(198, buff);
+    hCdReadDataBlock(198, (void *)buff);
     buff = (s32)GetFHMAddress((u32 *)buff, 2);
     hSndBankSet(buff, 0);
     freeBuff(1, 0x200000, NULL);

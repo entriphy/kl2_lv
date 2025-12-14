@@ -2,11 +2,11 @@
 #include "take/object.h"
 
 qword_uni LogoGsEnv[64] = {};
-int LogoGsEnvInd = 0;
+s32 LogoGsEnvInd = 0;
 qword_uni Kumo1GsEnv[64] = {};
-int Kumo1GsEnvInd = 0;
+s32 Kumo1GsEnvInd = 0;
 qword_uni Kumo2GsEnv[64] = {};
-int Kumo2GsEnvInd = 0;
+s32 Kumo2GsEnvInd = 0;
 void *pLogo = NULL;
 void *pKumo1 = NULL;
 void *pKumo2 = NULL;

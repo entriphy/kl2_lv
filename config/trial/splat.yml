@@ -126,28 +126,30 @@ segments:
       - [0x067928, c, hoshino/h_test_se]
       - [0x067D70, c, hoshino/h_util]
       - [0x068210, c, hoshino/h_wkmng]
-      - [0x068318, asm, kazuya/bios]
-      - [0x06A688, asm, kazuya/func]
-      - [0x06A740, asm, kazuya/interfac]
-      - [0x06AB18, asm, kazuya/menu]
-      - [0x06AEB0, asm, kazuya/obj_klo]
-      - [0x06B6F0, asm, kazuya/obj_std]
-      - [0x06BC68, asm, kazuya/objfunc]
-      - [0x06BCA0, asm, kazuya/objtest]
-      - [0x06C288, asm, kazuya/sample]
-      - [0x06C5F0, asm, kazuya/sinit]
-      - [0x06CA10, asm, kazuya/string]
-      - [0x06CD90, asm, kazuya/td_fljob]
-      - [0x06DBF8, asm, kazuya/td_job]
-      - [0x06F4A8, asm, kazuya/td_mhjob]
-      - [0x070188, asm, kazuya/td_nejob]
-      - [0x071108, asm, kazuya/td_sys]
-      - [0x0742D8, asm, kazuya/wm_job]
-      - [0x074C18, asm, kazuya/wm_main]
+      - [0x068318, c, kazuya/bios]
+      - [0x06A688, c, kazuya/cvar]
+      - [0x06A688, c, kazuya/func]
+      - [0x06A740, c, kazuya/interfac]
+      - [0x06AB18, c, kazuya/menu]
+      - [0x06AEB0, c, kazuya/obj_klo]
+      - [0x06B6F0, c, kazuya/obj_std]
+      - [0x06BC68, c, kazuya/objfunc]
+      - [0x06BCA0, c, kazuya/objtest]
+      - [0x06C288, c, kazuya/sample]
+      - [0x06C5F0, c, kazuya/sinit]
+      - [0x06CA10, c, kazuya/string]
+      - [0x06CD90, c, kazuya/td_fljob]
+      - [0x06DBF8, c, kazuya/td_job]
+      - [0x06F4A8, c, kazuya/td_mhjob]
+      - [0x070188, c, kazuya/td_nejob]
+      - [0x071108, c, kazuya/td_sys]
+      - [0x0742D8, c, kazuya/wm_job]
+      - [0x074C18, c, kazuya/wm_main]
       - [0x075360, c, nakano/calc3d]
+      - [0x0753F0, c, nakano/camedit]
       - [0x0753F0, c, nakano/camera]
       - [0x0784C0, c, nakano/capture]
-      - [0x0787A0, asm, nakano/dma]
+      - [0x0787A0, c, nakano/dma]
       - [0x078D50, c, nakano/drawof]
       - [0x078EA0, c, nakano/evrt]
       - [0x079428, c, nakano/filter]
@@ -167,14 +169,14 @@ segments:
       - [0x0859E0, asm, nakano/klohit2]
       - [0x085CD0, asm, nakano/klopipe]
       - [0x086ED8, asm, nakano/light]
-      - [0x088C58, asm, nakano/main]
+      - [0x088C58, c, nakano/main]
       - [0x088DD0, asm, nakano/map00]
       - [0x089490, asm, nakano/map01]
       - [0x089C60, asm, nakano/mapview]
       - [0x08AF80, asm, nakano/mat2rot]
       - [0x08B350, asm, nakano/menu]
       - [0x08C010, asm, nakano/mfunc]
-      - [0x08C080, asm, nakano/nk2pcon]
+      - [0x08C080, c, nakano/nk2pcon]
       - [0x08C6C8, asm, nakano/nkfunc]
       - [0x08C770, asm, nakano/nkmirr]
       - [0x08C980, c, nakano/objfunc]
@@ -189,12 +191,12 @@ segments:
       - [0x096CB0, asm, nakano/readfile]
       - [0x096E68, c, nakano/route]
       - [0x098C08, c, nakano/rtconn]
-      - [0x099368, asm, nakano/sinit]
-      - [0x099D40, asm, nakano/tmddraw]
-      - [0x099DC0, asm, nakano/vstart]
-      - [0x099E18, asm, nakano/vtmrg]
-      - [0x099F60, asm, nakano/wipe]
-      - [0x09AFB0, asm, nakano/wmeter]
+      - [0x099368, c, nakano/sinit]
+      - [0x099D40, c, nakano/tmddraw]
+      - [0x099DC0, c, nakano/vstart]
+      - [0x099E18, c, nakano/vtmrg]
+      - [0x099F60, c, nakano/wipe]
+      - [0x09AFB0, c, nakano/wmeter]
       - [0x09B9B0, asm, okanoyo/init]
       - [0x09C4E0, asm, okanoyo/mchip00]
       - [0x09CB98, asm, okanoyo/object]
@@ -466,29 +468,29 @@ segments:
       - [0x1F50E8, .data, hoshino/h_str]
       - [0x1F6F40, .data, hoshino/h_test]
       - [0x1F7030, .data, hoshino/h_test_se]
-      - [0x1F70F8, data, kazuya/cvar]
-      - [0x1F7118, data, kazuya/func]
-      - [0x1F7148, data, kazuya/menu]
-      - [0x1F7190, data, kazuya/obj_klo]
-      - [0x1F71C0, data, kazuya/obj_std]
-      - [0x1F7578, data, kazuya/objfunc]
-      - [0x1F7588, data, kazuya/objtest]
-      - [0x1F7590, data, kazuya/sample]
-      - [0x1F7598, data, kazuya/sinit]
-      - [0x1F75F8, data, kazuya/string]
-      - [0x1F9B18, data, kazuya/td_job]
-      - [0x1F9C78, data, kazuya/td_mhjob]
-      - [0x1F9CE0, data, kazuya/td_sys]
-      - [0x1FCBD0, data, kazuya/wm_job]
-      - [0x1FCC88, data, kazuya/wm_main]
+      - [0x1F70F8, .data, kazuya/cvar]
+      - [0x1F7118, .data, kazuya/func]
+      - [0x1F7148, .data, kazuya/menu]
+      - [0x1F7190, .data, kazuya/obj_klo]
+      - [0x1F71C0, .data, kazuya/obj_std]
+      - [0x1F7578, .data, kazuya/objfunc]
+      - [0x1F7588, .data, kazuya/objtest]
+      - [0x1F7590, .data, kazuya/sample]
+      - [0x1F7598, .data, kazuya/sinit]
+      - [0x1F75F8, .data, kazuya/string]
+      - [0x1F9B18, .data, kazuya/td_job]
+      - [0x1F9C78, .data, kazuya/td_mhjob]
+      - [0x1F9CE0, .data, kazuya/td_sys]
+      - [0x1FCBD0, .data, kazuya/wm_job]
+      - [0x1FCC88, .data, kazuya/wm_main]
       - [0x1FCC90, .data, nakano/camera]
       - [0x1FCD50, .data, nakano/capture]
-      - [0x1FCD68, data, nakano/dma]
+      - [0x1FCD68, .data, nakano/dma]
       - [0x1FCD90, data, nakano/game]
       - [0x204C90, .data, nakano/gssub]
       - [0x205050, data, nakano/k_math]
       - [0x205080, data, nakano/light]
-      - [0x2051C0, data, nakano/main]
+      - [0x2051C0, .data, nakano/main]
       - [0x20C2C0, data, nakano/mapview]
       - [0x20C2C8, data, nakano/menu]
       - [0x20C390, data, nakano/mfunc]
@@ -499,7 +501,7 @@ segments:
       - [0x20C458, .data, nakano/objnfunc]
       - [0x20C4A0, .data, nakano/ocamtst]
       - [0x20C4A8, data, nakano/popuka]
-      - [0x20C4B0, data, nakano/wmeter]
+      - [0x20C4B0, .data, nakano/wmeter]
       - [0x20C530, data, okanoyo/init]
       - [0x20C670, data, okanoyo/okafl00]
       - [0x20C688, data, okanoyo/okajp00]
@@ -640,30 +642,37 @@ segments:
       - [0x265210, .rodata, hoshino/h_test]
       - [0x265508, .rodata, hoshino/h_test_se]
       - [0x265608, .rodata, hoshino/h_util]
-      - [0x265660, rodata, kazuya/bios]
-      - [0x265760, rodata, kazuya/menu]
-      - [0x265780, rodata, kazuya/obj_klo]
-      - [0x2657C8, rodata, kazuya/obj_std]
-      - [0x2657E8, rodata, kazuya/sample]
-      - [0x265890, rodata, kazuya/td_fljob]
-      - [0x265920, rodata, kazuya/td_job]
-      - [0x265970, rodata, kazuya/td_mhjob]
-      - [0x265988, rodata, kazuya/td_nejob]
-      - [0x2659A0, rodata, kazuya/td_sys]
-      - [0x2659C0, rodata, kazuya/wm_job]
-      - [0x265AF0, rodata, kazuya/wm_main]
+      - [0x265660, .rodata, kazuya/bios]
+      - [0x265750, .rodata, kazuya/menu]
+      - [0x265780, .rodata, kazuya/obj_klo]
+      - [0x2657C8, .rodata, kazuya/obj_std]
+      - [0x2657E8, .rodata, kazuya/sample]
+      - [0x265830, .rodata, kazuya/sinit]
+      - [0x265890, .rodata, kazuya/td_fljob]
+      - [0x265920, .rodata, kazuya/td_job]
+      - [0x265970, .rodata, kazuya/td_mhjob]
+      - [0x265988, .rodata, kazuya/td_nejob]
+      - [0x2659A0, .rodata, kazuya/td_sys]
+      - [0x2659C0, .rodata, kazuya/wm_job]
+      - [0x265AF0, .rodata, kazuya/wm_main]
       - [0x265B80, .rodata, nakano/camera]
       - [0x265D68, .rodata, nakano/capture]
-      - [0x265DE0, rodata, nakano/dma]
+      - [0x265DE0, .rodata, nakano/dma]
       - [0x265E30, .rodata, nakano/filter]
       - [0x265F10, rodata, nakano/game]
       - [0x266040, .rodata, nakano/gflow]
       - [0x266050, rodata, nakano/gmiss]
+      - [0x266310, .rodata, nakano/main]
+      - [0x266350, rodata, nakano/map01]
+      - [0x266768, .rodata, nakano/nk2pcon]
+      - [0x2667C0, rodata, nakano/nkmirr]
       - [0x266BA0, .rodata, nakano/ocamtst]
       - [0x266BE0, rodata, nakano/popuka]
+      - [0x266CC8, rodata, nakano/readfile]
       - [0x266D00, .rodata, nakano/route]
       - [0x266D10, .rodata, nakano/rtconn]
-      - [0x266D30, rodata, nakano/sinit]
+      - [0x266D30, .rodata, nakano/sinit]
+      - [0x266DA8, rodata, okanoyo/init]
       - [0x26A5C8, .rodata, take/outline]
       - [0x26A5E8, rodata, take/sfxbios]
       - [0x26A620, .rodata, take/t_sample]
@@ -716,13 +725,13 @@ segments:
       - [0x272088, .lit4, hoshino/h_sound]
       - [0x2720A4, .lit4, hoshino/h_str]
       - [0x2720CC, .lit4, hoshino/h_test]
-      - [0x2720FC, lit4, kazuya/interfac]
-      - [0x272100, lit4, kazuya/obj_klo]
-      - [0x272104, lit4, kazuya/obj_std]
-      - [0x272108, lit4, kazuya/objtest]
-      - [0x272144, lit4, kazuya/td_nejob]
-      - [0x272148, lit4, kazuya/td_sys]
-      - [0x272174, lit4, kazuya/wm_job]
+      - [0x2720FC, .lit4, kazuya/interfac]
+      - [0x272100, .lit4, kazuya/obj_klo]
+      - [0x272104, .lit4, kazuya/obj_std]
+      - [0x272108, .lit4, kazuya/objtest]
+      - [0x272144, .lit4, kazuya/td_nejob]
+      - [0x272148, .lit4, kazuya/td_sys]
+      - [0x272174, .lit4, kazuya/wm_job]
       - [0x2721A0, .lit4, nakano/camera]
       - [0x272410, lit4, nakano/gscreen]
       - [0x2724A4, .lit4, nakano/gssub]
@@ -744,9 +753,9 @@ segments:
       - [0x272A08, lit4, nakano/popuka]
       - [0x272A34, lit4, nakano/raycrs]
       - [0x272A60, .lit4, nakano/route]
-      - [0x272AA0, lit4, nakano/sinit]
-      - [0x272AA4, lit4, nakano/tmddraw]
-      - [0x272AB4, lit4, nakano/wipe]
+      - [0x272AA0, .lit4, nakano/sinit]
+      - [0x272AA4, .lit4, nakano/tmddraw]
+      - [0x272AB4, .lit4, nakano/wipe]
       - [0x272AC4, lit4, okanoyo/mchip00]
       - [0x272AE8, lit4, okanoyo/objsub]
       - [0x272AEC, lit4, okanoyo/okajp00]
@@ -890,20 +899,25 @@ segments:
       - [0x275198, .sdata, hoshino/h_test]
       - [0x275208, .sdata, hoshino/h_test_se]
       - [0x2753A8, .sdata, hoshino/h_util]
-      - [0x2753D8, sdata, kazuya/bios]
-      - [0x2753FC, sdata, kazuya/cvar]
-      - [0x275458, sdata, kazuya/interfac]
-      - [0x2754A8, sdata, kazuya/td_fljob]
-      - [0x2754F8, sdata, kazuya/td_job]
-      - [0x275650, sdata, kazuya/td_mhjob]
-      - [0x2756D0, sdata, kazuya/td_nejob]
-      - [0x275738, sdata, kazuya/td_sys]
-      - [0x275AC8, sdata, kazuya/wm_job]
+      - [0x2753D8, .sdata, kazuya/bios]
+      - [0x2753FC, .sdata, kazuya/cvar]
+      - [0x275450, .sdata, kazuya/func]
+      - [0x275458, .sdata, kazuya/interfac]
+      - [0x275464, .sdata, kazuya/menu]
+      - [0x2754A4, .sdata, kazuya/td_fljob]
+      - [0x2754F4, .sdata, kazuya/td_job]
+      - [0x27564C, .sdata, kazuya/td_mhjob]
+      - [0x2756D0, .sdata, kazuya/td_nejob]
+      - [0x275738, .sdata, kazuya/td_sys]
+      - [0x275AC8, .sdata, kazuya/wm_job]
       - [0x275AE0, .sdata, nakano/camera]
-      - [0x275AE8, sdata, nakano/dma]
-      - [0x275B38, sdata, nakano/game]
-      - [0x275B74, sdata, nakano/main]
+      - [0x275AE8, .sdata, nakano/dma]
+      - [0x275B34, sdata, nakano/game]
+      - [0x275B74, .sdata, nakano/main]
       - [0x275BB8, sdata, nakano/map01]
+      - [0x275DB0, .sdata, nakano/nk2pcon]
+      - [0x275DB8, sdata, nakano/nkfunc]
+      - [0x275DC0, sdata, nakano/objklo2]
       - [0x275DC8, sdata, okanoyo/init]
       - [0x275E30, sdata, okanoyo/okggum00]
       - [0x275E40, sdata, okanoyo/okgmain]
@@ -987,20 +1001,20 @@ segments:
       - {start: 0x276800, type: .sbss, vram: 0x3758C0, name: hoshino/h_file}
       - {start: 0x276800, type: .sbss, vram: 0x3758C8, name: hoshino/h_packet}
       - {start: 0x276800, type: .sbss, vram: 0x3758CC, name: hoshino/h_test_se}
-      - {start: 0x276800, type: sbss, vram: 0x3758E0, name: kazuya/bios}
-      - {start: 0x276800, type: sbss, vram: 0x375910, name: kazuya/obj_klo}
-      - {start: 0x276800, type: sbss, vram: 0x375914, name: kazuya/td_job}
-      - {start: 0x276800, type: sbss, vram: 0x375920, name: kazuya/td_mhjob}
+      - {start: 0x276800, type: .sbss, vram: 0x3758E0, name: kazuya/bios}
+      - {start: 0x276800, type: .sbss, vram: 0x375910, name: kazuya/obj_klo}
+      - {start: 0x276800, type: .sbss, vram: 0x375914, name: kazuya/td_job}
+      - {start: 0x276800, type: .sbss, vram: 0x375920, name: kazuya/td_mhjob}
       - {start: 0x276800, type: .sbss, vram: 0x375924, name: nakano/camera}
       - {start: 0x276800, type: sbss, vram: 0x37592C, name: nakano/game}
       - {start: 0x276800, type: sbss, vram: 0x375938, name: nakano/keyfsv}
       - {start: 0x276800, type: sbss, vram: 0x375948, name: nakano/light}
       - {start: 0x276800, type: sbss, vram: 0x37594C, name: nakano/map01}
       - {start: 0x276800, type: sbss, vram: 0x375954, name: nakano/mapview}
-      - {start: 0x276800, type: sbss, vram: 0x37595C, name: nakano/nk2pcon}
+      - {start: 0x276800, type: .sbss, vram: 0x37595C, name: nakano/nk2pcon}
       - {start: 0x276800, type: .sbss, vram: 0x375960, name: nakano/route}
       - {start: 0x276800, type: .sbss, vram: 0x375964, name: nakano/rtconn}
-      - {start: 0x276800, type: sbss, vram: 0x375968, name: nakano/vstart}
+      - {start: 0x276800, type: .sbss, vram: 0x375968, name: nakano/vstart}
       - {start: 0x276800, type: sbss, vram: 0x37596C, name: okanoyo/okcam}
       - {start: 0x276800, type: sbss, vram: 0x375980, name: take/object}
       - {start: 0x276800, type: sbss, vram: 0x375988, name: take/title}
@@ -1030,24 +1044,24 @@ segments:
       - {start: 0x276864, type: .bss, vram: 0x390080, name: hoshino/h_sound}
       - {start: 0x276864, type: .bss, vram: 0x490480, name: hoshino/h_test}
       - {start: 0x276864, type: .bss, vram: 0x490580, name: hoshino/h_wkmng}
-      - {start: 0x276864, type: bss, vram: 0x4905B0, name: kazuya/menu}
-      - {start: 0x276864, type: bss, vram: 0x4905C0, name: kazuya/obj_klo}
-      - {start: 0x276864, type: bss, vram: 0x490A50, name: kazuya/obj_std}
-      - {start: 0x276864, type: bss, vram: 0x490AD0, name: kazuya/string}
+      - {start: 0x276864, type: .bss, vram: 0x4905B0, name: kazuya/menu}
+      - {start: 0x276864, type: .bss, vram: 0x4905C0, name: kazuya/obj_klo}
+      - {start: 0x276864, type: .bss, vram: 0x490A50, name: kazuya/obj_std}
+      - {start: 0x276864, type: .bss, vram: 0x490AD0, name: kazuya/string}
       - {start: 0x276864, type: .bss, vram: 0x490ED0, name: nakano/camera}
       - {start: 0x276864, type: .bss, vram: 0x491190, name: nakano/evrt}
       - {start: 0x276864, type: bss, vram: 0x491290, name: nakano/gscreen}
       - {start: 0x276864, type: bss, vram: 0x491440, name: nakano/klopipe}
       - {start: 0x276864, type: bss, vram: 0x491450, name: nakano/light}
-      - {start: 0x276864, type: bss, vram: 0x491680, name: nakano/main}
+      - {start: 0x276864, type: .bss, vram: 0x491680, name: nakano/main}
       - {start: 0x276864, type: bss, vram: 0x6B1720, name: nakano/mapview}
       - {start: 0x276864, type: bss, vram: 0x6B18F0, name: nakano/menu}
       - {start: 0x276864, type: bss, vram: 0x6B1980, name: nakano/nkmirr}
       - {start: 0x276864, type: bss, vram: 0x6B1A40, name: nakano/raycrs}
       - {start: 0x276864, type: .bss, vram: 0x6B9D80, name: nakano/route}
       - {start: 0x276864, type: .bss, vram: 0x6B9E80, name: nakano/rtconn}
-      - {start: 0x276864, type: bss, vram: 0x6BA080, name: nakano/wipe}
-      - {start: 0x276864, type: bss, vram: 0x6BA0D0, name: nakano/wmeter}
+      - {start: 0x276864, type: .bss, vram: 0x6BA080, name: nakano/wipe}
+      - {start: 0x276864, type: .bss, vram: 0x6BA0D0, name: nakano/wmeter}
       - {start: 0x276864, type: bss, vram: 0x6BA210, name: okanoyo/okmenu}
       - {start: 0x276864, type: bss, vram: 0x6BA220, name: okanoyo/okprint}
       - {start: 0x276864, type: bss, vram: 0x6BC220, name: okanoyo/okzdraw}

@@ -297,11 +297,20 @@ def create_paruu_config(elf: ELFFile, stdump: dict) -> list[Section]:
             "h_util.c": 0x3743A8,
         },
         "kazuya:c": {
-            "bios.c": 0x3743D8
+            "bios.c": 0x3743D8,
+            "func.c": 0x374450,
+            "menu.c": 0x374464,
+            "td_fljob.c": 0x3744A4,
+            "td_job.c": 0x3744F4,
+            "td_mhjob.c": 0x37464C
         },
         "nakano:c": {
             "camera.c": 0x374AE0,
-            "map01.c": 0x374BB8
+            "game.c": 0x00374B34,
+            "map01.c": 0x374BB8,
+            "nk2pcon.c": 0x374DB0,
+            "nkfunc.c": 0x374DB8,
+            "objklo2.c": 0x374DC0
         },
         "take:c": {
             "t_func.c": 0x375278,
@@ -378,10 +387,11 @@ def create_paruu_config(elf: ELFFile, stdump: dict) -> list[Section]:
         },
         "kazuya:c": {
             "bios.c": 0x364660,
-            "menu.c": 0x364760,
+            "menu.c": 0x364750,
             "obj_klo.c": 0x364780,
             "obj_std.c": 0x003647C8,
             "sample.c": 0x3647E8,
+            "sinit.c": 0x364830,
             "td_fljob.c": 0x364890,
             "td_job.c": 0x364920,
             "td_mhjob.c": 0x364970,
@@ -398,11 +408,19 @@ def create_paruu_config(elf: ELFFile, stdump: dict) -> list[Section]:
             "game.c": 0x364F10,
             "gflow.c": 0x365040,
             "gmiss.c": 0x365050,
+            "main.c": 0x365310,
+            "map01.c": 0x365350,
+            "nk2pcon.c": 0x365768,
+            "nkmirr.c": 0x3657C0,
             "ocamtst.c": 0x365BA0,
             "popuka.c": 0x365BE0,
+            "readfile.c": 0x365CC8,
             "route.c": 0x365D00,
             "rtconn.c": 0x365D10,
             "sinit.c": 0x365D30
+        },
+        "okanoyo:c": {
+            "init.c": 0x365DA8
         },
         "take:c": {
             "outline.c": 0x3695C8,
@@ -501,13 +519,20 @@ def write_splat_config(version: str, sections: list[Section]):
         SplatSegment(SECTION_ADDRS["bss"], "bss", "lib/sce", 0x6D27C0),
         SplatSegment(SECTION_ADDRS["bss"], "bss", "lib/gcc", 0x6D7CA8),
     ]
+    q = None
     for section in sections:
         if "lib" in section.id:
             continue
-        for unit in section.units:
+        for u, unit in enumerate(section.units):
             matching = os.path.exists(f"src/{section.path}/{unit.name}")
             if len(unit.functions) > 0:
+                if q is not None:
+                    q.start = unit.functions[0].address - 0x100000 + 0x1000
+                    subsegments.append(q)
+                    q = None
                 subsegments.append(SplatSegment(unit.functions[0].address - 0x100000 + 0x1000, unit.name.split(".")[1] if matching else "asm", f"{section.path}/{unit.name.split(".")[0]}"))
+            elif matching:
+                q = SplatSegment(0, unit.name.split(".")[1] if matching else "asm", f"{section.path}/{unit.name.split(".")[0]}")
             for elf_section in ["data", "sdata", "sbss", "bss", "rodata", "lit4"]:
                 data = unit.get_section_start(elf_section)
                 if data is not None:
@@ -696,13 +721,6 @@ def write_ninja_config(version: str, linker_entries: list[LinkerEntry], debug: b
             build(entry.object_path, entry.src_paths, "as", implicit=["build/tools/elf_patcher"])
         elif isinstance(seg, splat.segtypes.common.cpp.CommonSegCpp):
             build(entry.object_path, entry.src_paths, "cpp")
-
-            # Build ASM for objdiff
-            # src_path = list(entry.src_paths[0].with_suffix(".s").parts)
-            # src_path[0] = "asm"
-            # object_path = list(entry.object_path.parts)
-            # object_path[1] = "asm"
-            # build(Path(*object_path), [Path(*src_path)], "as", implicit=["build/tools/elf_patcher"], link=False)
         elif isinstance(seg, splat.segtypes.common.c.CommonSegC):
             link_asm: list[Path] = []
 
@@ -724,7 +742,7 @@ def write_ninja_config(version: str, linker_entries: list[LinkerEntry], debug: b
                 with src.open("r") as f:
                     asm = f.read()
                 with src.open("w") as f:
-                    f.write(asm.replace(" ACC,", " $ACC,").replace(" Q,", " $Q,").replace(", Q", ", $Q"))
+                    f.write(asm.replace(" ACC,", " $ACC,").replace(" Q,", " $Q,").replace(", Q", ", $Q").replace(" R,", " $R,"))
 
             # Build data ASMs
             src_path.insert(1, "data")
