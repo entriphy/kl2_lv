@@ -41,11 +41,11 @@ segments:
       - [0x0010C8, asm, lib/tmp]
       - [0x001130, c, abe/ab_access]
       - [0x001158, c, abe/ab_dummy]
-      - [0x0012A0, asm, abe/ab_func]
-      - [0x001330, asm, abe/ab_menu]
+      - [0x0012A0, c, abe/ab_func]
+      - [0x001330, c, abe/ab_menu]
       - [0x001960, c, abe/ab_objtest]
-      - [0x001FC8, asm, abe/firetest]
-      - [0x002488, asm, abe/sample]
+      - [0x001FC8, c, abe/firetest]
+      - [0x002488, c, abe/sample]
       - [0x0028F8, c, harada/h_vpm2]
       - [0x002BC0, c, harada/hr_abe]
       - [0x002BE0, c, harada/hr_anmdt]
@@ -371,7 +371,7 @@ segments:
       - [0x1520F8, asm, abe/ab_kiryu_a]
       - [0x1540D8, asm, abe/ab_lensflaer]
       - [0x154BD0, asm, abe/ab_lightning_a]
-      - [0x157AC8, asm, abe/ab_mfifo]
+      - [0x157AC8, cc, abe/ab_mfifo]
       - [0x157DD8, asm, abe/ab_object]
       - [0x15CF50, asm, abe/ab_objfunc]
       - [0x177468, asm, abe/ab_ougu_a]
@@ -412,11 +412,11 @@ segments:
       - [0x1E4000, data, lib/tmp]
       - [0x1E4018, data, lib/gcc]
       - [0x1E4058, .data, abe/ab_dummy]
-      - [0x1E4068, data, abe/ab_func]
-      - [0x1E4098, data, abe/ab_menu]
+      - [0x1E4068, .data, abe/ab_func]
+      - [0x1E4098, .data, abe/ab_menu]
       - [0x1E40E0, .data, abe/ab_objtest]
-      - [0x1E40E8, data, abe/firetest]
-      - [0x1E40F0, data, abe/sample]
+      - [0x1E40E8, .data, abe/firetest]
+      - [0x1E40F0, .data, abe/sample]
       - [0x1E4100, .data, harada/h_vpm2]
       - [0x1E4310, .data, harada/hr_anmdt]
       - [0x1E4320, .data, harada/hr_anmvp]
@@ -587,9 +587,9 @@ segments:
       - [0x2502D0, data, abe/ab_util]
       - [0x250F00, data, nakano/cpad]
       - [0x253000, data, vudata]
-      - [0x260F00, rodata, abe/ab_menu]
-      - [0x260F30, rodata, abe/firetest]
-      - [0x260F40, rodata, abe/sample]
+      - [0x260F00, .rodata, abe/ab_menu]
+      - [0x260F30, .rodata, abe/firetest]
+      - [0x260F40, .rodata, abe/sample]
       - [0x260FA0, .rodata, harada/hr_bgwk]
       - [0x260FC8, rodata, harada/hr_main]
       - [0x2613C0, rodata, harada/hr_mapdr]
@@ -678,7 +678,9 @@ segments:
       - [0x26A620, .rodata, take/t_sample]
       - [0x26A668, rodata, take/title]
       - [0x26AA38, .rodata, hoshino/kit/kitoutlinefunc]
-      - [0x26AA58, rodata, rodata]
+      - [0x26AA58, rodata, nakano/gimmick/bridge_b7]
+      - [0x26D1B8, .rodata, abe/ab_mfifo]
+      - [0x26D1E8, rodata, rodata]
       - [0x271400, rodatabin, gcc_except_table]
       - [0x271500, .lit4, abe/ab_objtest]
       - [0x27153C, .lit4, harada/hr_anmdt]
@@ -873,8 +875,8 @@ segments:
       - [0x274AAC, lit4, abe/ab_util]
       - [0x274AE0, lit4, nakano/cpad]
       - [0x274B00, sdata, lib/gcc]
-      - [0x274B08, sdata, abe/ab_menu]
-      - [0x274B40, sdata, abe/firetest]
+      - [0x274B08, .sdata, abe/ab_menu]
+      - [0x274B40, .sdata, abe/firetest]
       - [0x274B48, .sdata, harada/hr_anmvp]
       - [0x274B50, .sdata, harada/hr_bgwk]
       - [0x274B60, sdata, harada/hr_main]
@@ -968,7 +970,8 @@ segments:
       - [0x2765E8, sdata, abe/ab_kazedama_b]
       - [0x2765F8, sdata, abe/ab_kiryu_a]
       - [0x276608, sdata, abe/ab_lightning_a]
-      - [0x276610, sdata, abe/ab_mfifo]
+      - [0x276610, .sdata, abe/ab_mfifo]
+      - [0x276614, sdata, abe/ab_object]
       - [0x276650, sdata, abe/ab_objfunc]
       - [0x276654, sdata, abe/ab_ougu_a]
       - [0x276658, sdata, abe/ab_packet]
@@ -1026,14 +1029,14 @@ segments:
       - {start: 0x276800, type: sbss, vram: 0x3759C0, name: abe/ab_kazedama}
       - {start: 0x276800, type: sbss, vram: 0x3759C8, name: abe/ab_kazedama_b}
       - {start: 0x276800, type: sbss, vram: 0x3759D4, name: abe/ab_lensflaer}
-      - {start: 0x276800, type: sbss, vram: 0x3759DC, name: abe/ab_mfifo}
+      - {start: 0x276800, type: .sbss, vram: 0x3759DC, name: abe/ab_mfifo}
       - {start: 0x276800, type: sbss, vram: 0x3759E8, name: abe/ab_pteff}
       - {start: 0x276800, type: sbss, vram: 0x3759EC, name: abe/ab_shadow}
       - {start: 0x276800, type: sbss, vram: 0x3759F0, name: abe/ab_shougrd_a}
       - {start: 0x276800, type: sbss, vram: 0x3759F8, name: abe/ab_smoke}
       - {start: 0x276800, type: sbss, vram: 0x375A00, name: lib/sce}
       - {start: 0x276800, type: sbss, vram: 0x375A08, name: lib/gcc}
-      - {start: 0x276864, type: bss, vram: 0x375BE0, name: abe/ab_menu}
+      - {start: 0x276864, type: .bss, vram: 0x375BE0, name: abe/ab_menu}
       - {start: 0x276864, type: bss, vram: 0x375BF0, name: harada/hr_mapv}
       - {start: 0x276864, type: bss, vram: 0x375EA0, name: harada/hrmenu}
       - {start: 0x276864, type: bss, vram: 0x375EB0, name: hato/ht_menu}
@@ -1081,7 +1084,8 @@ segments:
       - {start: 0x276864, type: bss, vram: 0x6BCF10, name: abe/ab_fire_b}
       - {start: 0x276864, type: bss, vram: 0x6BCF50, name: abe/ab_fire_sp}
       - {start: 0x276864, type: bss, vram: 0x6BD100, name: abe/ab_jigen_a}
-      - {start: 0x276864, type: bss, vram: 0x6C8000, name: abe/ab_mfifo}
+      - {start: 0x276864, type: .bss, vram: 0x6C8000, name: abe/ab_mfifo}
+      - {start: 0x276864, type: bss, vram: 0x6D0000, name: abe/ab_object}
       - {start: 0x276864, type: bss, vram: 0x6D0078, name: abe/ab_pteff}
       - {start: 0x276864, type: bss, vram: 0x6D0130, name: abe/ab_shadow}
       - {start: 0x276864, type: bss, vram: 0x6D2400, name: abe/ab_smoke}

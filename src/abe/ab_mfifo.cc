@@ -1,0 +1,93 @@
+#include "abe/ab_mfifo.h"
+#include "okanoyo/okmain.h"
+
+/*
+ * In order to get this file to match, D_CTRL and Dn_CHCR must be changed to a non-volatile s32 pointer.
+ * Why the dev didn't just use whatever is in the SDK headers, I have no idea.
+ */
+
+
+#define AB_D_CTRL          ((s32 *)(D_CTRL))
+#define AB_DGET_D_CTRL()   (*AB_D_CTRL)
+#define AB_DPUT_D_CTRL(x)  (*AB_D_CTRL = x)
+
+#define AB_D8_CHCR         ((s32 *)(D8_CHCR))
+#define AB_DGET_D8_CHCR()  (*AB_D8_CHCR)
+#define AB_DPUT_D8_CHCR(x) (*AB_D8_CHCR = x)
+
+#define	MFIFO_SIZE 0x8000
+static char mfifo_base[MFIFO_SIZE];
+
+extern "C" {
+
+void abMfifoInit() {
+    DPUT_D_RBOR((u32)mfifo_base);
+    DPUT_D_RBSR(MFIFO_SIZE - 0x10);
+    DPUT_D8_MADR((u32)mfifo_base);
+    DPUT_D2_TADR((u32)mfifo_base);
+    if (fontDispID == 5) {
+        KL2_DEBUG_PRINT(("RBOR, RBSR = 0x%08X, 0x%08X\n", DGET_D_RBOR(), DGET_D_RBSR()));
+    }
+}
+
+void abMfifoSwapDBuffDc(sceGsDBuffDc *db, s32 id) {
+    sceGsSyncPath(0, 0);
+    AB_DPUT_D_CTRL(AB_DGET_D_CTRL() & ~D_CTRL_MFD_M);
+    sceGsSwapDBuffDc(db, id);
+    while (DGET_D2_CHCR() & D_CHCR_STR_M);
+    AB_DPUT_D_CTRL(AB_DGET_D_CTRL() | D_CTRL_MFD_M);
+    DPUT_D8_MADR((u32)mfifo_base);
+    DPUT_D2_TADR((u32)mfifo_base);
+    DPUT_D2_CHCR(0x104);
+}
+
+void abMfifoBegin() {
+    while (DGET_D2_CHCR() & D_CHCR_STR_M);
+    DPUT_D_CTRL(DGET_D_CTRL() | D_CTRL_MFD_M);
+    DPUT_D8_MADR((u32)mfifo_base);
+    DPUT_D2_TADR((u32)mfifo_base);
+    DPUT_D2_CHCR(0x104);
+}
+
+void abMfifoEnd(void *tagw) {
+    *(u128 *)tagw = 0;
+    *(u32 *)tagw = DMAend;
+    abMfifoSend(tagw, 1);
+    while (DGET_D2_CHCR() & D_CHCR_STR_M);
+    DPUT_D_CTRL(AB_DGET_D_CTRL() & ~D_CTRL_MFD_M);
+}
+
+s32 abMfifoSync(s32 mode) {
+    if (mode != 0) {
+        return DGET_D8_CHCR() & D_CHCR_STR_M;
+    } else {
+        while (DGET_D8_CHCR() & D_CHCR_STR_M);
+        return 0;
+    }
+}
+
+void abMfifoSend(void *sadr, u32 qwc) {
+    static u32 tadr;
+    static u32 madr;
+    static u32 remain;
+    static s32 debug = -1;
+    s32 debug_cnt;
+
+    debug = 0;
+    DPUT_D8_SADR((u32)sadr & 0x3FF0);
+    DPUT_D8_QWC(qwc);
+    qwc <<= 4;
+    debug_cnt = -1;
+    do {
+        tadr = DGET_D2_TADR();
+        madr = DGET_D8_MADR();
+        remain = tadr != madr ? (tadr - madr & 0x7FF0) : 0x8000;
+        debug_cnt++;
+    } while (remain <= qwc);
+    if (debug_cnt > 0 && fontDispID == 5) {
+        KL2_DEBUG_PRINT(("debug_cnt:%d\n", debug_cnt));
+    }
+    AB_DPUT_D8_CHCR(DGET_D8_CHCR() | 0x100);
+}
+
+}

@@ -6898,6 +6898,7 @@ sections:
           - [0x001E4BD8, SetGimBridgeB7]
         data:
           - [0x0034D2D0, ObjFuncTbl.7, data, 0x0000]
+          - [0x00369A58, null, rodata, 0x0000]
           - [0x00372D08, null, lit4, 0x0000]
       - name: door04pazzle.c
         functions:
@@ -8758,6 +8759,7 @@ sections:
           - [0x00256CD8, abMfifoSync]
           - [0x00256D20, abMfifoSend]
         data:
+          - [0x0036C1B8, null, rodata, 0x0000]
           - [0x00375610, debug, sdata, 0x0004]
           - [0x003759DC, tadr, sbss, 0x0004]
           - [0x003759E0, madr, sbss, 0x0004]
@@ -8896,6 +8898,9 @@ sections:
           - [0x0025BF38, deallocate__Q23ntlt9allocator1Z16CParticleBubbleAP16CParticleBubbleA.5]
           - [0x0025BF40, deallocate__Q23ntlt9allocator1ZQ33ntlt4list1Zt8CObjwork1Z17CParticleShibukiA4nodePQ33ntlt4list1Zt8CObjwork1Z17CParticleShibukiA4node.4]
           - [0x0025BF48, deallocate__Q23ntlt9allocator1Z17CParticleShibukiAP17CParticleShibukiA.4]
+        data:
+          - [0x00375614, null, sdata, 0x0000]
+          - [0x006D0000, null, bss, 0x0000]
       - name: ab_objfunc.cc
         functions:
           - [0x0025BF50, abObjFunc]

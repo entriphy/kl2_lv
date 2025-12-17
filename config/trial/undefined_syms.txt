@@ -1,8 +1,0 @@
-# SndPacket = 0x390080;
-# SndTempBuff = 0x390480;
-PsfxWorkBuff = 0x491680;
-p1_packet_buff = 0x691680;
-p1_ot_buff = 0x6b1680;
-kpd0.0 = 0x374400;
-kpd1.0 = 0x374404;
-D_002F7AF8 = 0x2F7AF8;

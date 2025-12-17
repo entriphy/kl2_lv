@@ -32,12 +32,15 @@ COMPILER_FLAGS_CPP = "-O2 -G8 -gstabs -x c++ -fno-exceptions -fno-common"
 COMPILE_CMD_C      = f"{COMPILER_DIR}/bin/ee-gcc -c {COMMON_INCLUDES} {COMPILER_FLAGS_C}"
 COMPILE_CMD_CPP    = f"{COMPILER_DIR}/bin/ee-gcc -c {COMMON_INCLUDES} {COMPILER_FLAGS_CPP}"
 
+KL2_C_PRESET_ID   = 106
+KL2_CPP_PRESET_ID = 107
+
 # TODO: delete this
 SECTION_ADDRS = {
     "vutext": 0x1E1900,
     "vudata": 0x253000,
     # "rodata": 0x260F00,
-    "rodata": 0x369A58 - 0x100000 + 0x1000,
+    "rodata": 0x36c1e8 - 0x100000 + 0x1000,
     "gcc_except_table": 0x271400,
     # "lit4": 0x271500,
     "sbss": 0x276800,
@@ -318,6 +321,9 @@ def create_paruu_config(elf: ELFFile, stdump: dict) -> list[Section]:
         },
         "vtusr:c": {
             "vttmpprog.c": 0x375360
+        },
+        "abe:cc": {
+            "ab_object.cc": 0x375614 # ?
         }
     }
 
@@ -431,6 +437,12 @@ def create_paruu_config(elf: ELFFile, stdump: dict) -> list[Section]:
         "hoshino/kit:c": {
             "kitoutlinefunc.c": 0x369A38
         },
+        "nakano/gimmick:c": {
+            "bridge_b7.c": 0x369A58
+        },
+        "abe:cc": {
+            "ab_mfifo.cc": 0x36C1B8
+        }
     }
 
     DATA_FIX = {
@@ -439,6 +451,12 @@ def create_paruu_config(elf: ELFFile, stdump: dict) -> list[Section]:
         },
         "take:c": {
             "motip.c": 0x329FF0
+        }
+    }
+
+    BSS_FIX = {
+        "abe:cc": {
+            "ab_object.cc": 0x6D0000
         }
     }
 
@@ -453,6 +471,10 @@ def create_paruu_config(elf: ELFFile, stdump: dict) -> list[Section]:
     for section, units in DATA_FIX.items():
         for unit, address in units.items():
             next(u for u in sections[section].units if u.name == unit).data.append(Data(None, address, "data", 0))
+
+    for section, units in BSS_FIX.items():
+        for unit, address in units.items():
+            next(u for u in sections[section].units if u.name == unit).data.append(Data(None, address, "bss", 0))
     
     for section in sections.values():
         for unit in section.units:
@@ -602,7 +624,11 @@ def write_objdiff_config(sections: list[Section]):
             objdiff_units.append({
                 "name": f"{section.path}/{unit_name}",
                 "target_path": f"build/asm/{section.path}/{unit_name}.o",
-                "base_path": f"build/src/{section.path}/{unit_name}.o"
+                "base_path": f"build/src/{section.path}/{unit_name}.o",
+                "scratch": {
+                    "platform": "ps2",
+                    "preset": KL2_C_PRESET_ID if unit.name.split(".")[-1] == "c" else KL2_CPP_PRESET_ID
+                }
             })
     
     with open("objdiff.json", "w") as f:
@@ -719,13 +745,11 @@ def write_ninja_config(version: str, linker_entries: list[LinkerEntry], debug: b
 
         if isinstance(seg, splat.segtypes.common.asm.CommonSegAsm):
             build(entry.object_path, entry.src_paths, "as", implicit=["build/tools/elf_patcher"])
-        elif isinstance(seg, splat.segtypes.common.cpp.CommonSegCpp):
-            build(entry.object_path, entry.src_paths, "cpp")
-        elif isinstance(seg, splat.segtypes.common.c.CommonSegC):
+        elif isinstance(seg, splat.segtypes.common.c.CommonSegC) or isinstance(seg, splat.segtypes.common.cpp.CommonSegCpp):
             link_asm: list[Path] = []
 
             # Build code source
-            build(entry.object_path, entry.src_paths, "c")
+            build(entry.object_path, entry.src_paths, "cpp" if isinstance(seg, splat.segtypes.common.cpp.CommonSegCpp) else "c")
 
             # Build code ASM
             src_path = list(entry.src_paths[0].with_suffix(".s").parts)
