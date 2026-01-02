@@ -788,7 +788,10 @@ if __name__ == "__main__":
         ...
 
     while True:
-        inp = input("Enter VAG ID: ")
+        try:
+            inp = input("Enter VAG ID: ")
+        except KeyboardInterrupt:
+            break
         if not inp:
             break
         vag_id = int(inp[2:], base=16) if inp.startswith("0x") else int(inp, base=10)

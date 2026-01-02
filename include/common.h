@@ -7,6 +7,7 @@
 #include <string.h>
 #include "include_asm.h"
 
+#include <eekernel.h>
 #include <libdma.h>
 #include <libvu0.h>
 #include <libgraph.h>
@@ -431,6 +432,7 @@ typedef struct {
     /* 0x13c */ s32 motstop_flag;
     /* 0x140 */ s32 mot_actno;
 #else
+                s32 dai_se_cnt;
                 s32 jyouge;
 	            f32 motcnt;
 	            s32 b_act_rflag;
@@ -1094,6 +1096,112 @@ typedef enum {
     STR_NAME_P1,
     STR_NAME_P2,
 } STR;
+
+typedef enum {
+    PTOPENING,
+    PT0100_S2,
+    PT0100_S0,
+    PT0100_S1,
+    PT0104_S0,
+    PT0104_S1,
+    PT4001_S0,
+    PT0204_S0,
+    PT0207_S0,
+    PT2100_S0,
+    PT2100_S1,
+#ifdef KL2_VER_RETAIL
+    PT2100_S2,
+#endif
+    PT4001_S1,
+    PT4002_S0,
+    PT0400_S1,
+    PT0403_S0,
+    PT040A_S0,
+    PT040A_S1,
+    PT040B_S0,
+    PT040B_S1,
+    PT040B_S2,
+    PT0500_S0,
+    PT0505_S2,
+    PT0505_S0,
+    PT0505_S1,
+    PT4002_S1,
+    PT4002_S2,
+#ifdef KL2_VER_RETAIL
+    PT2201_S0,
+#endif
+    PT4001_S2,
+    PTXXXX_S0,
+    PT0605_S0,
+    PT0605_S1,
+    PT0609_S0,
+    PT0706_S0,
+    PT20XX_S0,
+    PT20XX_S1,
+    PT08XX_S0,
+#ifdef KL2_VER_RETAIL
+    PT0805_S0,
+#endif
+    PT0706_S1,
+    PT4001_S3,
+    PT09XX_S0,
+    PT09XX_S1,
+#ifdef KL2_VER_RETAIL
+    PT0908_S1,
+#endif
+    PT1000_S0,
+    PT1004_S0,
+    PT1100_S0,
+    PT1111_S0,
+    PT20XX_S2,
+    PT20XX_S3,
+    PT20XX_S4,
+    PT4001_S4,
+    PT1200_S0,
+    PT1207_S0,
+    PT1207_S1,
+    PT1207_S2,
+    PT1304_S0,
+    PT1207_S3,
+    PT13XX_S0,
+    PT13XX_S1,
+    PT13XX_S2,
+    PT14XX_S0,
+    PT14XX_S1,
+    PT20XX_S5,
+    PT20XX_S6,
+    PT20XX_S7,
+    PT1502_S0,
+    PT1507_S0,
+    PT1507_S1,
+    PT1500_S0,
+    PT1502_S2,
+    PT1502_S1,
+    PT16XX_S0,
+    PT16XX_S1,
+    PT17XX_S0,
+    PT2XXX_S0,
+#ifdef KL2_VER_RETAIL
+    PT2701_S0,
+#endif
+    PT2XXX_S1,
+    PT2XXX_S2,
+    PT2XXX_S3,
+    PTENDING,
+    PTMOME_S0,
+    PTMOME_S1,
+    PTMOME_S2,
+    PTMOME_S3,
+    PTMOME_S4,
+    PTMOME_S5,
+    PTTITLE,
+#ifdef KL2_VER_RETAIL
+    PT0102_S0,
+    PT1805_S0,
+    PT1908_S0,
+#endif
+    PTSCENE_NUM
+} PT;
 
 // From nakano/main.h
 extern GAME_WORK GameGbl;

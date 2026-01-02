@@ -290,7 +290,11 @@ def create_paruu_config(elf: ELFFile, stdump: dict) -> list[Section]:
         },
         "harada:c": {
             "hr_main.c": 0x373B60,
-            "hr_mapv.c": 0x373C90
+            "hr_mapv.c": 0x373C90,
+            "hr_mirr.c": 0x373E10,
+            "hr_obcon.c": 0x373E44,
+            "hr_obcon3.c": 0x373E98,
+            "hr_pall.c": 0x373EAC
         },
         "hoshino:c": {
             "h_func.c": 0x374158,
@@ -337,7 +341,7 @@ def create_paruu_config(elf: ELFFile, stdump: dict) -> list[Section]:
             "hr_bgwk.c": 0x35FFA0,
             "hr_main.c": 0x35FFC8,
             "hr_mapdr.c": 0x3603C0,
-            "hr_mapv.c": 0x3603F0,
+            "hr_mapv.c": 0x3603E8,
             "hr_mirr.c": 0x360A10,
             "hr_obcon.c": 0x360A40,
             "hr_obcon2.c": 0x360A60,
@@ -446,6 +450,9 @@ def create_paruu_config(elf: ELFFile, stdump: dict) -> list[Section]:
     }
 
     DATA_FIX = {
+        "harada:c": {
+            "hr_pall.c": 0x2E6F58
+        },
         "nakano:c": {
             "k_math.c": 0x304050
         },
@@ -627,7 +634,7 @@ def write_objdiff_config(sections: list[Section]):
                 "base_path": f"build/src/{section.path}/{unit_name}.o",
                 "scratch": {
                     "platform": "ps2",
-                    "preset": KL2_C_PRESET_ID if unit.name.split(".")[-1] == "c" else KL2_CPP_PRESET_ID
+                    "preset_id": KL2_C_PRESET_ID if unit.name.split(".")[-1] == "c" else KL2_CPP_PRESET_ID
                 }
             })
     

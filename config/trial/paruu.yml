@@ -302,7 +302,7 @@ sections:
           - [0x002E6260, hr_mv_avt_tbl, data, 0x0000]
           - [0x002E6268, hrMapVFuncTbl, data, 0x0000]
           - [0x002E6270, HrPtFuncTbl, data, 0x0000]
-          - [0x003603F0, null, rodata, 0x0000]
+          - [0x003603E8, null, rodata, 0x0000]
           - [0x00370564, null, lit4, 0x0000]
           - [0x00373C90, null, sdata, 0x0000]
           - [0x00375800, hr_gmsdata, sbss, 0x0004]
@@ -359,6 +359,7 @@ sections:
           - [0x002E6340, hfmcam, data, 0x02C0]
           - [0x00360A10, null, rodata, 0x0000]
           - [0x003705A4, null, lit4, 0x0000]
+          - [0x00373E10, null, sdata, 0x0000]
           - [0x00373E18, hfmircnt, sdata, 0x0004]
           - [0x00373E1C, hcmircnt, sdata, 0x0004]
           - [0x00373E20, hrmirflush, sdata, 0x0004]
@@ -426,6 +427,7 @@ sections:
           - [0x002E6DE0, hrMapExplTbl, data, 0x0000]
           - [0x002E6DF0, hrObjFuncTbl, data, 0x0020]
           - [0x00360A40, null, rodata, 0x0000]
+          - [0x00373E44, null, sdata, 0x0000]
       - name: hr_obcon1.c
         functions:
           - [0x0010FE88, hr_swtrg_getset]
@@ -490,6 +492,7 @@ sections:
         data:
           - [0x00360AF0, null, rodata, 0x0000]
           - [0x003705E4, null, lit4, 0x0000]
+          - [0x00373E98, null, sdata, 0x0000]
       - name: hr_obcon4.c
         functions:
           - [0x00110E48, hr_obcex_draw2]
@@ -527,6 +530,7 @@ sections:
           - [0x00111B00, hr_pall_draw]
           - [0x00111B18, hr_pall_aftdraw]
         data:
+          - [0x002E6F58, null, data, 0x0000]
           - [0x002E6F60, ppcam, data, 0x0310]
           - [0x002E7270, ppmes, data, 0x0040]
           - [0x002E72B0, ppwaku, data, 0x0020]
@@ -541,6 +545,7 @@ sections:
           - [0x002E73B0, ppsys, data, 0x0680]
           - [0x00360CD8, null, rodata, 0x0000]
           - [0x00370608, null, lit4, 0x0000]
+          - [0x00373EAC, null, sdata, 0x0000]
           - [0x00373F70, hrpcam, sdata, 0x0004]
           - [0x00373F74, hrpt_addr, sdata, 0x0004]
           - [0x00373F78, hrptm_addr, sdata, 0x0004]

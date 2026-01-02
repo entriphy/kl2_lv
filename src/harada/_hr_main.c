@@ -1,28 +1,29 @@
 #include "harada/hr_main.h"
+#include "hoshino/h_file.h"
 #include "hoshino/h_util.h"
 
-MAPVWORK mapvw = {};
-HRSCRST hrmapst = {};
-HRSCRST hrbgst = {};
-u32 *hrd_pack = NULL;
-u32 *hrg_pack = NULL;
-u32 *hrf_pack = NULL;
-#ifndef KL2_VER_TRIAL
-u32 *hrse_pack = NULL;
+MAPVWORK mapvw;
+HRSCRST hrmapst;
+HRSCRST hrbgst;
+u32 *hrd_pack;
+u32 *hrg_pack;
+u32 *hrf_pack;
+#ifdef KL2_VER_RETAIL
+u32 *hrse_pack;
 #endif
-s32 hr_abeoff = 0;
-s32 hr_objtype = 0;
-u32 *hr_mt_addr = NULL;
-vpmINFO hr_mtexi = {};
-s32 hr_resKeep = 0;
-s32 hr_resTmp = 0;
-#ifndef KL2_VER_TRIAL
-s16 hr_resFg = 0;
-s16 hr_resSV = 0;
+s32 hr_abeoff;
+s32 hr_objtype;
+u32 *hr_mt_addr;
+vpmINFO hr_mtexi;
+s32 hr_resKeep;
+s32 hr_resTmp;
+#ifdef KL2_VER_RETAIL
+s16 hr_resFg;
+s16 hr_resSV;
 #endif
-u32 *hr_obcdata = NULL;
-u32 *hr_obcvpf = NULL;
-VPOINFO *hr_obcvpo = NULL;
+u32 *hr_obcdata;
+u32 *hr_obcvpf;
+VPOINFO *hr_obcvpo;
 
 #ifdef KL2_VER_TRIAL
 #define HR_PACK_MAX 4
@@ -38,7 +39,7 @@ void hr_cold_start() {
     hr_pt_fclear();
     hrpt_deb = 0;
     hr_abeoff = 0;
-#ifndef KL2_VER_TRIAL
+#ifdef KL2_VER_RETAIL
     hrpt_sbgm = 0;
 #endif
 }
@@ -97,7 +98,7 @@ u32* hr_hpmk(f32 x, f32 y, f32 z, u32 *top) {
     HR_HPMK *hp;
     u16 gx;
     u16 gy;
-    u16 gz; // ?
+    u16 gz;
     f32 f;
 
     hp = (HR_HPMK *)top;
@@ -155,7 +156,7 @@ void hrStageDataLoad(s32 fg) {
     s32 num;
     u32 *buff;
 
-#ifndef KL2_VER_TRIAL
+#ifdef KL2_VER_RETAIL
     hrse_pack = (u32 *)-1;
 #endif
     hrf_pack = (u32 *)-1;
@@ -182,7 +183,7 @@ void hrStageDataLoad(s32 fg) {
         KL2_DEBUG_PRINT(("No hrData !!!!\n"));
         return;
     }
-    KL2_DEBUG_PRINT(("hrData %x %d ==== Read\n", hrd_pack, *hrd_pack));
+    KL2_DEBUG_PRINT(("hrData %x %d ==== Read\n", (u32)hrd_pack, *hrd_pack));
 
     num = *hrd_pack;
     if (num > HR_PACK_MAX) {

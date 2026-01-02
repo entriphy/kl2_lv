@@ -2,7 +2,7 @@
 #define __HR_ABE_H
 
 #include "common.h"
-#include "harada/hr_prm.h"
+#include "harada/hr_obcon3.h"
 
 extern void hr_abe_efcOn(PTEFC id, sceVu0FVECTOR v);
 extern void hr_abe_efcWork(PTEFC id, sceVu0FVECTOR v);

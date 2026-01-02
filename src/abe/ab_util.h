@@ -254,4 +254,14 @@ struct CBillBoard : /* 0x00 */ CPrimitive { // 0xb0
 
 #endif
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+extern s32 MfifoOn;
+
+#ifdef __cplusplus
+}
+#endif
+
 #endif

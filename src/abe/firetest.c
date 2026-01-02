@@ -1,5 +1,6 @@
 #include "abe/firetest.h"
 #include "abe/ab_mfifo.h"
+#include "abe/ab_util.h"
 #include "harada/hr_main.h"
 #include "harada/hr_mapv.h"
 #include "nakano/dma.h"
@@ -14,9 +15,6 @@
 #include "okanoyo/okmain.h"
 #include "okanoyo/okprint.h"
 #include <libdev.h>
-
-// TODO: remove?
-extern s32 MfifoOn;
 
 static s32 FiretestInit() {
     vpmINFO *vpmi = &VpmInfo;
@@ -87,7 +85,7 @@ static s32 FiretestMain() {
     kpd1->rep = nkGetPrep(1);
 
     nkPathReset();
-    FlushCache(0);
+    FlushCache(WRITEBACK_DCACHE);
     SortObjWork(SysGbl.objwork, SysGbl.n_objw);
     ObjFunc(SysGbl.objwork);
     CamCalMatrix(&GameGbl.cam);

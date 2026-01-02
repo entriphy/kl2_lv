@@ -110,7 +110,6 @@ static inline void vu0_ApplyMtx(sceVu0FVECTOR dst, sceVu0FVECTOR src) {
     : : "r" (dst), "r" (src));
 }
 
-// TODO: properly define M_PIf
 static inline f32 nkRadMask(f32 rad) {
     if (rad <= -KL2_PI)    rad += KL2_2PI;
     else if (rad > KL2_PI) rad -= KL2_2PI;

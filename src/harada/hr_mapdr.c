@@ -15,7 +15,7 @@ extern u32 hr_vu1m_bg __attribute__((section(".vudata")));
 extern u32 hr_vu1m_mirr __attribute__((section(".vudata")));
 extern u32 hr_vu1m_avi __attribute__((section(".vudata")));
 
-u32 hrmaxlcnt = 0;
+u32 hrmaxlcnt;
 
 void DecodeVpm(u32 *vpm_top) {
     u32 i;
