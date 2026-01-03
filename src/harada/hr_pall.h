@@ -27,9 +27,11 @@ extern s16 hrpt_vt;
 extern s16 hrpt_deb;
 extern PCAMSC *hrpcc;
 extern u32 *hrpt_pack;
+#ifdef KL2_VER_RETAIL
 extern u32 *hrpt_gms;
 extern s16 hrpt_patch;
 extern s16 hrpt_patcnt;
+#endif
 extern s16 hrpt_stnk;
 extern HR_PSYS ppsys;
 extern HR_CALL *hrpt_call;

@@ -294,7 +294,14 @@ def create_paruu_config(elf: ELFFile, stdump: dict) -> list[Section]:
             "hr_mirr.c": 0x373E10,
             "hr_obcon.c": 0x373E44,
             "hr_obcon3.c": 0x373E98,
-            "hr_pall.c": 0x373EAC
+            "hr_pall.c": 0x373EAC,
+            "hr_pefc.c": 0x373FA0,
+            "hr_prm.c": 0x373FA8,
+            "hr_vpov.c": 0x373FD8,
+            "hrfunc.c": 0x373FE4
+        },
+        "hato:c": {
+            "ht_b06deb.c": 0x37408C
         },
         "hoshino:c": {
             "h_func.c": 0x374158,
@@ -350,8 +357,8 @@ def create_paruu_config(elf: ELFFile, stdump: dict) -> list[Section]:
             "hr_pbgm.c": 0x360D68,
             "hr_pcam.c": 0x360DA0,
             "hr_pefc.c": 0x360E08,
-            "hr_pmes.c": 0x360E20,
-            "hr_pread.c": 0x360FE0,
+            "hr_pmes.c": 0x360E18,
+            "hr_pread.c": 0x360FD8,
             "hr_pream.c": 0x361078,
             "hr_prm.c": 0x361098,
             "hr_take.c": 0x361258,
@@ -360,7 +367,7 @@ def create_paruu_config(elf: ELFFile, stdump: dict) -> list[Section]:
             "hrmenu.c": 0x3613B0
         },
         "hato:c": {
-            "ht_b01deb.c": 0x361410,
+            "ht_b01deb.c": 0x361408,
             "ht_b02deb.c": 0x3618E0,
             "ht_b03deb.c": 0x361C30,
             "ht_b04deb.c": 0x361F70,

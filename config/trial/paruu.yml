@@ -630,6 +630,7 @@ sections:
           - [0x00113828, hr_pt_skipdraw]
         data:
           - [0x00360E08, null, rodata, 0x0000]
+          - [0x00373FA0, null, sdata, 0x0000]
       - name: hr_pflag.c
         functions:
           - [0x00113880, hr_pflag_initAr]
@@ -676,7 +677,7 @@ sections:
           - [0x001151B0, hr_mesp_draw]
         data:
           - [0x002E7E08, hrMestbl, data, 0x000C]
-          - [0x00360E20, null, rodata, 0x0000]
+          - [0x00360E18, null, rodata, 0x0000]
       - name: hr_pread.c
         functions:
           - [0x00115300, pt_sys_call]
@@ -886,7 +887,7 @@ sections:
           - [0x002E7F60, HrPtCamTbl, data, 0x00F8]
           - [0x002E8058, HrPtKl2Tbl, data, 0x0078]
           - [0x002E80D0, hrPtFuncTbl, data, 0x0000]
-          - [0x00360FE0, null, rodata, 0x0000]
+          - [0x00360FD8, null, rodata, 0x0000]
           - [0x0037062C, null, lit4, 0x0000]
           - [0x00375834, p32a.0, sbss, 0x0004]
           - [0x00375838, p32b.0, sbss, 0x0004]
@@ -1010,6 +1011,7 @@ sections:
         data:
           - [0x00361098, null, rodata, 0x0000]
           - [0x00370634, null, lit4, 0x0000]
+          - [0x00373FA8, null, sdata, 0x0000]
           - [0x0037588C, hrpt_vcntid, sbss, 0x0004]
       - name: hr_take.c
         functions:
@@ -1141,6 +1143,7 @@ sections:
           - [0x002E81D0, hrVpoVFuncTbl, data, 0x0000]
           - [0x003612E0, null, rodata, 0x0000]
           - [0x00370650, null, lit4, 0x0000]
+          - [0x00373FD8, null, sdata, 0x0000]
           - [0x00375894, hrvpov, sbss, 0x0004]
       - name: hr_vtprg.c
         functions:
@@ -1153,6 +1156,7 @@ sections:
         data:
           - [0x002E81D8, MainFuncTbl.1, data, 0x0000]
           - [0x002E8200, hrFuncTbl, data, 0x0000]
+          - [0x00373FE4, null, sdata, 0x0000]
       - name: hrmenu.c
         functions:
           - [0x0011F0B8, hrMenuInit]
@@ -1176,7 +1180,7 @@ sections:
           - [0x00120810, htSetValue05.0]
           - [0x00120B58, htDrawDebug1]
         data:
-          - [0x00361410, null, rodata, 0x0000]
+          - [0x00361408, null, rodata, 0x0000]
           - [0x00370654, null, lit4, 0x0000]
       - name: ht_b02deb.c
         functions:
@@ -1223,6 +1227,7 @@ sections:
         data:
           - [0x00362310, null, rodata, 0x0000]
           - [0x003706E8, null, lit4, 0x0000]
+          - [0x0037408C, null, sdata, 0x0000]
       - name: ht_b07deb.c
         functions:
           - [0x00129850, htSetValue01.5]

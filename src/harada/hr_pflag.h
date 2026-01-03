@@ -11,6 +11,11 @@ typedef struct {
     s32 ptkeep[4];
 } HRMEMC;
 
+typedef struct {
+    s16 area;
+    s16 scene;
+} PTDATA;
+
 extern void hr_pflag_initAr();
 extern void hr_pflag_initSt();
 extern void hr_pflag_init();
@@ -19,7 +24,7 @@ extern s32 hr_pflag_sam(HRMEMC *buff);
 extern void hr_pflag_memcLoad(HRMEMC *buff);
 extern void hr_pflag_memcSave(HRMEMC *buff);
 extern void hr_pflag_memcClear(HRMEMC *buff);
-extern void hr_pflag_on(s32 id, s32 onoff);
+extern void hr_pflag_on KL2_VER_COND((s32 id), (s32 id, s32 onoff));
 extern void hr_pflag_theatar(s32 id, s32 mode);
 extern s32 hr_pflag_checkSV(s32 id);
 extern s32 hr_pflag_check(s32 id);

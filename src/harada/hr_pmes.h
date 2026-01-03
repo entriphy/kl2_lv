@@ -2,6 +2,7 @@
 #define __HR_PMES_H
 
 #include "common.h"
+#include "harada/hr_prm.h"
 
 typedef enum {
     HRPMJ_NOPRINT,

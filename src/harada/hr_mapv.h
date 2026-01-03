@@ -114,8 +114,8 @@ typedef struct { // 0xb0
     /* 0xa0 */ qword xyz1;
 } HRVV;
 
-extern s32 (*hrMapVFuncTbl[2])();
-extern s32 (*HrPtFuncTbl[2])();
+extern s32 (*hrMapVFuncTbl[])();
+extern s32 (*HrPtFuncTbl[])();
 
 extern void hr_avw_sint(HRANMV *av);
 extern void hr_avw_sint2(HRANMV *av);

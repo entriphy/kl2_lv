@@ -19,7 +19,7 @@ typedef struct { // 0x3d0
     /* 0x360 */ s32 flag;
     /* 0x364 */ s32 *read;
     /* 0x368 */ s32 *ret;
-    /* 0x36c */ tOBJECT *hObj;
+    /* 0x36c */ HOT *hObj;
     /* 0x370 */ u16 motno;
     /* 0x372 */ u16 motlp;
     /* 0x374 */ u16 motret;
@@ -32,8 +32,7 @@ typedef struct { // 0x3d0
     /* 0x384 */ s32 lightno;
     /* 0x388 */ s32 efc;
     /* 0x38c */ s32 *mem;
-    /* 0x390    f32 shady; */
-    /* 0x390 */ s32 sevag; // ?
+    /* 0x390 */ KL2_VER_COND(f32 shady, s32 sevag);
     /* 0x394 */ s32 pad0;
     /* 0x398 */ s16 loop[2];
     /* 0x39c */ s16 pad2;
@@ -61,10 +60,12 @@ typedef struct { // 0x20
     /* 0x04 */ f32 x;
     /* 0x08 */ f32 y;
     /* 0x0c */ f32 z;
+#ifdef KL2_VER_RETAIL
     /* 0x10 */ f32 rx;
     /* 0x14 */ f32 ry;
     /* 0x18 */ f32 rz;
     /* 0x1c */ f32 pad0;
+#endif
 } HR_ECONT;
 
 typedef struct { // 0x20
@@ -261,6 +262,50 @@ typedef struct { // 0x10
     /* 0xe */ s16 count;
 } HRMESP;
 
+#ifdef KL2_VER_TRIAL
+typedef struct { // 0x680
+    /* 0x000 */ sceVu0FMATRIX wmat;
+    /* 0x040 */ HR_CALL sys;
+    /* 0x410 */ HR_FADE fade;
+    /* 0x420 */ HR_ECONT econ[8];
+    /* 0x4a0 */ HR_PKEY key;
+    /* 0x4c0 */ HR_PTSE se[4];
+    /* 0x600 */ s32 count0;
+    /* 0x604 */ s32 count1;
+    /* 0x608 */ s16 klov;
+    /* 0x60a */ s16 pad0;
+    /* 0x60c */ s16 ecount0;
+    /* 0x60e */ s16 ecount1;
+    /* 0x610 */ s32 flag;
+    /* 0x614 */ s32 nflag;
+    /* 0x618 */ PT96A *flagptr[4];
+    /* 0x628 */ s32 ncall;
+    /* 0x62c */ HR_CALL *call;
+    /* 0x630 */ PCAMS *cam;
+    /* 0x634 */ HR_CALL *posc;
+    /* 0x638 */ HR_CALL *intec;
+    /* 0x63c */ s32 *model;
+    /* 0x640 */ HRPMOJI *pmes;
+    /* 0x644 */ HRPMWAKU *waku;
+    /* 0x648 */ s32 *efc;
+    /* 0x64c */ s16 rtno;
+    /* 0x64e */ s16 oksw;
+    /* 0x650 */ s32 rtmc;
+    /* 0x654 */ s32 yuka;
+    /* 0x658 */ s32 cntvc;
+    /* 0x65c */ s32 *addrvc;
+    /* 0x660 */ s32 idvc;
+    /* 0x664 */ s32 cntlip;
+    /* 0x668 */ s16 *addrlip;
+    /* 0x66c */ s16 dckcnt;
+    /* 0x66e */ s16 skipcnt;
+    /* 0x670 */ s16 ncVi;
+    /* 0x672 */ s16 ncSc;
+    /* 0x674 */ s16 reqbgm;
+    /* 0x676 */ s16 mircnt;
+    /* 0x678 */ HRMESP *mesp;
+} HR_PSYS;
+#else
 typedef struct {
     sceVu0FMATRIX wmat;
     HR_CALL sys;
@@ -306,6 +351,7 @@ typedef struct {
     s16 mircnt;
     HRMESP *mesp;
 } HR_PSYS;
+#endif
 
 typedef struct { // 0x8
     /* 0x0 */ HR_CALL *ca;
