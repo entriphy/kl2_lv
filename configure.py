@@ -4,6 +4,7 @@ import io
 import json
 import os
 from pathlib import Path
+import re
 import shutil
 import struct
 import subprocess
@@ -297,6 +298,7 @@ def create_paruu_config(elf: ELFFile, stdump: dict) -> list[Section]:
             "hr_pall.c": 0x373EAC,
             "hr_pefc.c": 0x373FA0,
             "hr_prm.c": 0x373FA8,
+            "hr_vpa.c": 0x373FBC,
             "hr_vpov.c": 0x373FD8,
             "hrfunc.c": 0x373FE4
         },
@@ -656,7 +658,43 @@ def write_objdiff_config(sections: list[Section]):
 def splat_stuff(version: str, make_full_disasm_for_code: bool = True) -> list[LinkerEntry]:
     yaml_file = Path(f"config/{version}/splat.yml")
     split.main([yaml_file], modes="all", verbose=False, make_full_disasm_for_code=make_full_disasm_for_code)
+    replace_instructions_with_opcodes("asm")
     return split.linker_writer.entries.copy()
+
+# From https://github.com/Fantaskink/SOTC configure.py
+# Pattern to workaround unintended nops around loops
+COMMENT_PART = r"\/\* (.+) ([0-9A-Z]{2})([0-9A-Z]{2})([0-9A-Z]{2})([0-9A-Z]{2}) \*\/"
+INSTRUCTION_PART = r"(\b(bne|bnel|beq|beql|bnez|bnezl|beqzl|bgez|bgezl|bgtz|bgtzl|blez|blezl|bltz|bltzl|b)\b.*)"
+OPCODE_PATTERN = re.compile(f"{COMMENT_PART}  {INSTRUCTION_PART}")
+
+PROBLEMATIC_FUNCS = set(
+    [
+        "hr_anmVPA_draw_M1"
+    ]
+)
+
+def replace_instructions_with_opcodes(asm_folder: Path):
+    nm_folder = ROOT / asm_folder / "nonmatchings"
+
+    for p in nm_folder.rglob("*.s"):
+        if p.stem not in PROBLEMATIC_FUNCS:
+            continue
+
+        with p.open("r") as file:
+            content = file.read()
+
+        if re.search(OPCODE_PATTERN, content):
+            # Reference found
+            # Embed the opcode, we have to swap byte order for correct endianness
+            content = re.sub(
+                OPCODE_PATTERN,
+                r"/* \1 \2\3\4\5 */  .word      0x\5\4\3\2 /* \6 */",
+                content,
+            )
+
+            # Write the updated content back to the file
+            with p.open("w") as file:
+                file.write(content)
 
 def write_ninja_config(version: str, linker_entries: list[LinkerEntry], debug: bool = False):
     built_objects: set[Path] = set()
