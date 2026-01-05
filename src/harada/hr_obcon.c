@@ -6,6 +6,8 @@
 #include "harada/hr_mapdr.h"
 #include "harada/hr_pall.h"
 #include "harada/hr_pflag.h"
+#include "harada/hr_tobc.h"
+#include "harada/hr_vpa.h"
 #include "hoshino/h_event.h"
 #include "hoshino/h_util.h"
 #include "nakano/dma.h"

@@ -189,17 +189,17 @@ void hr_pcam_spdacc(PCAMSC *pcc) {
 void hr_pcam_spdclr(PCAMSC *pcc) {
     sceVu0SubVector(pcc->spd, pcc->spd, pcc->spd);
     sceVu0CopyVector(pcc->acc, pcc->spd);
-    pcc->flag &= -2;
+    pcc->flag &= ~1;
 }
 
 void hr_pcam_set_mode(s32 mode) {
     hrpcam->flag = mode;
     switch (mode) {
         case PCAMW_PAI:
-            hrpcam->mi.flag &= -14;
+            hrpcam->mi.flag &= ~(0x8 | 0x4 | 0x1);
             break;
         case PCAMW_IAP:
-            hrpcam->mp.flag &= -14;
+            hrpcam->mp.flag &= ~(0x8 | 0x4 | 0x1);
             break;
     }
 }
@@ -225,7 +225,7 @@ static void hr_pcam_matrix(PCAMSM *pcm, sceVu0FMATRIX m) {
         }
         sceVu0TransMatrix(m, m, pcm->hv);
     }
-    pcm->flag &= -9;
+    pcm->flag &= ~0x8;
 }
 
 static void hr_pcam_ang(PCAMSC *pcc, sceVu0FVECTOR v) {
@@ -265,7 +265,7 @@ static void hr_pcam_posinte(PCAMSC *pcc, PCAMSM *pcm, sceVu0FVECTOR v) {
     }
 
     if (!(pcm->flag & 4)) {
-        pcm->flag &= -2;
+        pcm->flag &= ~0x1;
     }
 }
 

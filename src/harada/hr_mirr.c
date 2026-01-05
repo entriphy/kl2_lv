@@ -1,8 +1,11 @@
 #include "harada/hr_mirr.h"
 #include "harada/hr_main.h"
-#include "nakano/main.h"
 #include "okanoyo/okmain.h"
 #include "okanoyo/okprint.h"
+
+#ifdef KL2_VER_RETAIL
+#include "nakano/main.h"
+#endif
 
 static void hr_mir_setf() {
     HFMIR *fmir;

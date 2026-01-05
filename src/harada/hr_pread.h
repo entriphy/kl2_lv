@@ -4,6 +4,22 @@
 #include "common.h"
 #include "harada/hr_prm.h"
 
+typedef enum {
+    HRPSIZE_L,
+    HRPSIZE_M,
+    HRPSIZE_S,
+    HRPSIZE_F
+} HRPSIZE;
+
+typedef enum {
+    PGETFT_ML,
+    PGETFT_MP,
+    PGETFT_LP,
+    PGETFT_TM,
+    PGETFT_ZN,
+    PGETFT_NUM
+} PGETFT;
+
 extern void pt_flag_work(HR_PSYS *ps, PT96A *sfg);
 extern void comm_p128b_ft(PCAMSC *pcc, s32 ft);
 extern void comm_jigen_spd(sceVu0FVECTOR spd, sceVu0FVECTOR acc, f32 ft, u8 uc0, u8 uc1);

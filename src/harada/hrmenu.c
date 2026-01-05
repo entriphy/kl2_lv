@@ -1,6 +1,6 @@
 #include "harada/hrmenu.h"
 #include "harada/hr_pall.h"
-// this may need to be included
+// Do NOT include this!!!
 // #include "harada/hr_pflag.h"
 #include "okanoyo/okmain.h"
 #include "okanoyo/okprint.h"

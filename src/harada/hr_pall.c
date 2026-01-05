@@ -1,4 +1,5 @@
 #include "harada/hr_pall.h"
+#include "harada/hr_pefc.h"
 #include "harada/hr_pflag.h"
 #include "harada/hr_main.h"
 #include "harada/hr_prm.h"
@@ -225,7 +226,7 @@ static void hr_pt_skipcheck(HR_PSYS *ps) {
 s32 hr_check_skw() {
     if (ppsys.flag & 0x20) {
         if (hrpt_patch & 4) {
-            hrpt_patch &= -5;
+            hrpt_patch &= ~0x4;
             return 0;
         }
         return ppsys.skipcnt;
@@ -241,7 +242,7 @@ s32 hr_pall_work() {
 
 #ifdef KL2_VER_RETAIL
     if (hrpt_patch & 1) {
-        hrpt_patch &= -2;
+        hrpt_patch &= ~0x1;
         hSndEffSetVol_PPTstart();
     }
 
@@ -255,7 +256,7 @@ s32 hr_pall_work() {
     if (ppsys.flag & 0x20) {
 #ifdef KL2_VER_RETAIL
         if (hrpt_patch & 2) {
-            hrpt_patch &= -3;
+            hrpt_patch &= ~0x2;
             pt_set_skip2(&ppsys);
         }
 #endif
@@ -273,7 +274,7 @@ s32 hr_pall_work() {
         if (hrpt_flag != 4) {
             hr_pmes_work(&ppmes);
             if (ppmes.flag & 0x10000) {
-                ppmes.flag &= -0x10001;
+                ppmes.flag &= ~0x10000;
                 hr_ptvoice_stop(&ppsys, &ppmes);
             }
             if (!(ppmes.flag & 0x4000) && ppsys.flag & 0x400) {
@@ -289,7 +290,7 @@ s32 hr_pall_work() {
         if (hrpt_patch & 0x10) {
             hrpt_patcnt--;
             if (hrpt_patcnt == 0) {
-                hrpt_patch &= -0x11;
+                hrpt_patch &= ~0x10;
                 hr_hse_areaend();
                 hr_pt_setBGM(&ppsys, -1, 0);
             }

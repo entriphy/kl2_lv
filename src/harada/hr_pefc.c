@@ -176,7 +176,7 @@ void hr_pfade_draw(HR_FADE *fade) {
         hr_pfade_drawN(fade);
     } else {
         hr_pfade_drawX(fade);
-        fade->flag &= -0x21;
+        fade->flag &= ~0x20;
         fade->flag |= 0x10;
     }
 }
@@ -280,9 +280,9 @@ void hr_pt_skipdraw(HR_PSYS *ps) {
 
     if (hrpt_flag & 8) {
         if (hrpt_patch & 8) {
-            hrpt_patch &= -9;
+            hrpt_patch &= ~0x8;
         } else {
-            hrpt_flag &= -9;
+            hrpt_flag &= ~0x8;
         }
 
         if (ps->flag & 0x800) {

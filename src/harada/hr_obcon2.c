@@ -3,6 +3,7 @@
 #include "harada/hr_nak.h"
 #include "harada/hr_pall.h"
 #include "harada/hr_prm.h"
+#include "harada/hr_take.h"
 #include "hoshino/h_util.h"
 #include "kazuya/interfac.h"
 #include "nakano/camera.h"

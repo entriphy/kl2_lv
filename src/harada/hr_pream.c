@@ -1,0 +1,421 @@
+#include "harada/hr_pream.h"
+#include "harada/hr_pbgm.h"
+#include "harada/hr_prm.h"
+#include "harada/hr_take.h"
+#include "hoshino/h_gamesnd.h"
+#include "hoshino/h_str.h"
+
+#ifdef KL2_VER_RETAIL
+#include "harada/hr_main.h"
+#include "harada/hr_pmes.h"
+#include "harada/hr_pall.h"
+#include "harada/hr_pread.h"
+#endif
+
+static PT32A *p32a;
+static PT32B *p32b;
+static PT64A *p64a;
+static PT64B *p64b;
+static PT96D *p96d;
+static PT96E *p96e;
+static PT96F *p96f;
+
+void hr_set_motion(HR_CALL *ca, s32 noth) {
+    if (noth == 0) {
+        hr_take_motionSet(ca->hObj, ca->motno, 0);
+    } else {
+        hr_take_motionSetN(ca->hObj, ca->motno, 0);
+    }
+
+    ca->flag |= 4;
+}
+
+#ifdef KL2_VER_RETAIL
+f32* pt_se_panpos(HR_CALL *ca, u16 on) {
+    if (on == 0) {
+        if (ca->hObj != NULL) {
+            hr_pt_getpos(ca, &ca->hObj->Base.Trans);
+            return ca->hObj->Base.Trans;
+        } else {
+            return ca->pos.p;
+        }
+    } else {
+        return NULL;
+    }
+}
+
+s32 pt_se_changer(s32 id) {
+    if ((s32)hrse_pack == -1) {
+        return -1;
+    }
+    if (id < 0 || *hrse_pack <= id) {
+        return -1;
+    }
+    return hrse_pack[id + 1];
+}
+
+s32 pt_motlp_secall(HR_CALL *ca) {
+    hSeKeyOn(ca->sevag & 0xFFFFFFFF, pt_se_panpos(ca, 0), 0);
+}
+#endif
+
+static s32 pt_mot_play(HR_CALL *ca, HR_PSYS *ps) {
+    s32 noth;
+
+    p64a = (PT64A *)ca->read;
+    ca->motlp = p64a->ss0;
+    ca->motlpi = 0;
+    KL2_VER_RETAIL_ONLY(ca->flag &= ~0x2000);
+    ca->motno = p64a->ss1;
+
+    if (p64a->code == 0x0104 || KL2_VER_COND(0, p64a->code == 0x0109)) {
+        noth = 1;
+    } else {
+        noth = 0;
+    }
+
+    if (ca->hObj != NULL) {
+        hr_set_motion(ca, noth);
+#ifdef KL2_VER_RETAIL
+        if (p64a->code == 0x0108 || p64a->code == 0x0109) {
+            ca->sevag = pt_se_changer(p64a->ss2);
+            if (ca->sevag != -1) {
+                ca->flag |= 0x2000;
+                pt_motlp_secall(ca);
+            }
+        }
+#endif
+    }
+
+    ca->read += 2;
+    return 1;
+}
+
+static s32 pt_mot_wait(HR_CALL *ca, HR_PSYS *ps) {
+    p32b = (PT32B *)ca->read;
+    if (p32b->us0 == 0) {
+        if (ca->flag & 4) {
+            return 0;
+        }
+    } else if (ca->motlpi < p32b->us0) {
+        return 0;
+    }
+
+    ca->read++;
+    return 1;
+}
+
+static s32 pt_mime_set(HR_CALL *ca, HR_PSYS *ps) {
+    p32b = (PT32B *)ca->read;
+    ca->read++;
+    return 1;
+}
+
+static s32 pt_lips(HR_CALL *ca, HR_PSYS *ps) {
+    p32a = (PT32A *)ca->read;
+
+#ifdef KL2_VER_RETAIL
+    if (hrpt_id == PT13XX_S0) {
+        if (ca->hObj != NULL) {
+            hr_take_lips(ca->hObj, (s16 *)pt_al_data(ca, p32a->ss0));
+        }
+    }
+#endif
+
+    ca->read++;
+    return 1;
+}
+
+static s32 pt_mot_clip(HR_CALL *ca, HR_PSYS *ps) {
+    s32 fg;
+
+    p32b = (PT32B *)ca->read;
+    if (p32b->us0 == 0) {
+        fg = 1;
+    } else {
+        fg = 0;
+    }
+
+    if (ca->hObj != NULL) {
+        hr_take_modelclip(ca->hObj, fg);
+    }
+
+    ca->read++;
+    return 1;
+}
+
+static s32 pt_mot_line(HR_CALL *ca, HR_PSYS *ps) {
+    p32b = (PT32B *)ca->read;
+    if (p32b->us0 == 1) {
+        hr_take_rinkaku(ca->hObj);
+    }
+    ca->read++;
+    return 1;
+}
+
+static s32 pt_mot_lpdata(HR_CALL *ca, HR_PSYS *ps) {
+    s32 *ptr;
+
+    p32a = (PT32A *)ca->read;
+    ptr = ca->read + p32a->ss0;
+    ps->cntlip = *ptr++;
+    ps->addrlip = (s16 *)ptr;
+    KL2_DEBUG_PRINT(("Lips %d %x\n", ps->cntlip, (u32)ps->addrlip));
+    ca->read++;
+    return 1;
+}
+
+static s32 pt_snd_voice(HR_CALL *ca, HR_PSYS *ps) {
+    p32b = (PT32B *)ca->read;
+    hr_ptvoice_call(ps, ps->pmes);
+    ca->read++;
+    return 1;
+}
+
+#ifdef KL2_VER_TRIAL
+static f32* pt_se_panpos(HR_CALL *ca, u16 on) {
+    if (on == 0) {
+        if (ca->hObj != NULL) {
+            hr_pt_getpos(ca, &ca->hObj->Base.Trans);
+            return ca->hObj->Base.Trans;
+        } else {
+            return ca->pos.p;
+        }
+    } else {
+        return NULL;
+    }
+}
+#endif
+
+static s32 pt_snd_se(HR_CALL *ca, HR_PSYS *ps) {
+    f32 *f;
+    s32 splt;
+
+    p64b = (PT64B *)ca->read;
+    f = pt_se_panpos(ca, p64b->us0);
+#ifdef KL2_VER_RETAIL
+    splt = pt_se_changer(p64b->si0);
+    if (splt != -1) {
+#endif
+        if (p64b->code == 0x0401) {
+            s32 obj = hSeKeyOn(KL2_VER_COND((u32)p64b->si0, (s64)splt & 0xFFFFFFFF), f, 0);
+#ifdef KL2_VER_RETAIL
+            if (hrpt_id == PTTITLE) {
+                switch (p64b->si0) {
+                    case 6:
+                        hSeSetObjPan(obj, 1.0f, 0.0f);
+                        break;
+                    case 7:
+                        hSeSetObjPan(obj, 0.0f, 1.0f);
+                        break;
+                }
+            }
+#endif
+        } else if (p64b->code == 0x0403) {
+            hr_seloop_on(ps->se, KL2_VER_COND(p64b->si0, splt), f);
+        } else {
+            hr_seloop_off(ps->se, KL2_VER_COND(p64b->si0, splt));
+        }
+#ifdef KL2_VER_RETAIL
+    }
+#endif
+
+    ca->read += 2;
+    return 1;
+}
+
+static s32 pt_snd_vcdata(HR_CALL *ca, HR_PSYS *ps) {
+    s32 *ptr;
+
+    p32a = (PT32A *)ca->read;
+    ptr = ca->read + p32a->ss0;
+    hPptSetList(ptr);
+    ps->cntvc = *ptr++;
+    ps->addrvc = ptr;
+    KL2_DEBUG_PRINT(("Voice %d %x\n", ps->cntvc, (u32)ps->addrvc));
+    KL2_VER_RETAIL_ONLY(hr_pmes_ns_st(ps->pmes));
+
+    ca->read++;
+    return 1;
+}
+
+static s32 pt_snd_bgm(HR_CALL *ca, HR_PSYS *ps) {
+    s32 mode;
+
+    p32b = (PT32B *)ca->read;
+    if (p32b->code == 0x0405) {
+        mode = 0;
+    } else {
+        mode = 2;
+    }
+    
+    if (KL2_VER_COND(1, hrpt_view == 0)) {
+        hr_pt_setBGM(ps, p32b->us0, mode);
+    }
+
+    ca->read++;
+    return 1;
+}
+
+static s32 pt_se_pitset(HR_CALL *ca, HR_PSYS *ps) {
+    p96e = (PT96E *)ca->read;
+    ca->read += 3;
+    return 1;
+}
+
+static s32 pt_se_pitmv(HR_CALL *ca, HR_PSYS *ps) {
+    p96e = (PT96E *)ca->read;
+    ca->read += 3;
+    return 1;
+}
+
+static s32 pt_se_pitmvp(HR_CALL *ca, HR_PSYS *ps) {
+    p96e = (PT96E *)ca->read;
+    ca->read += 3;
+    return 1;
+}
+
+#ifdef KL2_VER_RETAIL
+static HR_PTSE* pt_lse_search(HR_PSYS *ps, s32 id) {
+    s32 splt;
+
+    splt = pt_se_changer(id);
+    if (splt == -1) {
+        return NULL;
+    } else {
+        return hr_seloop_search(ps, splt);
+    }
+}
+#endif
+
+static s32 pt_se_volset(HR_CALL *ca, HR_PSYS *ps) {
+    HR_PTSE *se;
+
+    p96f = (PT96F *)ca->read;
+
+#ifdef KL2_VER_RETAIL
+    se = pt_lse_search(ps, p96f->ui0);
+    if (se != NULL) {
+        se->vol.p = p96f->f0;
+        hSeSetObjVol(se->id, se->vol.p);
+    }
+#endif
+
+    ca->read += 3;
+    return 1;
+}
+
+static s32 pt_se_volmv(HR_CALL *ca, HR_PSYS *ps) {
+    HR_PTSE *se;
+
+    p96f = (PT96F *)ca->read;
+
+#ifdef KL2_VER_RETAIL
+    se = pt_lse_search(ps, p96f->ui0);
+    if (se != NULL) {
+        comm_getft_mvF(ca, &se->vol);
+    }
+#endif
+
+    ca->read += 3;
+    return 1;
+}
+
+static s32 pt_se_volmvp(HR_CALL *ca, HR_PSYS *ps) {
+    HR_PTSE *se;
+
+    p96f = (PT96F *)ca->read;
+
+#ifdef KL2_VER_RETAIL
+    se = pt_lse_search(ps, p96f->ui0);
+    if (se != NULL) {
+        comm_getft_mvpF(ca, &se->vol);
+    }
+#endif
+
+    ca->read += 3;
+    return 1;
+}
+
+static s32 pt_snd_sev(HR_CALL *ca, HR_PSYS *ps) {
+    f32 *f;
+    s32 splt;
+
+    p96d = (PT96D *)ca->read;
+    f = pt_se_panpos(ca, p96d->us0);
+#ifdef KL2_VER_RETAIL
+    splt = pt_se_changer(p96d->si0);
+    if (splt != -1) {
+#endif
+        hSeSetObjVol(hSeKeyOn(KL2_VER_COND((u32)p96d->si0, (s64)splt & 0xFFFFFFFF), f, 0), p96d->f0);
+#ifdef KL2_VER_RETAIL
+    }
+#endif
+
+    ca->read += 3;
+    return 1;
+}
+
+#ifdef KL2_VER_RETAIL
+static s32 pt_snd_bgmsync(HR_CALL *ca, HR_PSYS *ps) {
+    ca->read++;
+    return 1;
+}
+
+static s32 pt_snd_ac3j(HR_CALL *ca, HR_PSYS *ps) {
+    p32a = (PT32A *)ca->read;
+    if (sD->Stereo == SND_MODE_5P1CH) {
+        ca->read += p32a->ss0;
+    } else {
+        ca->read++;
+    }
+    return 1;
+}
+
+static s32 pt_snd_ac3s(HR_CALL *ca, HR_PSYS *ps) {
+    p32a = (PT32A *)ca->read;
+    if (sD->Stereo != SND_MODE_5P1CH) {
+        ca->read += p32a->ss0;
+    } else {
+        ca->read++;
+    }
+    return 1;
+}
+#endif
+
+s32 (*HrPtMotTbl[KL2_VER_COND(8, 10)])(HR_CALL *ca, HR_PSYS *ps) = {
+    pt_mot_play,
+    pt_mot_wait,
+    pt_mime_set,
+    pt_lips,
+    pt_mot_play,
+    pt_mot_clip,
+    pt_mot_line,
+    pt_mot_lpdata,
+#ifdef KL2_VER_RETAIL
+    pt_mot_play,
+    pt_mot_play,
+#endif
+};
+
+s32 (*HrPtSndTbl[KL2_VER_COND(14, 17)])(HR_CALL *ca, HR_PSYS *ps) = {
+    pt_snd_voice,
+    pt_snd_se,
+    pt_snd_vcdata,
+    pt_snd_se,
+    pt_snd_se,
+    pt_snd_bgm,
+    pt_snd_bgm,
+    pt_se_pitset,
+    pt_se_pitmv,
+    pt_se_pitmvp,
+    pt_se_volset,
+    pt_se_volmv,
+    pt_se_volmvp,
+    KL2_VER_COND(NULL, pt_snd_sev),
+#ifdef KL2_VER_RETAIL
+    pt_snd_bgmsync,
+    pt_snd_ac3j,
+    pt_snd_ac3s,
+#endif
+};

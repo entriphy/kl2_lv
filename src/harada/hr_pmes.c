@@ -153,7 +153,7 @@ void hr_pmes_set(HRPMOJI *pmes, s32 *addr) {
 
 void hr_pmes_start(HRPMOJI *pmes) {
     pmes->mode = HRPMJ_NUM0;
-    pmes->flag &= -0x81;
+    pmes->flag &= ~0x80;
 }
 
 void hr_pmes_reta(HRPMOJI *pmes) {
@@ -170,7 +170,7 @@ static void hr_pmes_key(HRPMOJI *pmes) {
     kPadDATA *kpd;
 
     kpd = &GameGbl.kpd[0];
-    pmes->flag &= -0x2004;
+    pmes->flag &= ~(0x2000 | 0x2 | 0x1);
     if (pmes->flag & 0x40) {
         if (pmes->flag & 0x100) {
             pmes->flag ^= 0x100;
@@ -384,7 +384,7 @@ static void hr_pmes_read_data(HRPMOJI *pmes) {
     if (pmes->flag & 0x2000) {
         pmes->time = 0;
         if (pmes->flag & 0xC000) {
-            pmes->flag &= -0xC001;
+            pmes->flag &= ~0xC000;
             pmes->flag |= 0x10000;
         }
 #ifdef KL2_VER_RETAIL
@@ -396,7 +396,7 @@ static void hr_pmes_read_data(HRPMOJI *pmes) {
     if (pmes->time == 0) {
         pmes->time = pmes->wtime;
         if (pmes->flag & 0x8000) {
-            pmes->flag &= -0xC001;
+            pmes->flag &= ~0xC000;
         }
         while (hr_pmes_readM(pmes));
     }
@@ -421,7 +421,7 @@ static void hr_pmes_wait_bot(HRPMOJI *pmes) {
             pmes->flag ^= 4;
             hr_pmes_waitstp(pmes);
         } else {
-            pmes->flag &= -0x9;
+            pmes->flag &= ~0x8;
             pmes->mode = HRPMJ_CHGPAGE;
         }
 #ifdef KL2_VER_RETAIL

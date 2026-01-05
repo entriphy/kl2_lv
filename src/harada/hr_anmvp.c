@@ -5,21 +5,6 @@
 #include "nakano/dma.h"
 #include "nakano/main.h"
 
-static s32 hr_avp_sint(HRANMV *av, s32 mno);
-static s32 hr_avp_sint2(HRANMV *av, s32 mno);
-
-s32 (*hrAnmVpmTbl[])(HRANMV *, s32) = {
-    NULL,
-    hr_avp_sint,
-    hr_avp_sint2,
-    hr_avp_sint,
-    hr_avp_sint2
-};
-HRANMV hravbuf[1] = {};
-s32 hravcnt = 0;
-s32 hrmapoff = 0;
-HRAVL hrvlight[2] = {};
-
 extern u32 hr_vu1m_av1 __attribute__((section(".vudata")));
 extern u32 hr_vu1m_av2 __attribute__((section(".vudata")));
 extern u32 hr_vu1m_av1o __attribute__((section(".vudata")));
@@ -310,3 +295,15 @@ static s32 hr_avp_sint2(HRANMV *av, s32 mno) {
 
     return 0;
 }
+
+s32 (*hrAnmVpmTbl[])(HRANMV *, s32) = {
+    NULL,
+    hr_avp_sint,
+    hr_avp_sint2,
+    hr_avp_sint,
+    hr_avp_sint2
+};
+HRANMV hravbuf[1];
+s32 hravcnt;
+s32 hrmapoff;
+HRAVL hrvlight[2];

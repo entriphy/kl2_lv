@@ -1130,6 +1130,7 @@ sections:
           - [0x002E81B0, infovpa, data, 0x001C]
           - [0x003612A0, null, rodata, 0x0000]
           - [0x0037064C, null, lit4, 0x0000]
+          - [0x00373FBC, null, sdata, 0x0000]
           - [0x00373FD0, hri_anm, sdata, 0x0004]
           - [0x00373FD4, hri_bg, sdata, 0x0004]
       - name: hr_vpov.c

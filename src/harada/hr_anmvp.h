@@ -33,6 +33,13 @@ typedef struct { // 0x20
     /* 0x10 */ qword mscal;
 } ATR_AVPSINT2Z;
 
+
+extern s32 (*hrAnmVpmTbl[])(HRANMV *, s32);
+extern HRANMV hravbuf[1];
+extern s32 hravcnt;
+extern s32 hrmapoff;
+extern HRAVL hrvlight[2];
+
 extern u32 hr_float2int(f32 f);
 extern void hr_anmVPM_allinit();
 extern void hr_anmVPM_set(HRANMVS *avs);

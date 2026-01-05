@@ -106,8 +106,6 @@ extern u32* hr_hpmk(f32 x, f32 y, f32 z, u32 *top);
 extern u32* hr_hpmk_deb(f32 x, f32 y, f32 z, u32 *top, HR_HPDEB *hpd);
 extern void hr_stage_no(char *name, s32 fg);
 extern s32 hr_check_dmy(qword *addr);
-extern s32 func_00103398(u32 *pack, s32 param_2, s32 param_3);
-extern void func_00103508();
 extern void hrPtSeLoad();
 extern void hrStageDataLoad(s32 fg);
 extern void hr_set_defMVC();

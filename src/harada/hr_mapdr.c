@@ -1,5 +1,5 @@
 #include "harada/hr_mapdr.h"
-#include "harada/hr_anmdt.h"
+#include "harada/hr_anmvp.h"
 #include "harada/hr_bgwk.h"
 #include "harada/hr_mirr.h"
 #include "nakano/main.h"
@@ -935,10 +935,11 @@ static void hr_make_scaleST(HCMIR *cmir, f32 *st, f64 stc, f64 scale) {
     }
 }
 
+// https://decomp.me/scratch/2c9ui
 #ifndef NON_MATCHING
+/* static */ qword* hr_setp_mirstr(HCMIR *cmir, qword *pp, u32 count);
 INCLUDE_ASM("harada/hr_mapdr", hr_setp_mirstr);
 #else
-// Technically matches: https://decomp.me/scratch/2c9ui
 static qword* hr_setp_mirstr(HCMIR *cmir, qword *pp, u32 count) {
     qword *rgb;
     qword *ptrv;
@@ -1058,7 +1059,7 @@ static void hrDrawMirM(s32 no) {
     vpmINFO *info = func_0010DBC0();
 #endif
     hrSetBlockList(info, &hfmcam.vc, hfmcam.wvm);
-    KL2_OK_PRINT((4, 0x20, 2, scr_p[4], "mir %d(%d) / %d", info->block_list[0], hrmaxlcnt, info->vpm_block_num));
+    KL2_OK_PRINT((4, 32, 2, scr_p[4], "mir %d(%d) / %d", info->block_list[0], hrmaxlcnt, info->vpm_block_num));
     hrSetFogDist(info->fog_near, info->fog_far);
     hrSetFogCol(info->fog_col);
     hrSetClipRoadPacketMir(info);

@@ -539,7 +539,7 @@ def write_symbol_addrs(version: str, sections: list[Section], elf: ELFFile, stdu
         vudata_range = (vudata_section.header.sh_addr, vudata_section.header.sh_addr + vudata_section.header.sh_size)
         vutext_range = (vutext_section.header.sh_addr, vutext_section.header.sh_addr + vutext_section.header.sh_size)
         for label in stdump["labels"]:
-            if (vudata_range[0] < label["address"] < vudata_range[1] or vutext_range[0] < label["address"] < vutext_range[1]) and not label["name"].startswith(("p", ".")):
+            if (vudata_range[0] <= label["address"] <= vudata_range[1] or vutext_range[0] <= label["address"] <= vutext_range[1]) and not label["name"].startswith(("p", ".")):
                 f.write(f"{label['name']:<32} = 0x{label['address']:08X}; // size:0 allow_duplicated:True\n")
         f.write("\n")
 

@@ -4,13 +4,19 @@
 #include "harada/hr_bgwk.h"
 #include "harada/hr_main.h"
 #include "harada/hr_mapdr.h"
+#include "harada/hr_nak.h"
 #include "harada/hr_pall.h"
 #include "harada/hr_pcam.h"
+#include "harada/hr_pefc.h"
 #include "harada/hr_prm.h"
+#include "harada/hr_take.h"
+#include "harada/hr_vpa.h"
 #include "hoshino/h_game.h"
+#include "hoshino/h_init.h"
 #include "nakano/camera.h"
 #include "nakano/dma.h"
 #include "nakano/game.h"
+#include "nakano/light.h"
 #include "nakano/main.h"
 #include "nakano/nkpad.h"
 #include "nakano/readfile.h"
@@ -1624,6 +1630,418 @@ static s32 pt_menu_x(kPadDATA *kpd0, s32 kk) {
 
 // INCLUDE_RODATA("harada/hr_mapv", pt_camera_menu);
 INCLUDE_ASM("harada/hr_mapv", pt_camera_menu);
+
+static void pt_used_call_all(HR_PSYS *ps) {
+    HR_CALL *ca;
+    s32 i;
+
+    ca = ps->call;
+    i = 0;
+    if ((s32)ca == -1) {
+        return;
+    }
+
+    while (1) {
+        if (ca->flag != 0) {
+            pcsel.ca = ca;
+            pcsel.no = i;
+            return;
+        } else {
+            i++;
+            ca++;
+            if (i > 15) {
+                return;
+            }
+        }
+    }
+}
+
+static void pt_used_call(HR_PSYS *ps, s32 key) {
+    HR_CALL *ca;
+    s32 i;
+
+    if ((s32)ps->call == -1) {
+        return;
+    }
+
+    if (key == 0) {
+        for (i = pcsel.no + 1, ca = pcsel.ca + 1; i < 16; i++, ca++) {
+            if (ca ->flag != 0) {
+                pcsel.ca = ca;
+                pcsel.no = i;
+                return;
+            }
+        }
+
+        for (i = 0, ca = ps->call; i < pcsel.no; i++, ca++) {
+            if (ca->flag != 0) {
+                pcsel.ca = ca;
+                pcsel.no = i;
+                return;
+            }
+        }
+    } else {
+        for (i = pcsel.no - 1, ca = pcsel.ca - 1; i >= 0; i--, ca--) {
+            if (ca ->flag != 0) {
+                pcsel.ca = ca;
+                pcsel.no = i;
+                return;
+            }
+        }
+
+        for (i = 15, ca = ps->call + 15; i > pcsel.no; i--, ca--) {
+            if (ca->flag != 0) {
+                pcsel.ca = ca;
+                pcsel.no = i;
+                return;
+            }
+        }
+    }
+}
+
+static void pt_light_menu(HR_PSYS *ps, kPadDATA *kpd0, kPadDATA *kpd1) {
+    HR_CALL *ca;
+    s32 irp;
+    s32 rgb;
+    s32 rgbfg;
+    f32 *f;
+    f32 max;
+    f32 min;
+
+    rgb = 0;
+    min = 0.0f;
+    max = 0.0f;
+
+    if ((s32)ps->call == -1) {
+        return;
+    }
+
+    pt_menu_y(kpd0, 9);
+    irp = pt_menu_x(kpd0, 8);
+
+    if (pPAD_TRG_L2(kpd0)) {
+        pt_lightno--;
+        if (pt_lightno < 0) {
+            pt_lightno = 2;
+        }
+    } else if (pPAD_TRG_R2(kpd0)) {
+        pt_lightno++;
+        if (pt_lightno > 2) {
+            pt_lightno = 0;
+        }
+    }
+
+    if (irp != 0) {
+        ca = pcsel.ca;
+        rgbfg = 1;
+        switch (MapVMenu) {
+            case 0:
+            case 1:
+            case 2:
+                f = &ca->nlw[pt_lightno].p[MapVMenu];
+                max = 180.0f;
+                min = -180.0f;
+                rgbfg = 0;
+                break;
+            case 3:
+            case 4:
+            case 5:
+                f = &ca->lcolor[pt_lightno].p[MapVMenu - 3];
+                rgb = *f * 255.0f;
+                break;
+            case 6:
+            case 7:
+            case 8:
+                f = &ca->ambi[MapVMenu - 6];
+                rgb = *f * 255.0f;
+                break;
+        }
+
+        if (!rgbfg) {
+            *f += (f32)irp / 8.0f;
+            if (*f > max) {
+                *f = max;
+            } else if (*f < min) {
+                *f = min;
+            }
+        } else {
+            rgb += irp;
+            if (rgb > 0xFF) {
+                rgb = 0xFF;
+            } else if (rgb < 0x00) {
+                rgb = 0x00;
+            }
+
+            if (rgb == 0xFF) {
+                *f = 1.0f;
+            } else {
+                *f = (f32)rgb / 255.0f;
+            }
+        }
+
+        hr_pt_light(ca);
+    }
+}
+
+static void pt_pos_menu(HR_PSYS *ps, kPadDATA *kpd0, kPadDATA *kpd1) {
+    HR_CALL *ca;
+    s32 irp;
+    s32 fg;
+    f32 *f;
+    sceVu0FVECTOR v;
+
+    if ((s32)ps->call == -1) {
+        return;
+    }
+
+    ca = pcsel.ca;
+    pt_menu_y(kpd0, 7);
+    irp = pt_menu_x(kpd0, 8);
+    fg = 0;
+    if (irp != 0) {
+        f = NULL;
+        switch (MapVMenu) {
+            case 0:
+            case 1:
+            case 2:
+                f = &ca->pos.p[MapVMenu];
+                break;
+            case 3:
+            case 4:
+            case 5:
+                f = &ca->rot.p[MapVMenu - 3];
+                break;
+            case 6:
+                fg++;
+                SetMichinori(&ca->rtw, ca->rtw.mcn - (irp << 8));
+                MichiPosi(&ca->rtw, ca->rtpos);
+                GetMichiVec(&ca->rtw, v);
+                GetMichiRotXY(v, ca->rtrot);
+                ca->rtrot[0] = ca->rtrot[2] = 0.0f;
+                break;
+        }
+
+        if (!fg) {
+            *f += (f32)irp / 8.0f;
+        }
+        pt_posmv = 1;
+        hr_call_efcworkDeb(ca, ps);
+    }
+}
+
+static void hr_packet_afure() {
+    u32 size;
+
+    size = ((u32)p1_packet & 0x0FFFFFFF) - (u32)p1_packet_top;
+    if (size > 0x10000) {
+        printf("!!!! Packet Buff Over %x > %x\n", size, 0x10000);;
+    }
+}
+
+s32 hrPtMain() {
+    s32 work;
+    s32 inter;
+    kPadDATA *kpd0;
+    kPadDATA *kpd1;
+    PCAMS *pcam;
+    s32 retw;
+    s32 pk;
+    sceVu0FVECTOR stkv;
+
+    kpd0 = &GameGbl.kpd[0];
+    nkGetPad();
+    kpd0->lvl = nkGetPlvl(0);
+    kpd0->trg = nkGetPtrg(0);
+    kpd0->rep = nkGetPrep(0);
+    kpd1 = &GameGbl.kpd[1];
+    kpd1->lvl = nkGetPlvl(1);
+    kpd1->trg = nkGetPtrg(1);
+    kpd1->rep = nkGetPrep(1);
+
+    nkPathReset();
+    FlushCache(0);
+    hLoopTop();
+
+    if (hr_abeoff == 0) {
+        hr_take_initF();
+    }
+    abEffectMain(kpd0, kpd1);
+
+    pcam = hrpcam;
+    pt_posmv = 0;
+    retw = 0;
+    if (pt_pause == 0 || pt_koma != 0) {
+        hr_nak_work_allobj();
+        retw = hr_pall_work();
+    } else {
+        if (pPAD_TRG_SQUARE(kpd0)) {
+            MapVMsw++;
+            MapVMenu = 0;
+            if (MapVMsw > 3) {
+                MapVMsw = 0;
+            }
+        }
+
+        if (MapVMsw == 1) {
+            pt_camera_menu(pcam, kpd0, kpd1);
+        } else if (MapVMsw == 2) {
+            if (kpd0->trg & 0xC) {
+                pt_used_call(&ppsys, pPAD_TRG_L1(kpd0));
+            }
+            pt_light_menu(&ppsys, kpd0, kpd1);
+        } else if (MapVMsw == 3) {
+            if (kpd0->trg & 0xC) {
+                pt_used_call(&ppsys, pPAD_TRG_L1(kpd0));
+            }
+            pt_pos_menu(&ppsys, kpd0, kpd1);
+        }
+    }
+
+    CamCalMatrix(&GameGbl.cam);
+    hr_take_setM();
+    if (pt_pause == 0 || pt_koma != 0) {
+        hrMainWork();
+    } else {
+        hr_psys_debug(&ppsys, MapVMsw, &pcsel, pcam);
+        hrMainWork();
+    }
+
+    Dmir_addr = hr_ptmir_debobc(Dmir_addr);
+    nkMirDraw();
+    if (hrmirflush) {
+        if (!hr_check_mir()) {
+            hrPathClear();
+        }
+        hrPathFlushOld();
+    }
+
+    if (!hr_pt_check() || hrpt_vt) {
+        nkVT_ExecMovie();
+    }
+
+    pk = 0;
+    hrMainDraw();
+    if (pt_pause != 0 && pt_koma == 0) {
+        pk = 1;
+    }
+    hr_nak_draw_allobj();
+    hr_psys_motdraw(&ppsys, pk);
+    sceGsSyncPath(0, 0);
+    hr_nak_draw_effobj();
+
+    if (hrpt_flag != 4 && ppsys.mesp != NULL) {
+        hr_mesp_draw(ppsys.mesp, &ppmes);
+    }
+    hr_pfade_draw(&ppsys.fade);
+    hr_pmes_draw(&ppmes);
+    hr_pt_skipdraw(&ppsys);
+    hr_packet_afure();
+
+    work = *T0_COUNT;
+    nkSetMeter();
+    OkPFontFlush(PAD_TRG_SELECT(GameGbl.kpd[1]));
+    hLoopBottom();
+    inter = sceGsSyncV(0) ^ 1;
+    GameGbl.inter = inter;
+    if (GameGbl.fr & 1) {
+        sceGsSetHalfOffset(&GameGbl.db.draw11, 0x800, 0x800, inter);
+        sceGsSetHalfOffset2(&GameGbl.db.draw12, 0x800, 0x800, inter);
+    } else {
+        sceGsSetHalfOffset(&GameGbl.db.draw01, 0x800, 0x800, inter);
+        sceGsSetHalfOffset2(&GameGbl.db.draw02, 0x800, 0x800, inter);
+    }
+    sceGsSwapDBuffDc(&GameGbl.db, GameGbl.fr);
+    GameGbl.fr++;
+    nkResetMeter();
+    FlushCache(0);
+    sceGsSyncPath(0, 0);
+    nkPathFlush();
+
+    if (retw) {
+        printf("Ret: %x\n", retw);
+    }
+    if ((retw & -0x101) == 3) {
+        hr_pt_set(1, ppsys.ncSc, 1, 1);
+        GameGbl.vision = ppsys.ncVi;
+        SysGbl.smode = 0;
+        GameGbl.pause_flag = 0;
+        sceGsSyncPath(0, 0);
+        DisableDmac(1);
+        hExitStage();
+        hSndReset();
+    } else {
+        if (PAD_TRG_SELECT(GameGbl.kpd[0]) || retw) {
+            SysGbl.fmode = 0;
+            SysGbl.smode = 0;
+            GameGbl.pause_flag = 0;
+            sceGsSyncPath(0, 0);
+            DisableDmac(1);
+            TkRemoveAllEffect();
+            hExitStage();
+            hSndReset();
+        } else if (PAD_TRG_START(GameGbl.kpd[0])) {
+            pt_pause ^= 1;
+            if (pt_pause == 0) {
+                pt_koma = 0;
+                MapVMenu = 0;
+                MapVMsw = 0;
+
+                sceVu0CopyVector(stkv, pcam->wp.p);
+                pcam->wp = ptmp_wp;
+                sceVu0CopyVector(pcam->wp.p, stkv);
+
+                sceVu0CopyVector(stkv, pcam->wi.p);
+                pcam->wi = ptmp_wi;
+                sceVu0CopyVector(pcam->wi.p, stkv);
+
+                sceVu0CopyVector(stkv, pcam->wa.p);
+                pcam->wa = ptmp_wa;
+                sceVu0CopyVector(pcam->wa.p, stkv);
+
+                sceVu0CopyVector(stkv, pcam->mp.r.p);
+                pcam->mp.r = ptmp_mpr;
+                sceVu0CopyVector(pcam->mp.r.p, stkv);
+
+                sceVu0CopyVector(stkv, pcam->mi.r.p);
+                pcam->mi.r = ptmp_mir;
+                sceVu0CopyVector(pcam->mi.r.p, stkv);
+
+                pcam->len = ptmp_len;
+            } else {
+                ptmp_wp = pcam->wp;
+                ptmp_wi = pcam->wi;
+                ptmp_wa = pcam->wa;
+                ptmp_mpr = pcam->mp.r;
+                ptmp_mir = pcam->mi.r;
+                ptmp_len = pcam->len;
+
+                pcam->wp.spd[0] = pcam->wp.spd[1] = pcam->wp.spd[2] = 0.0f;
+                sceVu0CopyVectorXYZ(pcam->wp.acc, pcam->wp.spd);
+                sceVu0CopyVectorXYZ(pcam->wi.spd, pcam->wp.spd);
+                sceVu0CopyVectorXYZ(pcam->wi.acc, pcam->wp.spd);
+                sceVu0CopyVectorXYZ(pcam->wa.spd, pcam->wp.spd);
+                sceVu0CopyVectorXYZ(pcam->wa.acc, pcam->wp.spd);
+                sceVu0CopyVectorXYZ(pcam->mp.r.spd, pcam->wp.spd);
+                sceVu0CopyVectorXYZ(pcam->mp.r.acc, pcam->wp.spd);
+                sceVu0CopyVectorXYZ(pcam->mi.r.spd, pcam->wp.spd);
+                sceVu0CopyVectorXYZ(pcam->mi.r.acc, pcam->wp.spd);
+                hr_pcamsl_spdclr(&pcam->len);
+                hr_pcamsl_spdclr(&pcam->proj);
+                pt_used_call_all(&ppsys);
+            }
+        } else {
+            if (pt_pause != 0) {
+                if (PAD_TRG_CIRCLE(GameGbl.kpd[0])) {
+                    pt_koma = 1;
+                } else {
+                    pt_koma = 0;
+                }
+            }
+        }
+    }
+
+    return 0;
+}
 
 // s32 (*hrMapVFuncTbl[2])() = { MapvInit, MapvMain };
 // s32 (*HrPtFuncTbl[2])() = { hrPtInit, hrPtMain };

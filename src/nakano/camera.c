@@ -241,7 +241,7 @@ static void CamScrLim(OBJWORK *objw, sceVu0FVECTOR posi, sceVu0FVECTOR scrv) {
                     wlimit = -(work + 8.0f);
                     if (wlimit < 88.0f) {
                         wlimit = 80.0f;
-                        vwrk->flg2 &= -9;
+                        vwrk->flg2 &= ~0x8;
                     }
                 } else {
                     wlimit = 80.0f;
@@ -259,7 +259,7 @@ static void CamScrLim(OBJWORK *objw, sceVu0FVECTOR posi, sceVu0FVECTOR scrv) {
                     wlimit = -(work + herow->jumpspd_limit);
                     if (wlimit > -(50.0f + herow->jumpspd_limit)) {
                         wlimit = -50.0f;
-                        vwrk->flg2 &= -9;
+                        vwrk->flg2 &= ~0x8;
                     }
                 } else {
                     wlimit = -50.0f;

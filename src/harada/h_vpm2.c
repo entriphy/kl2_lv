@@ -51,6 +51,7 @@ void h_vp_init(VPCLIP *vpc, f32 proj, f32 near, f32 far, f32 hamix, f32 hamiy, f
 }
 
 s32 hm_vpclip(sceVu0FMATRIX rtm, sceVu0FVECTOR zure, sceVu0FVECTOR cmax, sceVu0FVECTOR cmin, sceVu0FVECTOR hmax, sceVu0FVECTOR hmin, sceVu0FVECTOR *out) {
+    s32 ret;
     asm __volatile__(
         "lqc2        $vf4, 0x0(%0)\n"
         "lqc2        $vf5, 0x10(%0)\n"
@@ -85,9 +86,10 @@ s32 hm_vpclip(sceVu0FMATRIX rtm, sceVu0FVECTOR zure, sceVu0FVECTOR cmax, sceVu0F
         "vnop\n"
         "vnop\n"
         "vnop\n"
-        "cfc2        $2, $vi16\n"
-        "andi        $2, $2, 0xC0\n"
-    : : "r" (rtm), "r" (zure), "r" (cmax), "r" (cmin), "r" (hmax), "r" (hmin), "r" (out));
+        "cfc2        %7, $vi16\n"
+        "andi        %7, %7, 0xC0\n"
+    : : "r" (rtm), "r" (zure), "r" (cmax), "r" (cmin), "r" (hmax), "r" (hmin), "r" (out), "r" (ret));
+    return ret;
 }
 
 s32 h_vpm_bclip(VPCLIP *vpc, s32 *bhead, sceVu0FMATRIX world_view) {

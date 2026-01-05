@@ -203,7 +203,7 @@ void CBasicPad::Update(bool skip) {
 
 // TODO: Not matching
 void CBasicPad::Read() {
-    this->exec_status &= -257;
+    this->exec_status &= ~0x100;
     s32 port = PadPortSlot[this->id].port;
     s32 slot = PadPortSlot[this->id].slot;
     this->pad_status = scePadGetState(port, slot);
@@ -251,7 +251,7 @@ void CBasicPad::Read() {
                             case 2:
                                 SetLooks(PAD_LOOKS_NEGCON);
                                 this->phase = 0x100;
-                                this->exec_status &= -9;
+                                this->exec_status &= ~0x8;
                                 break;
                             case 5:
                                 this->phase = 0x200;
@@ -263,7 +263,7 @@ void CBasicPad::Read() {
                                 break;
                         }
                     } else {
-                        this->exec_status &= -9;
+                        this->exec_status &= ~0x8;
                         switch (this->kind) {
                             case 5:
                                 SetLooks(PAD_LOOKS_ANAST);
@@ -339,7 +339,7 @@ void CBasicPad::Read() {
                     if (scePadInfoPressMode(port, slot) != 1) {
                         this->phase = 256;
                     } else {
-                        this->exec_status &= -17;
+                        this->exec_status &= ~0x10;
                         this->phase++;
                     }
                     break;

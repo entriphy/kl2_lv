@@ -242,6 +242,15 @@ typedef enum {
 } PTEFC;
 #endif
 
+typedef enum {
+    PTE_HARADA,
+    PTE_ABE,
+#ifdef KL2_VER_RETAIL
+    PTE_HATO,
+#endif
+    PTE_ALLNUM,
+} PTE;
+
 extern void hr_ptefc_set(OBJWORK *objw);
 extern void hr_ptefc_erase(s32 *ptr);
 extern void hr_ptefc_work(OBJWORK *objw);

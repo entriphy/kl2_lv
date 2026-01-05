@@ -1,15 +1,13 @@
 #include "harada/hr_bgwk.h"
 #include "harada/h_vpm2.h"
+#include "harada/hr_vpa.h"
+#include "okanoyo/okio.h"
 
-BGWK *hrbgbuff = NULL;
-s32 hrcntbg = 0;
-s32 hrcntdrawbg = 0;
-mINFO hrbgi[6] = {};
-u32 *hrbgbin[6] = {};
-
-// TODO: delete once hr_main.c is implemented
-u32 DELETE_1[] = {0, 0};
-u32 DELETE_2;
+BGWK *hrbgbuff;
+s32 hrcntbg;
+s32 hrcntdrawbg;
+mINFO hrbgi[6];
+u32 *hrbgbin[6];
 
 void hr_bg_onoff(s32 no, s32 fg) {
     BGWK *bg;

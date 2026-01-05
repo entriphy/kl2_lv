@@ -1,4 +1,5 @@
 #include "hoshino/h_pad.h"
+#include "nakano/nkpad.h"
 
 static hPAD_DATA Pad[2];
 

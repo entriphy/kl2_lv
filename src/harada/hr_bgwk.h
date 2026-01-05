@@ -12,7 +12,6 @@ typedef struct { // 0x90
     /* 0x8c */ s32 fg;
 } BGWK;
 
-
 extern BGWK *hrbgbuff;
 extern s32 hrcntbg;
 extern s32 hrcntdrawbg;
