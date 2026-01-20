@@ -938,7 +938,7 @@ static void hr_make_scaleST(HCMIR *cmir, f32 *st, f64 stc, f64 scale) {
 // https://decomp.me/scratch/2c9ui
 #ifndef NON_MATCHING
 /* static */ qword* hr_setp_mirstr(HCMIR *cmir, qword *pp, u32 count);
-INCLUDE_ASM("harada/hr_mapdr", hr_setp_mirstr);
+INCLUDE_ASM("asm/nonmatchings/harada/hr_mapdr", hr_setp_mirstr);
 #else
 static qword* hr_setp_mirstr(HCMIR *cmir, qword *pp, u32 count) {
     qword *rgb;
@@ -1075,7 +1075,7 @@ void hrDrawMir(s32 no) {
 }
 
 #ifndef NON_MATCHING
-INCLUDE_ASM("harada/hr_mapdr", hrPathFlushOld); // Regswap
+INCLUDE_ASM("asm/nonmatchings/harada/hr_mapdr", hrPathFlushOld); // Regswap
 #else
 void hrPathFlushOld() {
     s32 id;

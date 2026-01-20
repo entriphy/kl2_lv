@@ -697,7 +697,7 @@ f32 ChkHitPol(sceVu0FVECTOR vec, sceVu0FVECTOR muki, u32 *prim) {
 }
 
 #ifndef NON_MATCHING
-INCLUDE_ASM("nakano/raycrs", ChkHitPol2);
+INCLUDE_ASM("asm/nonmatchings/nakano/raycrs", ChkHitPol2);
 #else
 f32 ChkHitPol2(sceVu0FVECTOR vec, sceVu0FMATRIX mat, u32 *prim, u32 *hitcolor, sceVu0FVECTOR rnor) {
     s32 *p_pd;

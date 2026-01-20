@@ -549,7 +549,7 @@ static void hr_pmes_waku_draw(HRPMWAKU *waku) {
 }
 
 // https://decomp.me/scratch/Bdj4R
-INCLUDE_ASM("harada/hr_pmes", hr_pmes_sprite);
+INCLUDE_ASM("asm/nonmatchings/harada/hr_pmes", hr_pmes_sprite);
 /* static */ void hr_pmes_sprite(ATR_MMOJI *moji, s32 x, s32 y, s32 w, s32 v0, s32 no, s32 fw, s32 alpha, s32 dx, s32 dy);
 
 #ifdef KL2_VER_RETAIL

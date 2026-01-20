@@ -52,7 +52,7 @@ void hr_cold_start() {
 #endif
 }
 
-INCLUDE_ASM("harada/hr_main", hr_hpmk_init);
+INCLUDE_ASM("asm/nonmatchings/harada/hr_main", hr_hpmk_init);
 
 u32* hr_hpmk_blk(u16 gx, u16 gy, u16 gz, u32 *top) {
     HR_HPXZ *hxz;
@@ -132,7 +132,7 @@ u32* hr_hpmk(f32 x, f32 y, f32 z, u32 *top) {
     return hr_hpmk_blk(gx, gy, gz, top);
 }
 
-INCLUDE_ASM("harada/hr_main", hr_hpmk_deb);
+INCLUDE_ASM("asm/nonmatchings/harada/hr_main", hr_hpmk_deb);
 
 void hr_stage_no(char *name, s32 fg) {
     char *hex[16] = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"};

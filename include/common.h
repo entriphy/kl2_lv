@@ -8,6 +8,7 @@
 #include "include_asm.h"
 
 #include <eekernel.h>
+#include <eestruct.h>
 #include <libdma.h>
 #include <libvu0.h>
 #include <libgraph.h>

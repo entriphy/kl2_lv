@@ -261,7 +261,7 @@ static u16 hr_read_gmsh(HRGMSH *gmsh, qword *data, u64 bb, u16 psm) {
 
 // https://decomp.me/scratch/inOUl
 static void hr_initclut2(HR_CLUTS *ct, u8 *gms);
-INCLUDE_ASM("harada/hr_mapv", hr_initclut2);
+INCLUDE_ASM("asm/nonmatchings/harada/hr_mapv", hr_initclut2);
 
 void hr_okmem_reset() {
     memoryStageFormat();
@@ -579,7 +579,7 @@ static void hr_mv_avt_menu(kPadDATA *kpd, s32 irep, f32 frep) {
 
 // https://decomp.me/scratch/6N5Jy
 static void hr_clutsp2(HRGMSH *gmsh);
-INCLUDE_ASM("harada/hr_mapv", hr_clutsp2);
+INCLUDE_ASM("asm/nonmatchings/harada/hr_mapv", hr_clutsp2);
 
 static void hr_sendclut(HRGMSH *gmsh) {
     u32 size;
@@ -1629,7 +1629,7 @@ static s32 pt_menu_x(kPadDATA *kpd0, s32 kk) {
 }
 
 // INCLUDE_RODATA("harada/hr_mapv", pt_camera_menu);
-INCLUDE_ASM("harada/hr_mapv", pt_camera_menu);
+INCLUDE_ASM("asm/nonmatchings/harada/hr_mapv", pt_camera_menu);
 
 static void pt_used_call_all(HR_PSYS *ps) {
     HR_CALL *ca;

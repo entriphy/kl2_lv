@@ -9,8 +9,8 @@ extern u32 hr_vu1_vpa __attribute__((section(".vudata")));
 extern u32 hr_vu1_vpa_v __attribute__((section(".vudata")));
 
 // https://decomp.me/scratch/pBOW1
-INCLUDE_ASM("harada/hr_vpa", DecodeVpo2);
-INCLUDE_ASM("harada/hr_vpa", DecodeVpo2Tag);
+INCLUDE_ASM("asm/nonmatchings/harada/hr_vpa", DecodeVpo2);
+INCLUDE_ASM("asm/nonmatchings/harada/hr_vpa", DecodeVpo2Tag);
 
 void DecodeVpo2S(u32 *vpo_top, VPOINFO *vpoi) {
     u32 *headptr;
@@ -243,7 +243,7 @@ static void hr_anmVPA_draw_M() {
 
 // https://decomp.me/scratch/kD0tk
 /* static */ void hr_anmVPA_draw_M1();
-INCLUDE_ASM("harada/hr_vpa", hr_anmVPA_draw_M1);
+INCLUDE_ASM("asm/nonmatchings/harada/hr_vpa", hr_anmVPA_draw_M1);
 
 void hr_anmVPA_draw() {
     f32 f;

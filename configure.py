@@ -617,7 +617,7 @@ def write_splat_config(version: str, sections: list[Section]):
                 "type": "code",
                 "start": HexInt(0x1000),
                 "vram": HexInt(0x100000),
-                "bss_size": HexInt(0x3622F4),
+                "bss_size": HexInt(0x362514),
                 "subsegments": subsegments
             },
             SplatSegment(0x276800, "databin", None),
@@ -658,43 +658,7 @@ def write_objdiff_config(sections: list[Section]):
 def splat_stuff(version: str, make_full_disasm_for_code: bool = True) -> list[LinkerEntry]:
     yaml_file = Path(f"config/{version}/splat.yml")
     split.main([yaml_file], modes="all", verbose=False, make_full_disasm_for_code=make_full_disasm_for_code)
-    replace_instructions_with_opcodes("asm")
     return split.linker_writer.entries.copy()
-
-# From https://github.com/Fantaskink/SOTC configure.py
-# Pattern to workaround unintended nops around loops
-COMMENT_PART = r"\/\* (.+) ([0-9A-Z]{2})([0-9A-Z]{2})([0-9A-Z]{2})([0-9A-Z]{2}) \*\/"
-INSTRUCTION_PART = r"(\b(bne|bnel|beq|beql|bnez|bnezl|beqzl|bgez|bgezl|bgtz|bgtzl|blez|blezl|bltz|bltzl|b)\b.*)"
-OPCODE_PATTERN = re.compile(f"{COMMENT_PART}  {INSTRUCTION_PART}")
-
-PROBLEMATIC_FUNCS = set(
-    [
-        "hr_anmVPA_draw_M1"
-    ]
-)
-
-def replace_instructions_with_opcodes(asm_folder: Path):
-    nm_folder = ROOT / asm_folder / "nonmatchings"
-
-    for p in nm_folder.rglob("*.s"):
-        if p.stem not in PROBLEMATIC_FUNCS:
-            continue
-
-        with p.open("r") as file:
-            content = file.read()
-
-        if re.search(OPCODE_PATTERN, content):
-            # Reference found
-            # Embed the opcode, we have to swap byte order for correct endianness
-            content = re.sub(
-                OPCODE_PATTERN,
-                r"/* \1 \2\3\4\5 */  .word      0x\5\4\3\2 /* \6 */",
-                content,
-            )
-
-            # Write the updated content back to the file
-            with p.open("w") as file:
-                file.write(content)
 
 def write_ninja_config(version: str, linker_entries: list[LinkerEntry], debug: bool = False):
     built_objects: set[Path] = set()
@@ -798,8 +762,6 @@ def write_ninja_config(version: str, linker_entries: list[LinkerEntry], debug: b
         if isinstance(seg, splat.segtypes.common.asm.CommonSegAsm):
             build(entry.object_path, entry.src_paths, "as", implicit=["build/tools/elf_patcher"])
         elif isinstance(seg, splat.segtypes.common.c.CommonSegC) or isinstance(seg, splat.segtypes.common.cpp.CommonSegCpp):
-            link_asm: list[Path] = []
-
             # Build code source
             build(entry.object_path, entry.src_paths, "cpp" if isinstance(seg, splat.segtypes.common.cpp.CommonSegCpp) else "c")
 
@@ -809,32 +771,9 @@ def write_ninja_config(version: str, linker_entries: list[LinkerEntry], debug: b
             object_path = list(entry.object_path.parts)
             object_path[1] = "asm"
             src = Path(*src_path)
-            obj = Path(*object_path).with_suffix(".text.o")
+            obj = Path(*object_path)
             if src.exists():
                 build(obj, [src], "as", implicit=["build/tools/elf_patcher"], link=False)
-                link_asm.append(obj)
-
-                # Fix ACC register
-                with src.open("r") as f:
-                    asm = f.read()
-                with src.open("w") as f:
-                    f.write(asm.replace(" ACC,", " $ACC,").replace(" Q,", " $Q,").replace(", Q", ", $Q").replace(" R,", " $R,"))
-
-            # Build data ASMs
-            src_path.insert(1, "data")
-            object_path.insert(2, "data")
-            for section, sibling in seg.siblings.items():
-                src = Path(*src_path).with_suffix(section + ".s")
-                obj = Path(*object_path).with_suffix(section + ".o")
-                if src.exists():
-                    build(obj, [src], "as", implicit=["build/tools/elf_patcher"], link=False)
-                    link_asm.append(obj)
-            
-            # Link code + data ASMs
-            del src_path[1]
-            del object_path[2]
-            if len(link_asm) > 0:
-                build(Path(*object_path), link_asm, "ld_asm", link=False)
         elif isinstance(seg, splat.segtypes.common.data.CommonSegData):
             build(entry.object_path, entry.src_paths, "as", implicit=["build/tools/elf_patcher"])
         elif isinstance(seg, splat.segtypes.common.databin.CommonSegDatabin):

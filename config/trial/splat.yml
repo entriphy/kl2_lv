@@ -35,7 +35,7 @@ segments:
     type: code
     start: 0x001000
     vram: 0x100000
-    bss_size: 0x3622F4
+    bss_size: 0x362514
     subsegments:
       - [0x001000, asm, lib/crt0]
       - [0x0010C8, asm, lib/tmp]
@@ -285,7 +285,7 @@ segments:
       - [0x0E31F0, asm, take/viewer]
       - [0x0E34C0, asm, take/viewsub]
       - [0x0E3FA0, asm, take/vshadow]
-      - [0x0E41E8, asm, vtusr/vtfiremain]
+      - [0x0E41E8, c, vtusr/vtfiremain]
       - [0x0E4480, asm, vtusr/vttmpprog]
       - [0x0E4780, asm, vtusr/vtutil]
       - [0x0E4898, asm, vtusr/vtwavemain]
@@ -548,7 +548,7 @@ segments:
       - [0x24D210, data, take/title]
       - [0x24DE40, data, take/view]
       - [0x24E1D0, data, take/viewer]
-      - [0x24E1E0, data, vtusr/vtfiremain]
+      - [0x24E1E0, .data, vtusr/vtfiremain]
       - [0x24E260, data, vtusr/vtwavemain]
       - [0x24E2D0, data, nakano/gimmick/bridge_b7]
       - [0x24E2D8, data, nakano/gimmick/door04pazzle]

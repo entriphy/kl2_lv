@@ -155,7 +155,7 @@ static void SfxPacketMakeLight(SFXOBJ *pObj, s32 PartsNum, u64 *pStrip, u64 *pUv
 }
 
 #ifndef NON_MATCHING // https://decomp.me/scratch/esIRL
-INCLUDE_ASM("take/sfxdraw", SfxPacketMake);
+INCLUDE_ASM("asm/nonmatchings/take/sfxdraw", SfxPacketMake);
 #else
 static void SfxPacketMake(SFXOBJ *pObj, s32 PartsNum, long_uni *pStrip, u64 *pUv, u128 *pColorI, u128 *pVertexI, u128 *pSpecUVI, s32 LastStripNum) {
 	s32 adc_cnt = 0;

@@ -107,6 +107,6 @@ void nkSetRtConn(OBJWORK *objw) {
     GameGbl.st_klomode = GameGbl.Re_st_klomode;
 }
 
-INCLUDE_ASM("nakano/rtconn", nkRtConnMng); // https://decomp.me/scratch/VyTXH
+INCLUDE_ASM("asm/nonmatchings/nakano/rtconn", nkRtConnMng); // https://decomp.me/scratch/VyTXH
 
-INCLUDE_ASM("nakano/rtconn", nkRtconnKloMode); // https://decomp.me/scratch/GQyoK
+INCLUDE_ASM("asm/nonmatchings/nakano/rtconn", nkRtconnKloMode); // https://decomp.me/scratch/GQyoK
