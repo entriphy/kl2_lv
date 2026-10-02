@@ -4,7 +4,6 @@ import io
 import json
 import os
 from pathlib import Path
-import re
 import shutil
 import struct
 import subprocess
@@ -335,6 +334,9 @@ def create_paruu_config(elf: ELFFile, stdump: dict) -> list[Section]:
         "vtusr:c": {
             "vttmpprog.c": 0x375360
         },
+        "nakano/gimmick:c": {
+            "hpobj.c": 0x375390
+        },
         "abe:cc": {
             "ab_object.cc": 0x375614 # ?
         }
@@ -446,6 +448,20 @@ def create_paruu_config(elf: ELFFile, stdump: dict) -> list[Section]:
             "sfxbios.c": 0x3695E8,
             "t_sample.c": 0x369620,
             "title.c": 0x369668
+        },
+        "vtusr:c": {
+            "vtfiremain.c": 0x369890,
+            "vttmpprog.c": 0x3698B0,
+            "vtutil.c": 0x3699C0,
+            "vtwavemain.c": 0x369A08,
+        },
+        "vtusr/ao:c": {
+            "aoParticle.c": 0x36A268,
+            "aoVU1pkt.c": 0x36A280
+        },
+        "vtusr/taro:c": {
+            "taro_movie.c": 0x0036A6B0,
+            "taromoviemain.c": 0x0036AD50
         },
         "hoshino/kit:c": {
             "kitoutlinefunc.c": 0x369A38

@@ -1,19 +1,17 @@
 #include "vtusr/vtfiremain.h"
+#include "vtusr/vtwavemain.h"
 #include "nakano/main.h"
 
-/* data 34d1e0 */ vtFireStruct vtFireGlobal;
-/* data 34d200 */ u16 ipuClut[16];
-/* data 34d220 */ u8 gsClut[16][4];
+vtFireStruct vtFireGlobal;
+u16 ipuClut[16];
+u8 gsClut[16][4];
 
-// TODO: remove
-extern vtWaveStruct vtWaveGlobal;
-
-void vtInitFire(/* a0 4 */ s32 flag) {
-    /* t0 8 */ s32 i;
-    /* a1 5 */ u32 r;
-    /* a3 7 */ u32 g;
+void vtInitFire(s32 flag) {
+    s32 i;
+    u32 r;
+    u32 g;
     u32 b;
-    /* a2 6 */ u32 a;
+    u32 a;
 
     vtFireGlobal.vision = GameGbl.vision;
     vtFireGlobal.count = 0;
@@ -62,5 +60,21 @@ void vtExecFire() {
         return;
     }
 
-    vtFireGlobal.tarostruct = vtWaveGlobal
+    vtFireGlobal.tarostruct = vtWaveGlobal.tarostruct[7];
+    if (vtFireGlobal.tarostruct == NULL) {
+        printf(KL2_VER_COND("There is No Fire Movie File\n", "Warning : This vision has No Fire Movie File\n"));
+    }
+    
+    vtFireGlobal.fr = GameGbl.fr;
+    vtFireGlobal.pause = vtFireGlobal.kitstruct->pause = GameGbl.pause_flag;
+    vtFireGlobal.count += vtFireGlobal.pause ^ 1;
+    vtFireGlobal.odev = GameGbl.inter;
+    
+    if (vtFireGlobal.fire_flag == 1) {
+        vtIPU_decode(&vtFireGlobal.tarostruct->movie);
+        vtIPU_syncDecode(&vtFireGlobal.tarostruct->movie);
+        vtIPU_VQ(&vtFireGlobal.tarostruct->movie);
+        vtIPU_Sync(0, 20);
+        p1_packet = (qword *)vtIPU_mkPacketForVQ(packet, &vtFireGlobal.tarostruct->movie, 0);
+    }
 }

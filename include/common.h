@@ -1249,4 +1249,8 @@ extern sceDmaChan *DmaChtoSPR;
 #define SCE_GS_REGION_CLAMP  (2)
 #define SCE_GS_REGION_REPEAT (3)
 
+#define VIF_UNPACK_V3_16 9
+#define VIF_UNPACK_V4_32 12
+#define VIF_UNPACK_V4_8  14
+
 #endif // __KL2_COMMON_H

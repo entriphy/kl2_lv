@@ -2,14 +2,7 @@
 #define VTMRG_H
 
 #include "nakano.h"
-
-// TODO: this probably doesn't go here
-typedef struct { // 0x50
-    /* 0x00 */ void *movie_data_buf[8];
-    /* 0x20 */ void *wave_data_buf;
-    /* 0x24 */ void *spray_data_buf;
-    /* 0x28 */ sceGsTex0 tex0[4];
-} vtDataPtr;
+#include "vtusr/vtfiremain.h"
 
 typedef struct { // 0x30
     /* 0x00 */ s8  field_0x00;

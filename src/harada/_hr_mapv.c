@@ -5,9 +5,11 @@
 #include "harada/hr_main.h"
 #include "harada/hr_mapdr.h"
 #include "harada/hr_nak.h"
+#include "harada/hr_obcon2.h"
 #include "harada/hr_pall.h"
 #include "harada/hr_pcam.h"
 #include "harada/hr_pefc.h"
+#include "harada/hr_pmes.h"
 #include "harada/hr_prm.h"
 #include "harada/hr_take.h"
 #include "harada/hr_vpa.h"
@@ -1628,6 +1630,7 @@ static s32 pt_menu_x(kPadDATA *kpd0, s32 kk) {
     return irp;
 }
 
+/* static */ void pt_camera_menu(PCAMS *pcam, kPadDATA *kpd0, kPadDATA *kpd1);
 // INCLUDE_RODATA("harada/hr_mapv", pt_camera_menu);
 INCLUDE_ASM("asm/nonmatchings/harada/hr_mapv", pt_camera_menu);
 
@@ -1711,12 +1714,15 @@ static void pt_light_menu(HR_PSYS *ps, kPadDATA *kpd0, kPadDATA *kpd1) {
     rgb = 0;
     min = 0.0f;
     max = 0.0f;
+    KL2_OK_PRINT((4, 3, 9, scr_p[4], "Light %d", pt_lightno));
 
     if ((s32)ps->call == -1) {
         return;
     }
 
+    KL2_OK_PRINT((4, 3, 8, scr_p[4], "Call %d", pcsel.no));
     pt_menu_y(kpd0, 9);
+    KL2_OK_PRINT((4, 2, MapVMenu + 10, scr_p[4], ">"));
     irp = pt_menu_x(kpd0, 8);
 
     if (pPAD_TRG_L2(kpd0)) {
@@ -1731,8 +1737,8 @@ static void pt_light_menu(HR_PSYS *ps, kPadDATA *kpd0, kPadDATA *kpd1) {
         }
     }
 
+    ca = pcsel.ca;
     if (irp != 0) {
-        ca = pcsel.ca;
         rgbfg = 1;
         switch (MapVMenu) {
             case 0:
@@ -1781,6 +1787,16 @@ static void pt_light_menu(HR_PSYS *ps, kPadDATA *kpd0, kPadDATA *kpd1) {
 
         hr_pt_light(ca);
     }
+
+    KL2_OK_PRINT((4, 3, 10, scr_p[4], "NL x %f", ca->nlw[pt_lightno].p[0]));
+    KL2_OK_PRINT((4, 3, 11, scr_p[4], "   y %f", ca->nlw[pt_lightno].p[1]));
+    KL2_OK_PRINT((4, 3, 12, scr_p[4], "   z %f", ca->nlw[pt_lightno].p[2]));
+    KL2_OK_PRINT((4, 3, 13, scr_p[4], "LC r %d", (int)(ca->lcolor[pt_lightno].p[0] * 255.0f)));
+    KL2_OK_PRINT((4, 3, 14, scr_p[4], "   g %d", (int)(ca->lcolor[pt_lightno].p[1] * 255.0f)));
+    KL2_OK_PRINT((4, 3, 15, scr_p[4], "   b %d", (int)(ca->lcolor[pt_lightno].p[2] * 255.0f)));
+    KL2_OK_PRINT((4, 3, 16, scr_p[4], "am r %d", (int)(ca->ambi[0] * 255.0f)));
+    KL2_OK_PRINT((4, 3, 17, scr_p[4], "   g %d", (int)(ca->ambi[1] * 255.0f)));
+    KL2_OK_PRINT((4, 3, 18, scr_p[4], "   b %d", (int)(ca->ambi[2] * 255.0f)));
 }
 
 static void pt_pos_menu(HR_PSYS *ps, kPadDATA *kpd0, kPadDATA *kpd1) {
@@ -1794,8 +1810,10 @@ static void pt_pos_menu(HR_PSYS *ps, kPadDATA *kpd0, kPadDATA *kpd1) {
         return;
     }
 
+    KL2_OK_PRINT((4, 3, 8, scr_p[4], "Call %d", pcsel.no));
     ca = pcsel.ca;
     pt_menu_y(kpd0, 7);
+    KL2_OK_PRINT((4, 2, MapVMenu + 9, scr_p[4], ">"));
     irp = pt_menu_x(kpd0, 8);
     fg = 0;
     if (irp != 0) {
@@ -1827,6 +1845,14 @@ static void pt_pos_menu(HR_PSYS *ps, kPadDATA *kpd0, kPadDATA *kpd1) {
         pt_posmv = 1;
         hr_call_efcworkDeb(ca, ps);
     }
+
+    KL2_OK_PRINT((4, 3, 9,  scr_p[4], "Pos x %f", ca->pos.p[0]));
+    KL2_OK_PRINT((4, 3, 10, scr_p[4], "    y %f", ca->pos.p[1]));
+    KL2_OK_PRINT((4, 3, 11, scr_p[4], "    z %f", ca->pos.p[2]));
+    KL2_OK_PRINT((4, 3, 12, scr_p[4], "Rot x %f", ca->rot.p[0]));
+    KL2_OK_PRINT((4, 3, 13, scr_p[4], "    y %f", ca->rot.p[1]));
+    KL2_OK_PRINT((4, 3, 14, scr_p[4], "    z %f", ca->rot.p[2]));
+    KL2_OK_PRINT((4, 3, 15, scr_p[4], "Michi %x", ca->rtw.mcn));
 }
 
 static void hr_packet_afure() {
@@ -1915,9 +1941,11 @@ s32 hrPtMain() {
         hrPathFlushOld();
     }
 
+#ifdef KL2_VER_RETAIL
     if (!hr_pt_check() || hrpt_vt) {
         nkVT_ExecMovie();
     }
+#endif
 
     pk = 0;
     hrMainDraw();
@@ -1938,6 +1966,7 @@ s32 hrPtMain() {
     hr_packet_afure();
 
     work = *T0_COUNT;
+    KL2_OK_PRINT((4, 1, 6,scr_p[4], "Work = %d", work));
     nkSetMeter();
     OkPFontFlush(PAD_TRG_SELECT(GameGbl.kpd[1]));
     hLoopBottom();
@@ -1976,7 +2005,7 @@ s32 hrPtMain() {
             GameGbl.pause_flag = 0;
             sceGsSyncPath(0, 0);
             DisableDmac(1);
-            TkRemoveAllEffect();
+            KL2_VER_RETAIL_ONLY(TkRemoveAllEffect());
             hExitStage();
             hSndReset();
         } else if (PAD_TRG_START(GameGbl.kpd[0])) {
@@ -2043,5 +2072,5 @@ s32 hrPtMain() {
     return 0;
 }
 
-// s32 (*hrMapVFuncTbl[2])() = { MapvInit, MapvMain };
-// s32 (*HrPtFuncTbl[2])() = { hrPtInit, hrPtMain };
+s32 (*hrMapVFuncTbl[])() = { MapvInit, MapvMain };
+s32 (*HrPtFuncTbl[])() = { hrPtInit, hrPtMain };

@@ -6845,16 +6845,20 @@ sections:
           - [0x0034D1E0, vtFireGlobal, data, 0x001C]
           - [0x0034D200, ipuClut, data, 0x0020]
           - [0x0034D220, gsClut, data, 0x0040]
+          - [0x00369890, null, rodata, 0x0000]
       - name: vttmpprog.c
         functions:
           - [0x001E3480, vtLoadVisionData]
           - [0x001E3698, vtLoadFixTexture]
         data:
+          - [0x003698B0, null, rodata, 0x0000]
           - [0x00375360, null, sdata, 0x0000]
       - name: vtutil.c
         functions:
           - [0x001E3780, vtFileRead]
           - [0x001E3858, vtGetBuf64]
+        data:
+          - [0x003699C0, null, rodata, 0x0000]
       - name: vtwavemain.c
         functions:
           - [0x001E3898, vtInitWave]
@@ -6864,6 +6868,7 @@ sections:
           - [0x001E3B70, vtEndWave]
         data:
           - [0x0034D260, vtWaveGlobal, data, 0x0070]
+          - [0x00369A08, null, rodata, 0x0000]
   - id: hoshino/kit:c
     path: hoshino/kit
     units:
@@ -7004,6 +7009,7 @@ sections:
           - [0x001E7B50, nkObjPolyHit]
         data:
           - [0x00372DFC, null, lit4, 0x0000]
+          - [0x00375390, null, sdata, 0x0000]
           - [0x006BCA20, HitBlocksList2, bss, 0x0080]
       - name: s2bridge.c
         functions:
@@ -7167,6 +7173,7 @@ sections:
           - [0x001ECDF8, aoWaveEnd]
           - [0x001ECE00, aoVu0ViewClipMatrix]
         data:
+          - [0x0036A268, null, rodata, 0x0000]
           - [0x00372F64, null, lit4, 0x0000]
       - name: aoVU1pkt.c
         functions:
@@ -7181,6 +7188,7 @@ sections:
           - [0x001EDC88, calc_dist_vu0]
         data:
           - [0x0034D4F0, data, data, 0x00C0]
+          - [0x0036A280, null, rodata, 0x0000]
           - [0x00372F90, null, lit4, 0x0000]
           - [0x003753B0, param, sdata, 0x0004]
           - [0x003753C0, p_param, sdata, 0x0004]
@@ -7311,6 +7319,7 @@ sections:
           - [0x001F76E0, mkDmaTagToIPU_SCE]
           - [0x001F7758, vtIPU_readDataSCE]
         data:
+          - [0x0036A6B0, null, rodata, 0x0000]
           - [0x003753E8, dmaStat, sdata, 0x0002]
           - [0x003753EA, _ipuTimeout, sdata, 0x0002]
           - [0x006BCC70, _funcname, bss, 0x0100]
@@ -7320,6 +7329,8 @@ sections:
           - [0x001F7A50, taroMovieClone]
           - [0x001F7AC0, taroExecMovieDecode]
           - [0x001F7B30, taroTerminateMovieDecode]
+        data:
+          - [0x0036AD50, null, rodata, 0x0000]
   - id: abe:cc
     path: abe
     units:
