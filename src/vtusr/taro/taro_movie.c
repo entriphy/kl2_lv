@@ -1,18 +1,18 @@
 #include "vtusr/taro/taro_movie.h"
-#include "common.h"
 #include "kit.h"
 #include "vtusr/vtutil.h"
-#include <eeregs.h>
 
 static u16 dmaStat = 0;
 static u16 _ipuTimeout = 20;
 static char _funcname[256];
 
+static u128* mkDmaTagToIPU_SCE(u128 *tags, u8 *data, s32 datasize);
+
 void vtIPU_pr_vtIDEC_MOVIE(vtIDEC_MOVIE *movie, char *msg) {
     s32 i;
     
     KL2_DEBUG_PRINT(("-----------------------------------------------------\n"));
-    KL2_DEBUG_PRINT(("%s", msg));
+    KL2_DEBUG_PRINT(("%s\n", msg));
     KL2_DEBUG_PRINT(("(vtIPU_pr_vtIDEC_MOVIE) dmaStat = 0x%x\n", dmaStat));
     KL2_DEBUG_PRINT(("(vtIPU_pr_vtIDEC_MOVIE) movie = 0x%x\n", movie));
     KL2_DEBUG_PRINT(("\ttype = 0x%x\n", movie->type));
@@ -46,9 +46,9 @@ void vtIPU_pr_vtIDEC_MOVIE(vtIDEC_MOVIE *movie, char *msg) {
     KL2_DEBUG_PRINT(("-----------------------------------------------------\n", msg)); // no %s?
 }
 
-// TODO: regswap
 s32 vtIPU_Sync(s32 mode, u16 timeout) {
     s32 i;
+    s32 var; // ?
 
     if (DGET_IPU_CTRL() & IPU_CTRL_ECD_M) {
         DPUT_IPU_CTRL(IPU_CTRL_RST_M);
@@ -56,10 +56,7 @@ s32 vtIPU_Sync(s32 mode, u16 timeout) {
         DPUT_D_ENABLEW(D_ENABLEW_CPND_M);
         while (!(DGET_D_ENABLER() & D_ENABLER_CPND_M));
     } else {
-        i = 0;
-        while (i < timeout * 720 && *(vs32 *)IPU_CTRL < 0) {
-            i++;
-        }
+        for (i = 0; i < timeout * 720 && *(vs32 *)IPU_CTRL < 0; i++);
         if (i < timeout * 720) {
             return 0;
         }
@@ -70,24 +67,24 @@ s32 vtIPU_Sync(s32 mode, u16 timeout) {
         while (!(DGET_D_ENABLER() & D_ENABLER_CPND_M));
     }
 
-    DPUT_D3_CHCR(0);
-    i = dmaStat;
+    DPUT_D3_CHCR(0x00);
+    var = dmaStat;
     DPUT_D_STAT(0x8);
-    DPUT_D4_CHCR(0);
-    i &= ~0x18;
-    dmaStat = i;
+    DPUT_D4_CHCR(0x00);
+    var &= ~0x18;
+    dmaStat = var;
     DPUT_D_STAT(0x10);
     DPUT_D_ENABLEW(0);
     sceIpuInit();
-    sceIpuSync(0,0);
+    sceIpuSync(0, 0);
     DPUT_IPU_CMD(0);
-    sceIpuSync(0,0);
+    sceIpuSync(0, 0);
 
     return -1;
 }
 
 void vtCpMovieStruct(vtIDEC_MOVIE *m1, vtIDEC_MOVIE *m0, u32 vram_addr) {
-m1->type = m0->type;
+    m1->type = m0->type;
     m1->bsDataSize = m0->bsDataSize;
     m1->width = m0->width;
     m1->height = m0->height;
@@ -621,33 +618,33 @@ s32 vtIPU_VectorQuantization(vtIDEC_MOVIE *movie) {
     return 0;
 }
 
-s32 vtIPU_IDCT(/* s4 20 */ vtIDEC_MOVIE *movie) {
-    /* 0x0(sp) */ sceIpuDmaEnv env;
-    /* s0 16 */ u32 flag;
-    /* fp 30 */ sceIpuRGB32 *prgb = movie->cscBuff[movie->currentBufNo];
-    /* s6 22 */ sceIpuRAW16 *praw = movie->idctBuff[movie->currentBufNo];
-    /* t2 10 */ u32 *ppix;
-    /* t1 9 */ s16 *py;
-    /* a1 5 */ s32 y;
-    /* s5 21 */ s32 i;
-    /* t3 11 */ s32 j;
-    /* 0x30(sp) */ s32 len;
-    /* s2 18 */ u32 skipBit;
-    /* s1 17 */ u32 qsc;
-    /* s3 19 */ struct { // 0x4
-        /* 0x000:0 */ u32 first : 1;
-        /* 0x000:1 */ u32 dcreset : 1;
-        /* 0x000:2 */ u32 dt : 1;
-        /* 0x000:3 */ u32 qsc : 1;
-        /* 0x000:4 */ u32 tmp : 28;
+s32 vtIPU_IDCT(vtIDEC_MOVIE *movie) {
+    sceIpuDmaEnv env;
+    u32 flag;
+    sceIpuRGB32 *prgb = movie->cscBuff[movie->currentBufNo];
+    sceIpuRAW16 *praw = movie->idctBuff[movie->currentBufNo];
+    u32 *ppix;
+    s16 *py;
+    s32 y;
+    s32 i;
+    s32 j;
+    s32 len;
+    u32 skipBit;
+    u32 qsc;
+    struct { // 0x4
+        u32 first : 1;
+        u32 dcreset : 1;
+        u32 dt : 1;
+        u32 qsc : 1;
+        u32 tmp : 28;
     } isDecodeFg;
-    /* a3 7 */ s32 cb1;
-    /* v1 3 */ s32 cb2;
-    /* a2 6 */ s32 cr1;
-    /* a0 4 */ s32 cr2;
-    /* a2 6 */ s32 r;
-    /* a0 4 */ s32 g;
-    /* a1 5 */ s32 b;
+    s32 cb1;
+    s32 cb2;
+    s32 cr1;
+    s32 cr2;
+    s32 r;
+    s32 g;
+    s32 b;
 
     strcpy(_funcname, "vtIPU_IDCT()");
     if (movie->frame_cnt >= movie->nframes) {
@@ -745,10 +742,9 @@ s32 vtIPU_IDCT(/* s4 20 */ vtIDEC_MOVIE *movie) {
         } else {
             qsc = 0;
         }
-    
-        flag = isDecodeFg.dt;
-        KL2_DEBUG_PRINT(("isDecodeFg.dt = %d isDecodeFg.qsc = %d qsc = 0x%x\n", flag, isDecodeFg.qsc, qsc));
-        DPUT_IPU_CMD(0x28000000 | isDecodeFg.dcreset << 26 | flag << 25 | qsc << 16 | skipBit);
+
+        KL2_DEBUG_PRINT(("isDecodeFg.dt = %d isDecodeFg.qsc = %d qsc = 0x%x\n", isDecodeFg.dt, isDecodeFg.qsc, qsc));
+        DPUT_IPU_CMD(0x28000000 | isDecodeFg.dcreset << 26 | isDecodeFg.dt << 25 | qsc << 16 | skipBit);
         if (vtIPU_Sync(0, _ipuTimeout)) {
             return -1;
         }
@@ -759,18 +755,19 @@ s32 vtIPU_IDCT(/* s4 20 */ vtIDEC_MOVIE *movie) {
             ppix = UNCACHED(prgb);
             py = UNCACHED(praw);
             for (j = 0; j < 256; j++, ppix++, py++) {
+                // See "8.6. Post Processing" in EE User's Manual
                 cr1 = praw->cr[j] - 128;
                 cb1 = praw->cb[j] - 128;
-                cr2 = ((cr1 * 104) & ~0x3F) >> 6;
-                cr1 = ((cr1 * 204) & ~0x3F) >> 6;
-                cb2 = ((cb1 * 258) & ~0x3F) >> 6;
-                cb1 = ((cb1 * 50) & ~0x3F) >> 6;
+                cr2 = ((cr1 * 0x068) & ~0x3F) >> 6;
+                cr1 = ((cr1 * 0x0CC) & ~0x3F) >> 6;
+                cb2 = ((cb1 * 0x102) & ~0x3F) >> 6;
+                cb1 = ((cb1 * 0x032) & ~0x3F) >> 6;
 
                 y = *py;
-                y = (((y - 16) * 149) & ~0x3F) >> 6;
+                y = (((y - 16) * 0x095) & ~0x3F) >> 6;
                 
                 r = y + cr1;
-                g = (y - cb1) - cr2;
+                g = y - cb1 - cr2;
                 b = y + cb2;
                 r = (r >> 1) + (r & 1);
                 g = (g >> 1) + (g & 1);
@@ -779,7 +776,7 @@ s32 vtIPU_IDCT(/* s4 20 */ vtIDEC_MOVIE *movie) {
                 g = g > 0xFF ? 0xFF : g < 0 ? 0 : g;
                 b = b > 0xFF ? 0xFF : b < 0 ? 0 : b;
 
-                *ppix = r | g << 8 | b << 16 | 0x80000000;
+                *ppix = r | g << 8 | b << 16 | 0x80 << 24;
             }
 
             prgb++;
@@ -868,7 +865,7 @@ u128* vtIPU_mkDmaTagOfSendTexVIF(u128 *dmaTag, sceIpuRGB32 *image, vtIDEC_MOVIE 
     packet->ul[1] = SCE_GS_BITBLTBUF;
     packet->ul[0] = SCE_GS_SET_BITBLTBUF(0, 0, SCE_GS_PSMCT32, movie->texbp, movie->texbw, SCE_GS_PSMCT32);
     packet++;
-    size = 16 * 16 * 4; // sizeof(sceIpuRGB32)
+    size = sizeof(sceIpuRGB32);
     packet->ul[1] = SCE_GS_TRXREG;
     packet->ul[0] = SCE_GS_SET_TRXREG(16, 16);
     packet++;
@@ -903,27 +900,17 @@ u128* vtIPU_mkDmaTagOfSendTexVIF(u128 *dmaTag, sceIpuRGB32 *image, vtIDEC_MOVIE 
     return (u128 *)packet;
 }
 
-u128* vtIPU_mkDmaTagOfSendINDX4VIF(/* a0 4 */ u128 *dmaTag, /* a1 5 */ sceIpuINDX4 *image, /* a2 6 */ vtIDEC_MOVIE *movie, /* a3 7 */ u32 vram) {
-    /* t0 8 */ kitADDR_DATA *packet = (kitADDR_DATA *)dmaTag + 1;
-    /* t6 14 */ s32 mbx;
-    /* t7 15 */ s32 mby;
-    /* a0 4 */ s32 i;
-    /* a3 7 */ s32 j;
-    /* s5 21 */ u64 size;
-    /* a1 5 */ u8 *pimage = (u8 *)image;
-    /* t1 9 */ kitADDR_DATA *pgiftag;
-    /* v1 3 */ kitDMAPACKET *pdmatag;
-
-    // packet = (kitADDR_DATA *)dmaTag;
-    // packet++;
-    // pdmatag = (kitDMAPACKET *)packet;
-    // packet++;
-    // pgiftag = packet++;
-
-    pdmatag = (kitDMAPACKET *)dmaTag++;
-    packet = (kitADDR_DATA *)dmaTag++;
-    pgiftag = packet++;
-
+u128* vtIPU_mkDmaTagOfSendINDX4VIF(u128 *dmaTag, sceIpuINDX4 *image, vtIDEC_MOVIE *movie, u32 vram) {
+    kitADDR_DATA *packet = (kitADDR_DATA *)dmaTag;
+    s32 mbx;
+    s32 mby;
+    s32 i;
+    s32 j;
+    u64 size;
+    u8 *pimage = (u8 *)image;
+    kitDMAPACKET *pdmatag = (kitDMAPACKET *)packet++;
+    kitADDR_DATA *pgiftag = (kitADDR_DATA *)packet++;
+    
     packet->data = SCE_GS_SET_BITBLTBUF(0, 0, SCE_GS_PSMCT32, vram, movie->texbw, SCE_GS_PSMT4);
     packet->addr = SCE_GS_BITBLTBUF;
     packet++;
@@ -931,6 +918,7 @@ u128* vtIPU_mkDmaTagOfSendINDX4VIF(/* a0 4 */ u128 *dmaTag, /* a1 5 */ sceIpuIND
     packet->data = SCE_GS_SET_TRXREG(16, 16);
     packet->addr = SCE_GS_TRXREG;
     packet++;
+    
     pgiftag->data = SCE_GIF_SET_TAG(2, SCE_GS_TRUE, SCE_GS_FALSE, 0, SCE_GIF_PACKED, 1);
     pgiftag->addr = SCE_GIF_PACKED_AD;
 
@@ -951,21 +939,22 @@ u128* vtIPU_mkDmaTagOfSendINDX4VIF(/* a0 4 */ u128 *dmaTag, /* a1 5 */ sceIpuIND
             packet->addr = SCE_GS_TRXDIR;
             packet->data = SCE_GS_SET_TRXDIR(0);
             packet++;
+
             pgiftag->data = SCE_GIF_SET_TAG(2, SCE_GS_TRUE, SCE_GS_FALSE, 0, SCE_GIF_PACKED, 1);
             pgiftag->addr = SCE_GIF_PACKED_AD;
-
             pgiftag = (kitADDR_DATA *)packet++;
             pgiftag->data = SCE_GIF_SET_TAG(size >> 4, SCE_GS_TRUE, SCE_GS_FALSE, 0, SCE_GIF_IMAGE, 0);
             pgiftag->addr = 0;
 
             pdmatag->ul[0] = DMAcnt | 4;
             pdmatag->ui[2] = 0;
-            pdmatag->ui[3] = SCE_VIF1_SET_DIRECT(4, 0);
-
+            pdmatag->ui[3] = SCE_VIF1_SET_DIRECT(0, 0);
+            pdmatag->ui[3] |= 4; // IMPORTANT: split into two lines to fix predefined for loop value order
             pdmatag = (kitDMAPACKET *)packet++;
             pdmatag->ul[0] = DMAref | size >> 4 | (u64)pimage << 32;
             pdmatag->ui[2] = 0;
-            pdmatag->ui[3] = SCE_VIF1_SET_DIRECT(size >> 4, 0);
+            pdmatag->ui[3] = SCE_VIF1_SET_DIRECT(0, 0);
+            pdmatag->ui[3] |= size >> 4;
         }
     }
 
@@ -1000,17 +989,88 @@ u128* vtIPU_mkTex0ForVQ(u128 *dmaTag, vtIDEC_MOVIE *movie, s32 context) {
     return (u128 *)packet;
 }
 
-u128* vtIPU_sendClut(/* a0 4 */ u128 *packet, /* a1 5 */ u8 *clut, /* a2 6 */ u32 cbp, /* a3 7 */ u32 cpsm, /* t0 8 */ u32 csm, /* t1 9 */ u32 csa, /* t2 10 */ u32 cld, /* t3 11 */ s32 context) {
-    /* t5 13 */ kitDMAPACKET *pdmatag = (kitDMAPACKET *)packet;
+// TODO: figure out the missing variables to make this more readable
+u128* vtIPU_sendClut(u128 *packet, u8 *clut, u32 cbp, u32 cpsm, u32 csm, u32 csa, u32 cld, s32 context) {
+    kitDMAPACKET *p = (kitDMAPACKET *)packet;
+    kitDMAPACKET *pdmatag;
 
-    
+    p[2].ul[0] = SCE_GS_SET_BITBLTBUF(0x00, 1, SCE_GS_PSMCT32, cbp, 1, SCE_GS_PSMCT32);
+    p[2].ul[1] = SCE_GS_BITBLTBUF;
+    p[3].ul[0] = SCE_GS_SET_TRXREG(8, 2);
+    p[3].ul[1] = SCE_GS_TRXREG;
+    p[1].ul[0] = SCE_GIF_SET_TAG(2, SCE_GS_FALSE, SCE_GS_FALSE, 0, SCE_GIF_PACKED, 1);
+    p[1].ul[1] = SCE_GIF_PACKED_AD;
+
+    p[5].ul[0] = SCE_GS_SET_TRXPOS(0, 0, 0, 0, 0);
+    p[5].ul[1] = SCE_GS_TRXPOS;
+    p[6].ul[0] = SCE_GS_SET_TRXDIR(0);
+    p[6].ul[1] = SCE_GS_TRXDIR;
+    p[4].ul[0] = SCE_GIF_SET_TAG(2, SCE_GS_FALSE, SCE_GS_FALSE, 0, SCE_GIF_PACKED, 1);
+    p[4].ul[1] = SCE_GIF_PACKED_AD;
+
+    p[7].ul[0] = SCE_GIF_SET_TAG(8, SCE_GS_TRUE, SCE_GS_FALSE, 0, SCE_GIF_IMAGE, 0);
+    p[7].ul[1] = 0;
+
+    pdmatag = p;
+    pdmatag->ul[0] = DMAcnt | 7;
+    pdmatag->ui[2] = SCE_VIF1_SET_FLUSH(0);
+    pdmatag->ui[3] = SCE_VIF1_SET_DIRECT(7, 0);
+    pdmatag = p + 8;
+    pdmatag->ul[0] = DMAref | 8 | (u64)clut << 32;
+    pdmatag->ui[2] = 0;
+    pdmatag->ui[3] = SCE_VIF1_SET_DIRECT(8, 0);
+    pdmatag = p + 9;
+
+    p[11].ul[0] = 0;
+    p[11].ul[1] = SCE_GS_TEXFLUSH;
+    p[12].ul[0] = SCE_GS_SET_TEX2(SCE_GS_PSMT4, cbp, cpsm, csm, csa, cld);
+    p[12].ul[1] = context == 0 ? SCE_GS_TEX2_1 : SCE_GS_TEX2_2;
+
+    p[10].ul[0] = SCE_GIF_SET_TAG(2, SCE_GS_TRUE, SCE_GS_FALSE, 0, SCE_GIF_PACKED, 1);
+    p[10].ul[1] = SCE_GIF_PACKED_AD;
+
+    pdmatag->ul[0] = DMAcnt | 3;
+    pdmatag->ui[2] = 0;
+    pdmatag->ui[3] = SCE_VIF1_SET_DIRECT(3, 0);
+
+    return packet + 13;
 }
 
-// /* 001f76e0 00000074 */ static u_long128* mkDmaTagToIPU_SCE(/* a0 4 */ u_long128 *tags, /* a1 5 */ unsigned char *data, /* a2 6 */ int datasize) {
-//     /* a0 4 */ int chunkSize;
-//     /* a3 7 */ long unsigned int *p;
-// }
+static u128* mkDmaTagToIPU_SCE(u128 *tags, u8 *data, s32 datasize) {
+    s32 chunkSize;
+    u64 *p = (u64 *)tags;
 
-// /* 001f7758 000000d4 */ int vtIPU_readDataSCE(/* s2 18 */ char *file, /* s1 17 */ vtIDEC_MOVIE *movie) {
-//     /* s0 16 */ int fd;
-// }
+    while (datasize > 0) {
+        chunkSize = datasize < 0xFFFF0 ? datasize : 0xFFFF0;
+        datasize -= chunkSize;
+        *p = DMAref | (chunkSize + 0xF) >> 4 | ((u64)data & 0x0FFFFFFF) << 32;
+        p += 2;
+        data += chunkSize;
+    }
+    *(p - 2) &= 0xFFFFFFFFCFFFFFFF;
+
+    return (u128 *)p;
+}
+
+s32 vtIPU_readDataSCE(char *file, vtIDEC_MOVIE *movie) {
+    s32 fd = sceOpen(file, SCE_RDONLY);
+    if (fd < 0) {
+        return 0;
+    }
+
+    if (sceLseek(fd, 16, SCE_SEEK_SET) < 0) {
+        KL2_DEBUG_PRINT(("ERROR: seek failed\n"));
+        sceClose(fd);
+        return 0;
+    }
+
+    KL2_DEBUG_PRINT(("Read Data start: sce file[%s] %dbytes\n", file, movie->bsDataSize));
+    if (sceRead(fd, movie->bsData, movie->bsDataSize) != movie->bsDataSize) {
+        sceClose(fd);
+        return 0;
+    }
+
+    sceClose(fd);
+    KL2_DEBUG_PRINT(("Read done: sce file[%s] %dbytes\n", file, movie->bsDataSize));
+    return 1;
+}

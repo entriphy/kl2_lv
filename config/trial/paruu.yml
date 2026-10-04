@@ -7365,9 +7365,12 @@ sections:
           - [0x001FAAB0, abVu0TransMatrix__FPA3_fT0Pf.0]
           - [0x001FAAB8, abVu0MulMatrix__FPA3_fT0T0.0]
         data:
+          - [0x0036AD80, null, rodata, 0x0000]
           - [0x003730AC, null, lit4, 0x0000]
+          - [0x00375404, null, sdata, 0x0000]
           - [0x00375410, _16CObjAuraAManager$m_instance, sdata, 0x0004]
           - [0x00375414, _14CParticleAuraA$ptclModelData, sdata, 0x0004]
+          - [0x006BCD70, null, bss, 0x0000]
       - name: ab_bosshit_a.cc
         functions:
           - [0x001FAAC0, abSetBosshitA]
