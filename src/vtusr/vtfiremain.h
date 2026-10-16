@@ -4,6 +4,7 @@
 #include "common.h"
 #include <libipu.h>
 #include "taro/taro_movie.h"
+#include "taro/taromoviemain.h"
 
 typedef struct { // 0x50
     /* 0x00 */ void *movie_data_buf[8];

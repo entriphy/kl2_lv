@@ -330,8 +330,8 @@ segments:
       - [0x0F24C0, asm, vtusr/kit/kitfirevu]
       - [0x0F2970, asm, vtusr/kit/kitwavemain]
       - [0x0F2CF8, asm, vtusr/kit/kitwavevuprog]
-      - [0x0F5E10, asm, vtusr/taro/taro_movie]
-      - [0x0F8830, asm, vtusr/taro/taromoviemain]
+      - [0x0F5E10, c, vtusr/taro/taro_movie]
+      - [0x0F8830, c, vtusr/taro/taromoviemain]
       - [0x0F8B88, asm, abe/ab_aura_a]
       - [0x0FBAC0, asm, abe/ab_bosshit_a]
       - [0x0FD690, asm, abe/ab_bubble_a]
@@ -685,8 +685,9 @@ segments:
       - [0x26AA58, rodata, nakano/gimmick/bridge_b7]
       - [0x26B268, .rodata, vtusr/ao/aoParticle]
       - [0x26B280, rodata, vtusr/ao/aoVU1pkt]
-      - [0x26B6B0, rodata, vtusr/taro/taro_movie]
-      - [0x26BD50, rodata, vtusr/taro/taromoviemain]
+      - [0x26B6B0, .rodata, vtusr/taro/taro_movie]
+      - [0x26BD50, .rodata, vtusr/taro/taromoviemain]
+      - [0x26BD80, rodata, abe/ab_aura_a]
       - [0x26D1B8, .rodata, abe/ab_mfifo]
       - [0x26D1E8, rodata, rodata]
       - [0x271400, rodatabin, gcc_except_table]
@@ -953,8 +954,8 @@ segments:
       - [0x276390, sdata, nakano/gimmick/hpobj]
       - [0x2763B0, sdata, vtusr/ao/aoVU1pkt]
       - [0x2763D0, sdata, vtusr/kit/kitfiremain]
-      - [0x2763E8, sdata, vtusr/taro/taro_movie]
-      - [0x276410, sdata, abe/ab_aura_a]
+      - [0x2763E8, .sdata, vtusr/taro/taro_movie]
+      - [0x276404, sdata, abe/ab_aura_a]
       - [0x276418, sdata, abe/ab_bosshit_a]
       - [0x276420, sdata, abe/ab_bubble_a]
       - [0x276428, sdata, abe/ab_buppy_b]
@@ -1095,7 +1096,8 @@ segments:
       - {start: 0x276864, type: bss, vram: 0x6BCAA0, name: nakano/gimmick/s2bridge}
       - {start: 0x276864, type: bss, vram: 0x6BCB90, name: nakano/gimmick/smpl_myu}
       - {start: 0x276864, type: bss, vram: 0x6BCC10, name: nakano/gimmick/tatto}
-      - {start: 0x276864, type: bss, vram: 0x6BCC70, name: vtusr/taro/taro_movie}
+      - {start: 0x276864, type: .bss, vram: 0x6BCC70, name: vtusr/taro/taro_movie}
+      - {start: 0x276864, type: bss, vram: 0x6BCD70, name: abe/ab_aura_a}
       - {start: 0x276864, type: bss, vram: 0x6BCED8, name: abe/ab_file}
       - {start: 0x276864, type: bss, vram: 0x6BCF10, name: abe/ab_fire_b}
       - {start: 0x276864, type: bss, vram: 0x6BCF50, name: abe/ab_fire_sp}

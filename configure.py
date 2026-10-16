@@ -338,6 +338,7 @@ def create_paruu_config(elf: ELFFile, stdump: dict) -> list[Section]:
             "hpobj.c": 0x375390
         },
         "abe:cc": {
+            "ab_aura_a.cc": 0x375404,
             "ab_object.cc": 0x375614 # ?
         }
     }
@@ -470,6 +471,7 @@ def create_paruu_config(elf: ELFFile, stdump: dict) -> list[Section]:
             "bridge_b7.c": 0x369A58
         },
         "abe:cc": {
+            "ab_aura_a.cc": 0x36AD80,
             "ab_mfifo.cc": 0x36C1B8
         }
     }
@@ -488,6 +490,7 @@ def create_paruu_config(elf: ELFFile, stdump: dict) -> list[Section]:
 
     BSS_FIX = {
         "abe:cc": {
+            "ab_aura_a.cc": 0x6BCD70,
             "ab_object.cc": 0x6D0000
         }
     }
