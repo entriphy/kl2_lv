@@ -23,7 +23,7 @@ u128* setSprayEnv(u128 *pkt, aoWaveStruct *aoStruct) {
     packet->vifcode0 = SCE_VIF1_SET_FLUSH(0);
     packet->vifcode1 = SCE_VIF1_SET_DIRECT(sizeof(*packet) / 0x10 - 1, 0);
     packet->regs = SCE_GIF_PACKED_AD;
-    packet->giftag = SCE_GIF_SET_TAG(sizeof(*packet) / 0x10 - 2, 1, 0, 0, 0, 1);
+    packet->giftag = SCE_GIF_SET_TAG(sizeof(*packet) / 0x10 - 2, SCE_GS_TRUE, SCE_GS_FALSE, 0, SCE_GIF_PACKED, 1);
     packet->texflush_addr = SCE_GS_TEXFLUSH;
     packet->texflush_data = 0;
     packet->clamp1_addr = SCE_GS_CLAMP_1;
@@ -56,7 +56,7 @@ u128* endSprayEnv(u128 *pkt) {
     packet->vifcode0 = SCE_VIF1_SET_FLUSH(0);
     packet->vifcode1 = SCE_VIF1_SET_DIRECT(sizeof(*packet) / 0x10 - 1, 0);
     packet->regs = SCE_GIF_PACKED_AD;
-    packet->giftag = SCE_GIF_SET_TAG(sizeof(*packet) / 0x10 - 2, 1, 0, 0, 0, 1);
+    packet->giftag = SCE_GIF_SET_TAG(sizeof(*packet) / 0x10 - 2, SCE_GS_TRUE, SCE_GS_FALSE, 0, SCE_GIF_PACKED, 1);
     packet->alpha1_addr = SCE_GS_ALPHA_1;
     packet->alpha1_data = SCE_GS_SET_ALPHA_1(SCE_GS_BLEND_RGB_SRC, SCE_GS_BLEND_RGB_DST, SCE_GS_BLEND_ALPHA_SRC, SCE_GS_BLEND_RGB_DST, 0);
     packet->test1_addr = SCE_GS_TEST_1;

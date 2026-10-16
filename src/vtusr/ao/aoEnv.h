@@ -2,7 +2,7 @@
 #define __AO_ENV_H
 
 #include "common.h"
-#include "vtusr/vtfiremain.h"
+#include "vtusr/ao/aoVU1pkt.h"
 
 extern u128* setSprayEnv(u128 *pkt, aoWaveStruct *aoStruct);
 extern u128* endSprayEnv(u128 *pkt);

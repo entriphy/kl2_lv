@@ -1,11 +1,12 @@
 #include "vtusr/ao/aoVU1pkt.h"
 #include "harada/h_vpm2.h"
 #include "nakano/route.h"
+#include "okanoyo/okio.h"
 #include "vtusr/ao/aoParticle.h"
 #include "vtusr/vtwavemain.h"
 
-AoParam **param;
-AoParam *p_param;
+AoParam **param __attribute__((aligned(16)));
+AoParam *p_param __attribute__((aligned(16)));
 AoData data;
 
 static u32* set_common_data(u32 *bp, aoWaveStruct *s);
@@ -256,12 +257,17 @@ static void check_timing(u32 n, aoWaveStruct *s) {
     param[n]->pre_height = height;
 }
 
-static void sort_obj(/* s2 18 */ aoWaveStruct *s) {
-    /* s1 17 */ s32 i;
-    /* a0 4 */ OBJWORK *klonoa = GameGbl.klonoa;
-    /* a0 4 */ s32 michinori = GetMichinori(&klonoa->rtw) >> 12;
+static void sort_obj(aoWaveStruct *s) {
+    s32 i;
+    OBJWORK *klonoa = GameGbl.klonoa;
+    s32 michinori = GetMichinori(&klonoa->rtw) >> 12;
 
-    if (vtWaveGlobal.vision == KL2_VISION(1, 0) || vtWaveGlobal.vision == KL2_VISION(1, 2)) {
+    if (
+        (vtWaveGlobal.vision == KL2_VISION(1, 0) && ((michinori < 630) || (michinori > 2324 && michinori < 2654) || (michinori > 3447 && michinori < 3771) || (michinori > 5520 && michinori < 5835)))
+        ||
+        (vtWaveGlobal.vision == KL2_VISION(1, 2) && ((michinori < 469) || (michinori > 1296 && michinori < 1360) || (michinori > 1151 && michinori < 1241) || (michinori > 7072 && michinori < 8037)))
+       )
+    {
         for (i = 0; i < s->n_obj; i++) {
             param[i]->dist = calc_dist_vu0(param[i]->pos, GameGbl.cam.posi);
         }
@@ -269,21 +275,75 @@ static void sort_obj(/* s2 18 */ aoWaveStruct *s) {
     }
 }
 
-static void combsort(/* a0 4 */ s32 first, /* a1 5 */ s32 last) {
-    /* t4 12 */ s32 i;
-    /* t0 8 */ s32 j;
-    /* t3 11 */ s32 gap = last - first;
-    /* t7 15 */ u8 changed;
+// https://decomp.me/scratch/Uj3c4
+static void combsort(s32 first, s32 last) {
+    s32 i;
+    s32 j;
+    s32 gap = last - first;
+    u8 changed = 1;
 
-    
+    if (gap > 0) {
+        while (changed || gap > 1) {
+            if (gap != 1) {
+                int x = 10; int y = 13;
+                if ((gap = gap * x / y) == 10 || gap == 9) gap = 11;
+            }
+
+            changed = 0; // unused?
+            for (i = first, j = first + gap; j <= last; i++, j++) {
+                if (param[i]->dist < param[j]->dist) {
+                    AoParam *tmp = param[i];
+                    param[i] = param[j];
+                    param[j] = tmp;
+                }
+            }
+        }
+    }
 }
 
-// /* 001edae8 0000019c */ int SetParam(/* s0 16 */ vtDataPtr *vtdata) {
-// 	/* s1 17 */ int n_obj;
-// 	/* a0 4 */ int i;
-// 	/* 0x0(sp) */ int status;
-// }
+s32 SetParam(vtDataPtr *vtdata) {
+    s32 n_obj;
+    s32 i;
+    s32 status;
 
-// /* 001edc88 00000030 */ static int calc_dist_vu0(/* a0 4 */ float *v0, /* a1 5 */ float *v1) {
-// 	/* 0x0(sp) */ VECTOR ret;
-// }
+    data.total_ptcl = *((u32 *)vtdata->spray_data_buf)++; // clangd thinks this is illegal lol
+    n_obj = *((u32 *)vtdata->spray_data_buf)++;
+    data.n_far = n_obj * 0.3f;
+    data.n_mid = n_obj * 0.6f;
+
+    param = NULL;
+    p_param = NULL;
+    param = getBuff(1, n_obj * sizeof(AoParam *), NULL, &status);
+    if (status == -1) {
+        printf("ao param alloc fail\n");
+        return -1;
+    }
+    p_param = getBuff(1, n_obj * sizeof(AoParam), NULL, &status);
+    if (status == -1) {
+        printf("ao p_param alloc fail\n");
+        return -1;
+    }
+
+    memcpy(p_param, vtdata->spray_data_buf, n_obj * sizeof(AoParam));
+    for (i = 0; i < n_obj; i++) {
+        param[i] = &p_param[i];
+    }
+    h_vp_init((VPCLIP *)&data.ao_cvpm, GameGbl.cam.scr_z, 0.0f, 65536.0f, -512.0f, 0.0f, -1024.0f, 1);
+    data.cam_scr_z = GameGbl.cam.scr_z;
+    return n_obj;
+}
+
+static s32 calc_dist_vu0(sceVu0FVECTOR v0, sceVu0FVECTOR v1) {
+    sceVu0FVECTOR ret;
+
+    __asm__ volatile(
+        "lqc2    $vf4, 0x0(%0)\n"
+        "lqc2    $vf5, 0x0(%1)\n"
+        "vsub.xz $vf6, $vf4, $vf5\n"
+        "vmul.xz $vf7, $vf6, $vf6\n"
+        "vaddz.x $vf8, $vf7, $vf7\n"
+        "sqc2    $vf8, 0x0(%2)\n"
+    : : "r" (v0), "r" (v1), "r" (ret));
+
+    return ret[0];
+}

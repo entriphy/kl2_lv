@@ -2,7 +2,7 @@
 #define __AO_PARTICLE_H
 
 #include "common.h"
-#include "vtusr/vtfiremain.h"
+#include "vtusr/ao/aoVU1pkt.h"
 
 extern aoWaveStruct* aoWaveInit(vtDataPtr *vtdata);
 extern u128* aoExecWave(u128 *pkt);

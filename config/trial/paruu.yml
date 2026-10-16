@@ -7200,6 +7200,9 @@ sections:
           - [0x001EDF08, print_vu1_IntRegister]
           - [0x001EDF88, print_vu1_ControlRegister]
           - [0x001EE0C8, print_pkt]
+        data:
+          - [0x0036A2B0, null, rodata, 0x0000]
+          - [0x003753C4, null, sdata, 0x0000]
   - id: vtusr/kit:c
     path: vtusr/kit
     units:
@@ -7224,6 +7227,7 @@ sections:
           - [0x001F1110, kitClutMovieDraw]
           - [0x001F1498, kitVu0InnerProduct]
         data:
+          - [0x0036A630, null, rodata, 0x0000]
           - [0x00372FF4, null, lit4, 0x0000]
           - [0x003753D0, kitfirestructGBL_spr, sdata, 0x0004]
           - [0x003753D8, alpha, sdata, 0x0008]
@@ -7273,6 +7277,7 @@ sections:
           - [0x001F4AF0, kitCalcWaveHeight]
           - [0x001F4C68, kitGetWaveHeight]
         data:
+          - [0x0036A690, null, rodata, 0x0000]
           - [0x0037307C, null, lit4, 0x0000]
   - id: vtusr/taro:c
     path: vtusr/taro

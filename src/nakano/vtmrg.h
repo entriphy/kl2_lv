@@ -2,7 +2,7 @@
 #define VTMRG_H
 
 #include "nakano.h"
-#include "vtusr/vtfiremain.h"
+#include "vtusr/vtutil.h"
 
 typedef struct { // 0x30
     /* 0x00 */ s8  field_0x00;

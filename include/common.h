@@ -152,6 +152,7 @@ typedef volatile s128 vs128 __attribute__((mode(TI)));
 #define COPYVEC(v0, v1) (v0[0] = v1[0], v0[1] = v1[1], v0[2] = v1[2], v0[3] = v1[3])
 #define SETDVEC(v0, x, y) (v0.vx = x, v0.vy = y)
 #define COPYDVEC(v0, v1) (v0.vx = v1.vx, v0.vy = v1.vy)
+#define COPY128(dst, src) (*(u128 *)(dst) = *(u128 *)(src))
 #define SPR_MEM ((void *)0x70000000)
 #define SPR_MEM_IDX(i) ((void *)(0x70000000 + (i) * 0x10))
 #define SPR_SRC(x) ((void *)((u32)x | 0x80000000))

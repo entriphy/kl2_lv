@@ -324,11 +324,11 @@ segments:
       - [0x0ED828, asm, okanoyo/linux/pdriver]
       - [0x0EDAE0, c, vtusr/ao/aoEnv]
       - [0x0EDBD0, c, vtusr/ao/aoParticle]
-      - [0x0EDE90, asm, vtusr/ao/aoVU1pkt]
-      - [0x0EECB8, asm, vtusr/ao/vu1dump]
-      - [0x0EF158, asm, vtusr/kit/kitfiremain]
-      - [0x0F24C0, asm, vtusr/kit/kitfirevu]
-      - [0x0F2970, asm, vtusr/kit/kitwavemain]
+      - [0x0EDE90, c, vtusr/ao/aoVU1pkt]
+      - [0x0EECB8, c, vtusr/ao/vu1dump]
+      - [0x0EF158, c, vtusr/kit/kitfiremain]
+      - [0x0F24C0, c, vtusr/kit/kitfirevu]
+      - [0x0F2970, c, vtusr/kit/kitwavemain]
       - [0x0F2CF8, asm, vtusr/kit/kitwavevuprog]
       - [0x0F5E10, c, vtusr/taro/taro_movie]
       - [0x0F8830, c, vtusr/taro/taromoviemain]
@@ -566,7 +566,7 @@ segments:
       - [0x24E3E8, data, nakano/gimmick/wblowup]
       - [0x24E400, data, okanoyo/debug/oksedebug]
       - [0x24E4E8, data, okanoyo/debug/okvramtest]
-      - [0x24E4F0, data, vtusr/ao/aoVU1pkt]
+      - [0x24E4F0, .data, vtusr/ao/aoVU1pkt]
       - [0x24E5B0, data, abe/ab_enemywave_a]
       - [0x24E5D0, data, abe/ab_exp00]
       - [0x24E5E0, data, abe/ab_expcnt_a]
@@ -684,7 +684,10 @@ segments:
       - [0x26AA38, .rodata, hoshino/kit/kitoutlinefunc]
       - [0x26AA58, rodata, nakano/gimmick/bridge_b7]
       - [0x26B268, .rodata, vtusr/ao/aoParticle]
-      - [0x26B280, rodata, vtusr/ao/aoVU1pkt]
+      - [0x26B280, .rodata, vtusr/ao/aoVU1pkt]
+      - [0x26B2B0, .rodata, vtusr/ao/vu1dump]
+      - [0x26B630, .rodata, vtusr/kit/kitfiremain]
+      - [0x26B690, rodata, vtusr/kit/kitwavevuprog]
       - [0x26B6B0, .rodata, vtusr/taro/taro_movie]
       - [0x26BD50, .rodata, vtusr/taro/taromoviemain]
       - [0x26BD80, rodata, abe/ab_aura_a]
@@ -830,8 +833,8 @@ segments:
       - [0x273EFC, lit4, nakano/gimmick/viking]
       - [0x273F50, lit4, nakano/gimmick/wblowup]
       - [0x273F64, .lit4, vtusr/ao/aoParticle]
-      - [0x273F90, lit4, vtusr/ao/aoVU1pkt]
-      - [0x273FF4, lit4, vtusr/kit/kitfiremain]
+      - [0x273F90, .lit4, vtusr/ao/aoVU1pkt]
+      - [0x273FF4, .lit4, vtusr/kit/kitfiremain]
       - [0x27407C, lit4, vtusr/kit/kitwavevuprog]
       - [0x2740AC, lit4, abe/ab_aura_a]
       - [0x2740B4, lit4, abe/ab_bosshit_a]
@@ -952,8 +955,9 @@ segments:
       - [0x2762E8, sdata, take/view]
       - [0x276360, .sdata, vtusr/vttmpprog]
       - [0x276390, sdata, nakano/gimmick/hpobj]
-      - [0x2763B0, sdata, vtusr/ao/aoVU1pkt]
-      - [0x2763D0, sdata, vtusr/kit/kitfiremain]
+      - [0x2763B0, .sdata, vtusr/ao/aoVU1pkt]
+      - [0x2763C4, .sdata, vtusr/ao/vu1dump]
+      - [0x2763D0, .sdata, vtusr/kit/kitfiremain]
       - [0x2763E8, .sdata, vtusr/taro/taro_movie]
       - [0x276404, sdata, abe/ab_aura_a]
       - [0x276418, sdata, abe/ab_bosshit_a]
@@ -1038,7 +1042,7 @@ segments:
       - {start: 0x276800, type: sbss, vram: 0x37596C, name: okanoyo/okcam}
       - {start: 0x276800, type: sbss, vram: 0x375980, name: take/object}
       - {start: 0x276800, type: sbss, vram: 0x375988, name: take/title}
-      - {start: 0x276800, type: sbss, vram: 0x375990, name: vtusr/kit/kitfirevu}
+      - {start: 0x276800, type: .sbss, vram: 0x375990, name: vtusr/kit/kitfirevu}
       - {start: 0x276800, type: sbss, vram: 0x3759A0, name: abe/ab_exp00}
       - {start: 0x276800, type: sbss, vram: 0x3759A8, name: abe/ab_fire_b}
       - {start: 0x276800, type: sbss, vram: 0x3759B0, name: abe/ab_hahen_a}

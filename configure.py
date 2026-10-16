@@ -334,6 +334,9 @@ def create_paruu_config(elf: ELFFile, stdump: dict) -> list[Section]:
         "vtusr:c": {
             "vttmpprog.c": 0x375360
         },
+        "vtusr/ao:c": {
+            "vu1dump.c": 0x3753C4
+        },
         "nakano/gimmick:c": {
             "hpobj.c": 0x375390
         },
@@ -458,7 +461,12 @@ def create_paruu_config(elf: ELFFile, stdump: dict) -> list[Section]:
         },
         "vtusr/ao:c": {
             "aoParticle.c": 0x36A268,
-            "aoVU1pkt.c": 0x36A280
+            "aoVU1pkt.c": 0x36A280,
+            "vu1dump.c": 0x36A2B0
+        },
+        "vtusr/kit:c": {
+            "kitfiremain.c": 0x36A630,
+            "kitwavevuprog.c": 0x36A690
         },
         "vtusr/taro:c": {
             "taro_movie.c": 0x0036A6B0,
