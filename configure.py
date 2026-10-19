@@ -788,7 +788,7 @@ def write_ninja_config(version: str, linker_entries: list[LinkerEntry], debug: b
 
         if isinstance(seg, splat.segtypes.common.asm.CommonSegAsm):
             build(entry.object_path, entry.src_paths, "as", implicit=["build/tools/elf_patcher"])
-        elif isinstance(seg, splat.segtypes.common.c.CommonSegC) or isinstance(seg, splat.segtypes.common.cpp.CommonSegCpp):
+        elif isinstance(seg, (splat.segtypes.common.c.CommonSegC, splat.segtypes.common.cpp.CommonSegCpp)):
             # Build code source
             build(entry.object_path, entry.src_paths, "cpp" if isinstance(seg, splat.segtypes.common.cpp.CommonSegCpp) else "c")
 
@@ -801,11 +801,7 @@ def write_ninja_config(version: str, linker_entries: list[LinkerEntry], debug: b
             obj = Path(*object_path)
             if src.exists():
                 build(obj, [src], "as", implicit=["build/tools/elf_patcher"], link=False)
-        elif isinstance(seg, splat.segtypes.common.data.CommonSegData):
-            build(entry.object_path, entry.src_paths, "as", implicit=["build/tools/elf_patcher"])
-        elif isinstance(seg, splat.segtypes.common.databin.CommonSegDatabin):
-            build(entry.object_path, entry.src_paths, "as", implicit=["build/tools/elf_patcher"])
-        elif isinstance(seg, splat.segtypes.common.rodatabin.CommonSegRodatabin):
+        elif isinstance(seg, (splat.segtypes.common.data.CommonSegData, splat.segtypes.common.databin.CommonSegDatabin, splat.segtypes.common.rodatabin.CommonSegRodatabin)):
             build(entry.object_path, entry.src_paths, "as", implicit=["build/tools/elf_patcher"])
         else:
             print(f"WARN: Unsupported build segment type {seg.type}")
@@ -933,4 +929,4 @@ if __name__ == "__main__":
         
         write_ninja_config(args.version, split.linker_writer.entries, debug=True)
         with open("compile_commands.json", "wb") as f:
-            subprocess.run(["ninja", "-t", "compdb"], stdout=f)
+            subprocess.run(["ninja", "-t", "compdb"], stdout=f, check=False)

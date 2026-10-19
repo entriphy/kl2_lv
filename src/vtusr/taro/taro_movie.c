@@ -8,6 +8,20 @@ static char _funcname[256];
 
 static u128* mkDmaTagToIPU_SCE(u128 *tags, u8 *data, s32 datasize);
 
+#define DTD(flags)          (((flags) >> 2) & 0x1)
+#define IPU_CTRL_VAL(flags) (((flags) & ~0x00000004) << 16)
+#define vtIPU_sync()        if (vtIPU_Sync(0, _ipuTimeout)) return -1;
+
+#define CBCR_BIAS 128
+#define Y_BIAS    16
+
+#define Y_COEFF   0x095
+#define CR2_COEFF 0x0CC
+#define CR3_COEFF 0x068
+#define CB2_COEFF 0x032
+#define CB3_COEFF 0x102
+
+
 void vtIPU_pr_vtIDEC_MOVIE(vtIDEC_MOVIE *movie, char *msg) {
     s32 i;
     
@@ -48,36 +62,39 @@ void vtIPU_pr_vtIDEC_MOVIE(vtIDEC_MOVIE *movie, char *msg) {
 
 s32 vtIPU_Sync(s32 mode, u16 timeout) {
     s32 i;
-    s32 var; // ?
+    s32 var_v1; // ?
 
-    if (DGET_IPU_CTRL() & IPU_CTRL_ECD_M) {
-        DPUT_IPU_CTRL(IPU_CTRL_RST_M);
+    if (sceIpuIsError()) {
+        sceIpuReset();
         sceIpuSync(0, 0);
         DPUT_D_ENABLEW(D_ENABLEW_CPND_M);
         while (!(DGET_D_ENABLER() & D_ENABLER_CPND_M));
     } else {
-        for (i = 0; i < timeout * 720 && *(vs32 *)IPU_CTRL < 0; i++);
+        for (i = 0; i < timeout * 720 && sceIpuIsBusy(); i++);
         if (i < timeout * 720) {
             return 0;
         }
         KL2_DEBUG_PRINT(("IPU TIMEOUT: %s\n", _funcname));
-        DPUT_IPU_CTRL(IPU_CTRL_RST_M);
+        sceIpuReset();
         sceIpuSync(0, 0);
         DPUT_D_ENABLEW(D_ENABLEW_CPND_M);
         while (!(DGET_D_ENABLER() & D_ENABLER_CPND_M));
     }
 
     DPUT_D3_CHCR(0x00);
-    var = dmaStat;
-    DPUT_D_STAT(0x8);
+    var_v1 = dmaStat;
+    DPUT_D_STAT(D_STAT_CIS3_M);
+
     DPUT_D4_CHCR(0x00);
-    var &= ~0x18;
-    dmaStat = var;
-    DPUT_D_STAT(0x10);
+    var_v1 &= ~(D_STAT_CIS3_M | D_STAT_CIS4_M);
+    dmaStat = var_v1;
+    DPUT_D_STAT(D_STAT_CIS4_M);
+
     DPUT_D_ENABLEW(0);
+
     sceIpuInit();
     sceIpuSync(0, 0);
-    DPUT_IPU_CMD(0);
+    sceIpuBCLR(0);
     sceIpuSync(0, 0);
 
     return -1;
@@ -188,12 +205,12 @@ void vtIPU_init(vtIDEC_MOVIE *movie, s64 texaddr) {
     movie->currentBufNo = 0;
     movie->killFg = 0;
 
-    DPUT_D_PCR(DGET_D_PCR() | 0x318);
-    DPUT_D_STAT(0x8);
-    DPUT_D_STAT(0x10);
-    DPUT_D_STAT(0x100);
-    DPUT_D_STAT(0x200);
-    DPUT_D_CTRL(DGET_D_CTRL() & 0x70F | 0x70);
+    DPUT_D_PCR(DGET_D_PCR() | (D_PCR_CPC3_M | D_PCR_CPC4_M | D_PCR_CPC8_M | D_PCR_CPC9_M));
+    DPUT_D_STAT(D_STAT_CIS3_M);
+    DPUT_D_STAT(D_STAT_CIS4_M);
+    DPUT_D_STAT(D_STAT_CIS8_M);
+    DPUT_D_STAT(D_STAT_CIS9_M);
+    DPUT_D_CTRL(DGET_D_CTRL() & (0x7FF & ~(D_CTRL_STS_M | D_CTRL_STD_M)) | (3 << D_CTRL_STS_O | 1 << D_CTRL_STD_O)); 
     dmaStat = 0;
     sceIpuInit();
 }
@@ -353,32 +370,26 @@ void vtIPU_sendBsdataToSPR(vtIDEC_MOVIE *movie, u32 ptrOnSPR) {
 
     movie->bsData1Addr = (ptrOnSPR + 0x3F) >> 6 << 6;
     n = movie->top[movie->frame_cnt];
-    vtIPU_wait(movie,9);
-    vtIPU_wait(movie,4);
+    vtIPU_wait(movie, DMAC_TO_SPR);
+    vtIPU_wait(movie, DMAC_TO_IPU);
     DPUT_D9_MADR((u32)&movie->bsData[n] & 0xFFFFFFF0);
     DPUT_D9_QWC((movie->top[movie->frame_cnt + 1] >> 4) - (n >> 4));
     DPUT_D9_SADR(movie->bsData1Addr);
-    DPUT_D9_CHCR(0x100);
-    dmaStat |= 0x200;
+    DPUT_D9_CHCR(D_CHCR_STR_M);
+    dmaStat |= D_STAT_CIS9_M;
     movie->bsData1Size = ((movie->top[movie->frame_cnt + 1] - n) + 0xF) >> 4 << 4;
 }
 
 static s32 _decodeFlag(u32 *flag) {
     strcpy(_funcname, "_decodeFlag()");
 
-    DPUT_IPU_CMD(0x40000000);
+    sceIpuFDEC(0);
     sceIpuSync(0, 0);
-    *flag = DGET_IPU_CMD() >> 0x18;
-    if (vtIPU_Sync(0, _ipuTimeout)) {
-        return -1;
-    }
-
-    DPUT_IPU_CMD(0x40000008);
-    if (vtIPU_Sync(0, _ipuTimeout)) {
-        return -1;
-    }
-
-    DPUT_IPU_CTRL((*flag & 0xfffffffb) << 0x10 | 0x1000000);
+    *flag = DGET_IPU_CMD() >> 24;
+    vtIPU_sync();
+    sceIpuFDEC(8);
+    vtIPU_sync();
+    DPUT_IPU_CTRL(IPU_CTRL_VAL(*flag) | SCE_IPU_CTRL_PCT_IPIC);
     return 0;
 }
 
@@ -395,24 +406,18 @@ static s32 vtIPU_decodeSCE(vtIDEC_MOVIE *movie) {
         return 0;
     }
 
-    DPUT_IPU_CTRL(0x40000000);
-    if (vtIPU_Sync(0, _ipuTimeout)) {
-        return -1;
-    }
-
+    sceIpuReset();
+    vtIPU_sync();
     sceIpuStopDMA(&env);
-    DPUT_IPU_CMD(0x00);
+    sceIpuBCLR(0);
     sceIpuRestartDMA(&env);
-    if (vtIPU_Sync(0, _ipuTimeout)) {
-        return -1;
-    }
-
-    vtIPU_wait(movie,4);
+    vtIPU_sync();
+    vtIPU_wait(movie, DMAC_TO_IPU);
     DPUT_D4_TADR(movie->bsTags);
-    DPUT_D4_MADR(0x0);
-    DPUT_D4_QWC(0x0);
-    DPUT_D4_CHCR(0x104);
-    dmaStat |= 0x10;
+    DPUT_D4_MADR(0x00);
+    DPUT_D4_QWC(0);
+    DPUT_D4_CHCR(D_CHCR_STR_M | 1 << D_CHCR_MOD_O);
+    dmaStat |= D_STAT_CIS4_M;
 
     return 0;
 }
@@ -436,17 +441,12 @@ s32 vtIPU_decode(vtIDEC_MOVIE *movie) {
             return -1;
         }
     } else {
-        DPUT_IPU_CTRL(0x40000000);
-        if (vtIPU_Sync(0, _ipuTimeout)) {
-            return -1;
-        }
-
+        sceIpuReset();
+        vtIPU_sync();
         sceIpuStopDMA(&env);
-        DPUT_IPU_CMD(0x00);
+        sceIpuBCLR(0);
         sceIpuRestartDMA(&env);
-        if (vtIPU_Sync(0, _ipuTimeout)) {
-            return -1;
-        }
+        vtIPU_sync();
         
         if (movie->killFg) {
             return 0;
@@ -457,7 +457,7 @@ s32 vtIPU_decode(vtIDEC_MOVIE *movie) {
         movie->bsData1Size += 19;
         movie->bsData1Size >>= 4;
         movie->bsData1Size <<= 4;
-        vtIPU_wait(movie, 9);
+        vtIPU_wait(movie, DMAC_TO_SPR);
 
         for (i = 0; i < 16; i++) {
             j = -i;
@@ -472,46 +472,44 @@ s32 vtIPU_decode(vtIDEC_MOVIE *movie) {
             }
         }
 
-        vtIPU_wait(movie, 4);
+        vtIPU_wait(movie, DMAC_TO_IPU);
         DPUT_D4_TADR(0x00);
         DPUT_D4_MADR(movie->bsData1Addr & 0x0FFFFFFF | 0x80000000);
         DPUT_D4_QWC(movie->bsData1Size >> 4);
-        DPUT_D4_CHCR(0x100);
-        dmaStat |= 0x10;
+        DPUT_D4_CHCR(D_CHCR_STR_M);
+        dmaStat |= D_STAT_CIS4_M;
     }
 
-    vtIPU_wait(movie, 3);
+    vtIPU_wait(movie, DMAC_FROM_IPU);
     DPUT_D3_MADR(movie->cscBuff[movie->currentBufNo]);
     DPUT_D3_QWC((movie->mbx * movie->mby) << 10 >> 4);
-    DPUT_D3_CHCR(0x100);
-    dmaStat |= 0x8;
-    DPUT_IPU_CMD(0x90000000 | movie->thVal1 << 16 | movie->thVal0);
+    DPUT_D3_CHCR(D_CHCR_STR_M);
+    dmaStat |= D_STAT_CIS3_M;
+    sceIpuSETTH(movie->thVal1, movie->thVal0);
     if (_decodeFlag(&flag) == -1) {
         return -1;
     }
-    DPUT_IPU_CMD(0x10010000 | (flag >> 2 & 1) << 24);
+    sceIpuIDEC(SCE_IPU_IDEC_RGB32, SCE_IPU_IDEC_NODITHER, SCE_IPU_IDEC_NOOFFSET, DTD(flag), 1, 0);
     return 0;
 }
 
 static s32 _skipFrameDelimitaCode() {
     strcpy(_funcname, "_skipFrameDelimitaCode()");
-    DPUT_IPU_CMD(0x40000020);
-    if (vtIPU_Sync(0, _ipuTimeout)) {
-        return -1;
-    }
+    sceIpuFDEC(32);
+    vtIPU_sync();
     return 0;
 }
 
 s32 vtIPU_wait(vtIDEC_MOVIE *movie, s32 id) {
     strcpy(_funcname, "vtIPU_wait()");
 
-    if ((id == 3 || id == 4) && vtIPU_Sync(0, _ipuTimeout)) {
-        return -1;
+    if (id == DMAC_FROM_IPU || id == DMAC_TO_IPU) {
+        vtIPU_sync();
     }
 
     if (((dmaStat >> id) & 1) && !(DGET_D_STAT() & 1 << id)) {
         __asm__ volatile(
-            "addi  $6,$0,10000\n"
+            "addi  $6,$0,%0\n"
             "sync.p\n"
         "VTIPU_WAIT:\n"
             "bltz  $6,VTIPU_BREAK\n"
@@ -520,8 +518,9 @@ s32 vtIPU_wait(vtIDEC_MOVIE *movie, s32 id) {
             "nop\n"
         "VTIPU_BREAK:\n"
             "nop\n"
-        );
+        : : "i" (10000)); // Timeout value
     }
+
     dmaStat &= ~(1 << id);
     DPUT_D_STAT(1 << id);
     return 0;
@@ -532,35 +531,29 @@ s32 vtIPU_syncDecode(vtIDEC_MOVIE *movie) {
     sceIpuDmaEnv env;
 
     strcpy(_funcname, "vtIPU_syncDecode()");
-    vtIPU_wait(movie, 3);
+    vtIPU_wait(movie, DMAC_FROM_IPU);
     if (movie->killFg) {
         movie->killFg = 0;
         return 0;
     }
 
-    DPUT_IPU_CMD(0x40000020);
+    sceIpuFDEC(0x20);
     strcpy(_funcname, "vtIPU_syncDecode() 2");
-    if (vtIPU_Sync(0, _ipuTimeout)) {
-        return -1;
-    }
+    vtIPU_sync();
     if (movie->type != 1) {
         return 0;
     }
 
     for (i = movie->top[movie->frame_cnt] & 0xF; i >= 4; i -= 4) {
-        DPUT_IPU_CMD(0x40000020);
-        if (vtIPU_Sync(0, _ipuTimeout)) {
-            return -1;
-        }
+        sceIpuFDEC(0x20);
+        vtIPU_sync();
         strcpy(_funcname, "vtIPU_syncDecode() 3");
     }
 
     if (i > 0) {
-        DPUT_IPU_CMD(0x40000000 | i << 3);
+        sceIpuFDEC(i * 8);
         strcpy(_funcname, "vtIPU_syncDecode() 4");
-        if (vtIPU_Sync(0, _ipuTimeout)) {
-            return -1;
-        }
+        vtIPU_sync();
     }
 
     return 0;
@@ -578,43 +571,44 @@ s32 vtIPU_VQ(vtIDEC_MOVIE *movie) {
 s32 vtIPU_SetVQ(vtIDEC_MOVIE *movie, u16 *clut) {
     sceIpuDmaEnv env;
 
-    DPUT_IPU_CTRL(0x40000000);
+    sceIpuReset();
     sceIpuSync(0, 0);
     sceIpuStopDMA(&env);
-    DPUT_IPU_CMD(0x00);
+    sceIpuBCLR(0);
     sceIpuSync(0, 0);
     sceIpuRestartDMA(&env);
-    vtIPU_wait(movie, 4);
+    vtIPU_wait(movie, DMAC_TO_IPU);
     DPUT_D4_TADR(0x00);
     DPUT_D4_MADR(clut);
     DPUT_D4_QWC(2);
-    DPUT_D4_CHCR(0x100);
-    dmaStat |= 0x10;
-    DPUT_IPU_CMD(0x60000000);
+    DPUT_D4_CHCR(D_CHCR_STR_M);
+    dmaStat |= D_STAT_CIS4_M;
+    sceIpuSETVQ();
     return 0;
 }
 
 s32 vtIPU_VectorQuantization(vtIDEC_MOVIE *movie) {
     sceIpuDmaEnv env;
 
-    DPUT_IPU_CTRL(0x40000000);
+    sceIpuReset();
     sceIpuSync(0, 0);
     sceIpuStopDMA(&env);
-    DPUT_IPU_CMD(0x00);
+    sceIpuBCLR(0);
     sceIpuRestartDMA(&env);
     sceIpuSync(0, 0);
-    vtIPU_wait(movie, 4);
+    vtIPU_wait(movie, DMAC_TO_IPU);
+
     DPUT_D4_TADR(0x00);
     DPUT_D4_MADR(movie->cscBuff[movie->currentBufNo]);
     DPUT_D4_QWC((movie->mbx * movie->mby) << 10 >> 4);
-    DPUT_D4_CHCR(0x100);
-    dmaStat |= 0x10;
-    vtIPU_wait(movie, 3);
+    DPUT_D4_CHCR(D_CHCR_STR_M);
+    dmaStat |= D_STAT_CIS4_M;
+    vtIPU_wait(movie, DMAC_FROM_IPU);
     DPUT_D3_MADR(movie->vqBuff[movie->currentBufNo]);
     DPUT_D3_QWC((movie->mbx * movie->mby) << 7 >> 4);
-    DPUT_D3_CHCR(0x100);
-    dmaStat |= 0x8;
-    DPUT_IPU_CMD(movie->mbx * movie->mby | 0x80000000);
+    DPUT_D3_CHCR(D_CHCR_STR_M);
+    dmaStat |= D_STAT_CIS3_M;
+    sceIpuPACK(SCE_IPU_PACK_INDX4, SCE_IPU_PACK_NODITHER, movie->mbx * movie->mby);
     return 0;
 }
 
@@ -658,73 +652,62 @@ s32 vtIPU_IDCT(vtIDEC_MOVIE *movie) {
         return -1;
     }
     
-    DPUT_IPU_CTRL(0x40000000);
-    if (vtIPU_Sync(0, _ipuTimeout)) {
-        return -1;
-    }
-
+    sceIpuReset();
+    vtIPU_sync();
     sceIpuStopDMA(&env);
-    DPUT_IPU_CMD(0x00);
+    sceIpuBCLR(0);
     sceIpuRestartDMA(&env);
-    if (vtIPU_Sync(0, _ipuTimeout)) {
-        return -1;
-    }
+    vtIPU_sync();
 
     vtIPU_sendBsdataToSPR(movie, (u32)SPR_MEM);
     movie->bsData1Size += 19;
     movie->bsData1Size >>= 4;
     movie->bsData1Size <<= 4;
-    vtIPU_wait(movie, 9);
-    vtIPU_wait(movie, 4);
+    vtIPU_wait(movie, DMAC_TO_SPR);
+    vtIPU_wait(movie, DMAC_TO_IPU);
 
     DPUT_D4_TADR(0x00);
     DPUT_D4_MADR(movie->bsData1Addr & 0x0FFFFFFF | 0x80000000);
     DPUT_D4_QWC(movie->bsData1Size >> 4);
-    DPUT_D4_CHCR(0x100);
-    dmaStat |= 0x10;
+    DPUT_D4_CHCR(D_CHCR_STR_M);
+    dmaStat |= D_STAT_CIS4_M;
 
     isDecodeFg.first = 1;
     len = movie->mbx * movie->mby;
     for (i = 0; i < len; i++) {
-        if (DGET_IPU_CTRL() & 0x4000) {
+        if (sceIpuIsError()) {
             KL2_DEBUG_PRINT(("(vtIPU_IDCT) IPU ERROR\n"));
         }
-        vtIPU_wait(movie, 3);
-        FlushCache(0);
+        vtIPU_wait(movie, DMAC_FROM_IPU);
+        FlushCache(WRITEBACK_DCACHE);
         DPUT_D3_MADR(praw);
-        DPUT_D3_QWC(0x30);
-        DPUT_D3_CHCR(0x100);
-        dmaStat |= 0x8;
+        DPUT_D3_QWC(48);
+        DPUT_D3_CHCR(D_CHCR_STR_M);
+        dmaStat |= D_STAT_CIS3_M;
 
         if (isDecodeFg.first) {
-            DPUT_IPU_CMD(0x40000000);
+            sceIpuFDEC(0);
             if (vtIPU_Sync(0, _ipuTimeout)) {
                 return -1;
             }
 
-            flag = DGET_IPU_CMD();
+            flag = sceIpuGetFVdecResult();
             flag = (flag >> 24) & 0xFF;
-            DPUT_IPU_CTRL(0x1000000 | (flag & 0xFB) << 16);
-            if (vtIPU_Sync(0, _ipuTimeout)) {
-                return -1;
-            }
-
-            DPUT_IPU_CMD(0x40000008);
-            isDecodeFg.dt = flag & 0x4 ? 1 : 0;
+            DPUT_IPU_CTRL(IPU_CTRL_VAL(flag) | SCE_IPU_CTRL_PCT_IPIC);
+            vtIPU_sync();
+            sceIpuFDEC(8);
+            isDecodeFg.dt = DTD(flag) ? SCE_IPU_BDEC_FIELDDCT : SCE_IPU_BDEC_FRAMEDCT;
             isDecodeFg.first = 0;
-            isDecodeFg.dcreset = 1;
+            isDecodeFg.dcreset = SCE_IPU_BDEC_DCRESET;
             skipBit = 0;
         } else {
-            DPUT_IPU_CMD(0x40000000);
-            isDecodeFg.dcreset = 0;
+            sceIpuFDEC(0);
+            isDecodeFg.dcreset = SCE_IPU_BDEC_NODCRESET;
             skipBit = 1;
         }
 
-        if (vtIPU_Sync(0, _ipuTimeout)) {
-            return -1;
-        }
-
-        flag = DGET_IPU_CMD();
+        vtIPU_sync();
+        flag = sceIpuGetFVdecResult();
         KL2_DEBUG_PRINT(("MB flag = 0x%x\n", flag););
         if (flag >> skipBit & 1) {
             skipBit += 1;
@@ -744,27 +727,28 @@ s32 vtIPU_IDCT(vtIDEC_MOVIE *movie) {
         }
 
         KL2_DEBUG_PRINT(("isDecodeFg.dt = %d isDecodeFg.qsc = %d qsc = 0x%x\n", isDecodeFg.dt, isDecodeFg.qsc, qsc));
-        DPUT_IPU_CMD(0x28000000 | isDecodeFg.dcreset << 26 | isDecodeFg.dt << 25 | qsc << 16 | skipBit);
-        if (vtIPU_Sync(0, _ipuTimeout)) {
-            return -1;
-        }
+        sceIpuBDEC(SCE_IPU_BDEC_INTRA, isDecodeFg.dcreset, isDecodeFg.dt, qsc, skipBit);
+        vtIPU_sync();
 
         KL2_DEBUG_PRINT(("raw[%d].y[%d] = 0x%x\n", i, 0, (u32)(movie->idctBuff[movie->currentBufNo] + i)));
         if (i >= 0) {
-            vtIPU_wait(movie, 3);
+            vtIPU_wait(movie, DMAC_FROM_IPU);
+
             ppix = UNCACHED(prgb);
             py = UNCACHED(praw);
+
             for (j = 0; j < 256; j++, ppix++, py++) {
-                // See "8.6. Post Processing" in EE User's Manual
-                cr1 = praw->cr[j] - 128;
-                cb1 = praw->cb[j] - 128;
-                cr2 = ((cr1 * 0x068) & ~0x3F) >> 6;
-                cr1 = ((cr1 * 0x0CC) & ~0x3F) >> 6;
-                cb2 = ((cb1 * 0x102) & ~0x3F) >> 6;
-                cb1 = ((cb1 * 0x032) & ~0x3F) >> 6;
+                // See "8.6.1. CSC: Conversion from RAW8 to RGB32" in EE User's Manual
+                // why are they doing this on the EE?
+                cr1 = praw->cr[j] - CBCR_BIAS;
+                cb1 = praw->cb[j] - CBCR_BIAS;
+                cr2 = ((cr1 * CR3_COEFF) & ~0x3F) >> 6;
+                cr1 = ((cr1 * CR2_COEFF) & ~0x3F) >> 6;
+                cb2 = ((cb1 * CB3_COEFF) & ~0x3F) >> 6;
+                cb1 = ((cb1 * CB2_COEFF) & ~0x3F) >> 6;
 
                 y = *py;
-                y = (((y - 16) * 0x095) & ~0x3F) >> 6;
+                y = (((y - Y_BIAS) * Y_COEFF) & ~0x3F) >> 6;
                 
                 r = y + cr1;
                 g = y - cb1 - cr2;
@@ -817,7 +801,7 @@ u128* vtIPU_mkDmaTagOfSendTex(u128 *dmaTag, sceIpuRGB32 *image, vtIDEC_MOVIE *mo
     *p++ = SCE_GIF_PACKED_AD;
     *p++ = SCE_GS_SET_BITBLTBUF(0, 0, SCE_GS_PSMCT32, movie->texbp, movie->texbw, SCE_GS_PSMCT32);
     *p++ = SCE_GS_BITBLTBUF;
-    size = 16 * 16 * 4; // sizeof(sceIpuRGB32)
+    size = sizeof(sceIpuRGB32);
     *p++ = SCE_GS_SET_TRXREG(16, 16);
     *p++ = SCE_GS_TRXREG;
 
@@ -835,7 +819,7 @@ u128* vtIPU_mkDmaTagOfSendTex(u128 *dmaTag, sceIpuRGB32 *image, vtIDEC_MOVIE *mo
             *p++ = SCE_GS_TRXDIR;
             *p++ = SCE_GIF_SET_TAG(size >> 4, 1, 0, 0, SCE_GIF_IMAGE, 0);
             *p++ = 0;
-            *p++ = DMAref | size >> 4 | ((u64)pimage & 0x0FFFFFFF) << 32; // IMPORTANT: must cast pimage to u64 rather than u32 > u64
+            *p++ = DMAref | size >> 4 | ((u64)pimage & 0x0FFFFFFF) << 32;
             p++;
         }
     }
@@ -989,51 +973,60 @@ u128* vtIPU_mkTex0ForVQ(u128 *dmaTag, vtIDEC_MOVIE *movie, s32 context) {
     return (u128 *)packet;
 }
 
-// TODO: figure out the missing variables to make this more readable
 u128* vtIPU_sendClut(u128 *packet, u8 *clut, u32 cbp, u32 cpsm, u32 csm, u32 csa, u32 cld, s32 context) {
     kitDMAPACKET *p = (kitDMAPACKET *)packet;
-    kitDMAPACKET *pdmatag;
+    kitDMAPACKET *pdmatag = p++;
+    kitDMAPACKET *pgiftag = p++;
 
-    p[2].ul[0] = SCE_GS_SET_BITBLTBUF(0x00, 1, SCE_GS_PSMCT32, cbp, 1, SCE_GS_PSMCT32);
-    p[2].ul[1] = SCE_GS_BITBLTBUF;
-    p[3].ul[0] = SCE_GS_SET_TRXREG(8, 2);
-    p[3].ul[1] = SCE_GS_TRXREG;
-    p[1].ul[0] = SCE_GIF_SET_TAG(2, SCE_GS_FALSE, SCE_GS_FALSE, 0, SCE_GIF_PACKED, 1);
-    p[1].ul[1] = SCE_GIF_PACKED_AD;
+    p->ul[0] = SCE_GS_SET_BITBLTBUF(0x00, 1, SCE_GS_PSMCT32, cbp, 1, SCE_GS_PSMCT32);
+    p->ul[1] = SCE_GS_BITBLTBUF;
+    p++;
+    p->ul[0] = SCE_GS_SET_TRXREG(8, 2);
+    p->ul[1] = SCE_GS_TRXREG;
+    p++;
 
-    p[5].ul[0] = SCE_GS_SET_TRXPOS(0, 0, 0, 0, 0);
-    p[5].ul[1] = SCE_GS_TRXPOS;
-    p[6].ul[0] = SCE_GS_SET_TRXDIR(0);
-    p[6].ul[1] = SCE_GS_TRXDIR;
-    p[4].ul[0] = SCE_GIF_SET_TAG(2, SCE_GS_FALSE, SCE_GS_FALSE, 0, SCE_GIF_PACKED, 1);
-    p[4].ul[1] = SCE_GIF_PACKED_AD;
+    pgiftag->ul[0] = SCE_GIF_SET_TAG(2, SCE_GS_FALSE, SCE_GS_FALSE, 0, SCE_GIF_PACKED, 1);
+    pgiftag->ul[1] = SCE_GIF_PACKED_AD;
+    pgiftag = p++;
 
-    p[7].ul[0] = SCE_GIF_SET_TAG(8, SCE_GS_TRUE, SCE_GS_FALSE, 0, SCE_GIF_IMAGE, 0);
-    p[7].ul[1] = 0;
+    p->ul[0] = SCE_GS_SET_TRXPOS(0, 0, 0, 0, 0);
+    p->ul[1] = SCE_GS_TRXPOS;
+    p++;
+    p->ul[0] = SCE_GS_SET_TRXDIR(0);
+    p->ul[1] = SCE_GS_TRXDIR;
+    p++;
 
-    pdmatag = p;
+    pgiftag->ul[0] = SCE_GIF_SET_TAG(2, SCE_GS_FALSE, SCE_GS_FALSE, 0, SCE_GIF_PACKED, 1);
+    pgiftag->ul[1] = SCE_GIF_PACKED_AD;
+    pgiftag = p++;
+    pgiftag->ul[0] = SCE_GIF_SET_TAG(8, SCE_GS_TRUE, SCE_GS_FALSE, 0, SCE_GIF_IMAGE, 0);
+    pgiftag->ul[1] = 0;
+
     pdmatag->ul[0] = DMAcnt | 7;
     pdmatag->ui[2] = SCE_VIF1_SET_FLUSH(0);
     pdmatag->ui[3] = SCE_VIF1_SET_DIRECT(7, 0);
-    pdmatag = p + 8;
+    pdmatag = p++;
     pdmatag->ul[0] = DMAref | 8 | (u64)clut << 32;
-    pdmatag->ui[2] = 0;
+    pdmatag->ui[2] = SCE_VIF1_SET_NOP(0);
     pdmatag->ui[3] = SCE_VIF1_SET_DIRECT(8, 0);
-    pdmatag = p + 9;
+    pdmatag = p++;
+    pgiftag = p++;
 
-    p[11].ul[0] = 0;
-    p[11].ul[1] = SCE_GS_TEXFLUSH;
-    p[12].ul[0] = SCE_GS_SET_TEX2(SCE_GS_PSMT4, cbp, cpsm, csm, csa, cld);
-    p[12].ul[1] = context == 0 ? SCE_GS_TEX2_1 : SCE_GS_TEX2_2;
+    p->ul[0] = 0;
+    p->ul[1] = SCE_GS_TEXFLUSH;
+    p++;
+    p->ul[0] = SCE_GS_SET_TEX2(SCE_GS_PSMT4, cbp, cpsm, csm, csa, cld);
+    p->ul[1] = context == 0 ? SCE_GS_TEX2_1 : SCE_GS_TEX2_2;
+    p++;
 
-    p[10].ul[0] = SCE_GIF_SET_TAG(2, SCE_GS_TRUE, SCE_GS_FALSE, 0, SCE_GIF_PACKED, 1);
-    p[10].ul[1] = SCE_GIF_PACKED_AD;
+    pgiftag->ul[0] = SCE_GIF_SET_TAG(2, SCE_GS_TRUE, SCE_GS_FALSE, 0, SCE_GIF_PACKED, 1);
+    pgiftag->ul[1] = SCE_GIF_PACKED_AD;
 
     pdmatag->ul[0] = DMAcnt | 3;
-    pdmatag->ui[2] = 0;
+    pdmatag->ui[2] = SCE_VIF1_SET_NOP(0);
     pdmatag->ui[3] = SCE_VIF1_SET_DIRECT(3, 0);
 
-    return packet + 13;
+    return (u128 *)p;
 }
 
 static u128* mkDmaTagToIPU_SCE(u128 *tags, u8 *data, s32 datasize) {

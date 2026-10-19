@@ -4,6 +4,7 @@
 #include "okanoyo/okio.h"
 #include "vtusr/ao/aoParticle.h"
 #include "vtusr/vtwavemain.h"
+#include "vtusr/kit/kitwavevuprog.h"
 
 AoParam **param __attribute__((aligned(16)));
 AoParam *p_param __attribute__((aligned(16)));
@@ -190,7 +191,7 @@ static u32* set_particle(u32 *bp, u32 n, aoWaveStruct *s) {
 
     bp += 28;
     *bp++ = SCE_VIF1_SET_MSCALF(0x07, 0);
-    for (i = (u32)bp >> 2 & 3; i > 0; i--) {
+    for (i = (u32)bp / 4 % 4; i > 0; i--) {
         *bp++ = 0;
     }
 

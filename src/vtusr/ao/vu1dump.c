@@ -19,7 +19,7 @@ void print_vu1_Mem() {
         if (!(i & 0xFFF)) {
             KL2_DEBUG_PRINT((ANSI_BOLD "        [128   96 95    64 63    32 31     0]" ANSI_RESET "\n"));
         }
-        KL2_DEBUG_PRINT((ANSI_BOLD "0x%04x\x1b[m: [%08x %08x %08x %08x]\n", i, vu1mem[3], vu1mem[2], vu1mem[1], vu1mem[0]));
+        KL2_DEBUG_PRINT((ANSI_BOLD "0x%04x" ANSI_RESET ": [%08x %08x %08x %08x]\n", i, vu1mem[3], vu1mem[2], vu1mem[1], vu1mem[0]));
     }
     KL2_DEBUG_PRINT(("\n"));
 }
